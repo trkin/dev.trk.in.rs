@@ -4,12 +4,14 @@ title: About
 permalink: /about/
 ---
 
-This is the base Jekyll theme. You can find out more info about customizing your Jekyll theme, as well as basic Jekyll usage documentation at [jekyllrb.com](http://jekyllrb.com/)
 
-You can find the source code for the Jekyll new theme at:
-{% include icon-github.html username="jglovier" %} /
-[jekyll-new](https://github.com/jglovier/jekyll-new)
-
-You can find the source code for Jekyll at
-{% include icon-github.html username="jekyll" %} /
-[jekyll](https://github.com/jekyll/jekyll)
+| Legal type:   |Limited liability company|
+| Corporate ID: |20845317|
+| Tax ID (PIB): |107655403 |
+| Bank account: | 170-30015232001-76|
+| Address:      | TRG PRVOG MAJA 3 |
+| City:         |21000 NOVI SAD|
+| Country:      |SERBIA|
+| Phone:        |+381 63 7298539|
+| Email:        |kontakt@trk.in.rs|
+| Director:     |Dusan Orlovic|
