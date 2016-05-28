@@ -4,6 +4,7 @@ title: About
 permalink: /about/
 ---
 
+[old site](https://sites.google.com/site/trkinovacije/)
 
 | Legal type:   |Limited liability company|
 | Corporate ID: |20845317|
