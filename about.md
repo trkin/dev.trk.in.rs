@@ -6,6 +6,7 @@ permalink: /about/
 
 [old site](https://sites.google.com/site/trkinovacije/)
 
+| Name:         | TRK INOVACIJE DOO|
 | Legal type:   |Limited liability company|
 | Corporate ID (MB): |20845317|
 | Tax ID (PIB): |107655403 |
