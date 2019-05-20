@@ -7,7 +7,7 @@
 
 # Site settings
 title: TRK INOVACIJE DOO
-email: kontakt@trk.in.rs
+email: salji@trk.in.rs
 description: > # this means to ignore newlines until "baseurl:"
   TRK INOVACIJE doo
 baseurl: "" # the subpath of your site, e.g. /blog
