@@ -15,5 +15,5 @@ permalink: /about/
 | City:         | 21124 NOVI SAD|
 | Country:      |SERBIA|
 | Phone:        |+381 63 7298539|
-| Email:        |kontakt@trk.in.rs|
+| Email:        |salji@trk.in.rs|
 | Director:     |Dusan Orlovic|
