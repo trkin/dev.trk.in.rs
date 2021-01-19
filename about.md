@@ -11,8 +11,8 @@ permalink: /about/
 | Corporate ID (MB): |20845317|
 | Tax ID (PIB): |107655403 |
 | Bank account: | 170-30015232001-76|
-| Address:      | Nova 3, no. 9, PAK 406966 |
-| City:         | 21124 NOVI SAD|
+| Address:      | Sime Sarajlije no 40 apartment 4 |
+| City:         | 21107 NOVI SAD|
 | Country:      |SERBIA|
 | Phone:        |+381 63 7298539|
 | Email:        |<a href="mailto:{{ site.email }}">{{ site.email }}</a>|
