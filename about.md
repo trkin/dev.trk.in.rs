@@ -12,6 +12,7 @@ permalink: /about/
 | Tax ID (PIB): |107655403 |
 | Bank account: | 170-30015232001-76|
 | Address:      | Sime Sarajlije no 40 apartment 4 |
+| PAK           | 406953 |
 | City:         | 21107 NOVI SAD|
 | Country:      |SERBIA|
 | Phone:        |+381 63 7298539|
