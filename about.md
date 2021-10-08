@@ -4,17 +4,12 @@ title: About
 permalink: /about/
 ---
 
-[old site](https://sites.google.com/site/trkinovacije/)
-
-| Name:         | TRK INOVACIJE DOO|
-| Legal type:   |Limited liability company|
-| Corporate ID (MB): |20845317|
-| Tax ID (PIB): |107655403 |
-| Bank account: | 170-30015232001-76|
-| Address:      | Sime Sarajlije no 40 apartment 4 |
-| PAK           | 406953 |
-| City:         | 21107 NOVI SAD|
-| Country:      |SERBIA|
-| Phone:        |+381 63 7298539|
+| Name:         | Poslovno ime: | DUŠAN ORLOVIĆ PR PROGRAMIRANJE TRK INFORMACIJE NOVI SAD|
+| Short name:   | Skraceno poslovno ime: | DUŠAN ORLOVIĆ PR TRK INFORMACIJE |
+| Corporate ID: | Registrarski broj: | 66298868|
+| Tax ID: | PIB: |107655403 |
+| Bank account: | Racun u banci: | 170-30015232001-76|
+| Address:      | Poslovno sediste: | Marije Kalas 9 |
+| ZIP, city and country: | Postanksi broj, grad i drzava: | 21107 Novi Sad, Serbia|
+| Phone:        | Telefon: | {{ site.phone }}|
 | Email:        |<a href="mailto:{{ site.email }}">{{ site.email }}</a>|
-| Director:     |Dusan Orlovic|
