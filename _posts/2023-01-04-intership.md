@@ -2,24 +2,19 @@
 layout: post
 ---
 
-We rented a room on Liman 3 Novi Sad, intended for the training of programmers
-so that they improve their knowledge to the level that they can start working on
-client jobs.
-It will be an unpaid one-month internship (February) for the Ruby on Rails
-platform, 4+ hours every weekday.
+Do you want to know how to create web sites ? Try [Ruby on Rails](https://rubyonrails.org/) with us, Liman 3, Novi Sad.
+
+Intership for beginners in Ruby in March 2023 is free for selected participants.
 
 Requirements:
-- experience with `git`, `HTML&CSS`, `Ruby on Rails`, `SQL` (bonus if you are
+- experience with `HTML`, `CSS` and `Ruby on Rails` (bonus if you are
   using `vim`, develop with `testing` approach)
-- self motivated hobby projects (web, linux, electronics or similar)
 - good communication skills, knowledge sharing, honesty (nice person)
-- dedicated to a healthy lifestyle, practicing recreational sport (for example walking)
 
 Benefits:
-- 1 hour a day of mentoring and setting tasks (`jekyll`, `Rails`)
+- 1 hour a day of mentoring
 - work on our open source projects like Movebase.link (listing of sport events)
-- learn linux secrets on Ubuntu Multiseat computer
-- joint morning trainings (walking, paddling a SUP board)
+- experince so you can apply for a job (hopefully in our company)
 
 We select participants based on our assessment of whether they are ready to
 master Ruby on Rails material during the internship.
@@ -27,6 +22,40 @@ master Ruby on Rails material during the internship.
 We hope that at the end of the internship participants will be ready enough to
 apply for client jobs.
 
-Send an application to <a href="mailto:{{ site.email }}">{{ site.email }}</a> with a short description of what you
-have done so far, your github profile and eventually what do you expect from the
-intership from our side (so we can see if we are a good fit for you).
+Send an application to <a href="mailto:{{ site.email }}">{{ site.email }}</a>
+with answers to;
+- You experience with HTML, Javascript and Ruby language
+- Links to your work; github profile and sites that you take a part of (if
+  exists)
+- When do you expect from the intership, what are you plans and something about you
+
+Deadline for application is Februar 20 2023.
+
+[Srpski](#srpski)
+
+<hr id='srpski'>
+
+Želiš li da naučiš da praviš sajtove ? Probaj “Ruby on Rails” alat kod nas, na Limanu 3, Novi Sad.
+Kurs za početnike u Rubiju, potpuno besplatno, počinje 1 marta i traje mesec dana, 6 sati dnevno svaki radni dan.
+
+Uslovi:
+- Iskustvo sa `HTML`, `CSS`, `Javascript` i `Ruby on Rails` (nije neophodno
+  sve da znate, bonus je znanje iz `vim` i `testiranje`)
+- Dobre komunikacione sposobnosti, deljenje znanja, iskrenost
+
+Šta dobijate:
+- 1 sat svakog dana mentoring
+- Rad na opensource projektima
+- Iskustvo koje vam može pomoći u apliciranju za naredni posao (nadamo se kod
+  nas)
+
+Biramo polaznike koji su spremni da uče i da usavršavaju svoje znanje iz
+programiranja.
+
+Da bi ste aplicirali, pošaljite email na <a href="mailto:{{ site.email }}">{{ site.email }}</a> sa odgovorom na sledeća
+pitanja:
+- Koje je vaše dosadašnje iskustvo sa HTML, Javascript i Ruby jezikom
+- Linkovi ka dosadašnjem radu: github profil, primeri sajtova na kom ste radili ako postoje
+- Šta očekujete od prakse, koji su vam planovi za zaposlenje i ukratko o sebi
+
+Rok za prijavu je 20 Februar 2023.
