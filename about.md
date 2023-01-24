@@ -13,5 +13,5 @@ permalink: /about/
 | Račun u banci (bank account): | 265-2050310001216-90|
 | Poslovno sedište (address): | Marije Kalas 9 |
 | Poštanski broj, grad i drzava (zip, city, country): | 21107 Novi Sad, Serbia|
-| Telefon (mobile): | ![email]({{ site.baseurl }}/assets/email.png "email")|
-| Imejl (email): | ![phone]({{ site.baseurl }}/assets/phone.png "phone")|
+| Imejl (email): | ![email]({{ site.baseurl }}/assets/email.png "email")|
+| Telefon (mobile): | ![phone]({{ site.baseurl }}/assets/phone.png "phone")|

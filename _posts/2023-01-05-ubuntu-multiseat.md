@@ -54,8 +54,18 @@ loginctl seat-status seat0 | grep ttyACM
 for example on my comp front bottom is usb1, front top is usb2, back bottom is
 usb3, back middle and top are usb1
 
-When someone logs out than all users will  log out and only seat0 will get
+When someone logs out than all users will log out and only seat0 will get
 login screen. Solution is to log in and log out as seat0
+
+When you remove graphic card, than that seat will be discarted and all it's
+devices will be assigned to default seat seat0.
+When you want to remove all seats and attach to default
+```
+loginctl flush-devices
+```
+
+To remove one specific device from seat, you need to attach to another seat (you
+need to know it's path)
 
 
 # USB Dock
@@ -78,5 +88,15 @@ usb (all attached usb devices will show up under this usb device)
 		  │   │ │   usb:1-1.2.2.4
 ```
 other devices stays the same.
-There is no video device that can be attached to specific seat.
+And there is no change when we start or stop the driver.
+
 Driver page is https://github.com/DisplayLink/evdi
+
+You can stop start the driver with
+```
+sudo service displaylink-driver stop
+```
+
+You can attach specific evdi drm to new seats https://askubuntu.com/a/1304701/40031
+```
+```
