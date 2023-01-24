@@ -1,9 +1,16 @@
-# Rakefile
+# You store source on bitbucket so other can not see the changes (origin remote
+# is bitbucket)
 #
-# You need to set up git remote to github, for example:
+#   git clone git@bitbucket.org:duleorlovic/trk.in.rs.git
 #
-# git remote add github git@github.com:duleorlovic/blog.git
+# and deployment can be to gh-pages (github remote is github)
 #
+# git remote add github git@kgithub.com:kulakajak/trk.in.rs.git
+#
+# so run this Rakefile to automate deployment
+#
+# rake
+
 # Require jekyll to compile the site.
 require "jekyll"
 require 'tmpdir'
@@ -50,7 +57,7 @@ namespace :blog do
       system "git remote add origin #{origin}"
 
       # Push the files to the gh-pages branch, forcing an overwrite.
-      system "git push origin master:refs/heads/gh-pages --force"
+      system "git push origin main:refs/heads/gh-pages --force"
     end
 
     # Done.

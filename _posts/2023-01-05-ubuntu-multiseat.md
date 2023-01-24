@@ -78,4 +78,5 @@ usb (all attached usb devices will show up under this usb device)
 		  │   │ │   usb:1-1.2.2.4
 ```
 other devices stays the same.
-TODO: not sure how to attach video device that is used for extended display
+There is no video device that can be attached to specific seat.
+Driver page is https://github.com/DisplayLink/evdi

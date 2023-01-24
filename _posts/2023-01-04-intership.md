@@ -35,8 +35,16 @@ Deadline for application is Februar 20 2023.
 
 <hr id='srpski'>
 
-Želiš li da naučiš da praviš sajtove ? Probaj “Ruby on Rails” alat kod nas, na Limanu 3, Novi Sad.
-Kurs za početnike u Rubiju, potpuno besplatno, počinje 1 marta i traje mesec dana, 6 sati dnevno svaki radni dan.
+Želiš li da naučiš da praviš sajtove ? Probaj “Ruby on Rails” alat sa mnom, na
+Limanu 3, Novi Sad.
+
+Ja sam krenuo sa Ruby on Rails framework pre desetak godina i do sada sam uvek
+imao posla vezan za taj alat. Sada hocu da radim sa vecim timom (za sada je tu
+samo moj brat i drugar) pa zato trazim pojacanje, tj. obezbedio sam 3 mesta za
+stolom.
+
+Kurs za početnike u Rubiju počinje 1 marta i traje mesec dana, 6 sati dnevno
+svaki radni dan.
 
 Uslovi:
 - Iskustvo sa `HTML`, `CSS`, `Javascript` i `Ruby on Rails` (nije neophodno
@@ -49,7 +57,7 @@ Uslovi:
 - Iskustvo koje vam može pomoći u apliciranju za naredni posao (nadamo se kod
   nas)
 
-Biramo polaznike koji su spremni da uče i da usavršavaju svoje znanje iz
+Biramo 3 polaznika koji su spremni da uče i da usavršavaju svoje znanje iz
 programiranja.
 
 Da bi ste aplicirali, pošaljite email na <a href="mailto:{{ site.email }}">{{ site.email }}</a> sa odgovorom na sledeća
