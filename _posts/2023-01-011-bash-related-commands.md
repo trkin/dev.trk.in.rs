@@ -36,12 +36,16 @@ For rbenv to be able to find bin from gems you need to add
 # .bashrc
 export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
-
-# To install version of ruby that uses openssl 1.1 we need to use RUBY_CONFIGURE_OPTS
-export RUBY_CONFIGURE_OPTS="--with-openssl-dir=`brew --prefix openssl@1.1`"
+```
+When you install new gems, sometimes you need to rehash to create new shims
+https://github.com/rbenv/rbenv#rbenv-rehash
+```
+gem install jekyll
+rbenv rehash
+jekyll
 ```
 
-Install or try
+Install and change to that version
 ```
 rbenv install 3.2.0
 rbenv shell 3.2.0 # this export RBENV_VERSION=3.2.0
@@ -52,6 +56,9 @@ For compilers to find openssl@1.1 you may need to set (this is needed for rvm):
 export LDFLAGS="-L/home/linuxbrew/.linuxbrew/opt/openssl@1.1/lib"
 export CPPFLAGS="-I/home/linuxbrew/.linuxbrew/opt/openssl@1.1/include"
 export PKG_CONFIG_PATH="/home/linuxbrew/.linuxbrew/opt/openssl@1.1/lib/pkgconfig"
+
+# To install version of ruby that uses openssl 1.1 we need to use RUBY_CONFIGURE_OPTS
+export RUBY_CONFIGURE_OPTS="--with-openssl-dir=`brew --prefix openssl@1.1`"
 ```
 
 
