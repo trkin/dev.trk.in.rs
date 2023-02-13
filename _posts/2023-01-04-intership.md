@@ -47,8 +47,10 @@ Kurs za početnike u Rubiju počinje 1 marta i traje mesec dana, 6 sati dnevno
 svaki radni dan.
 
 Uslovi:
-- Iskustvo sa `HTML`, `CSS`, `Javascript` i `Ruby on Rails` (nije neophodno
-  sve da znate, bonus je znanje iz `vim` i `testiranje`)
+- Iskustvo sa `HTML`, `CSS`, `Javascript`, `Ruby on Rails` (nije neophodno
+  sve da znate). Na [Learning materials for Ruby on Rails]({% post_url
+  2023-01-24-learning-materials-for-ruby-and-rails %})  mozete naci neke
+  materijale
 - Dobre komunikacione sposobnosti, deljenje znanja, iskrenost
 
 Šta dobijate:
