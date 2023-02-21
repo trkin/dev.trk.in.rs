@@ -2,7 +2,8 @@
 layout: post
 ---
 
-Do you want to know how to create web sites ? Try [Ruby on Rails](https://rubyonrails.org/) with us, Liman 3, Novi Sad.
+Do you want to know how to create web sites ? Try "Ruby on Rails" tool with me,
+at Liman 3, Novi Sad.
 
 Intership for beginners in Ruby in March 2023 is free for selected participants.
 
@@ -39,8 +40,8 @@ Deadline for application is Februar 20 2023.
 Limanu 3, Novi Sad.
 
 Ja sam krenuo sa Ruby on Rails framework pre desetak godina i do sada sam uvek
-imao posla vezan za taj alat. Sada hocu da radim sa vecim timom (za sada je tu
-samo moj brat i drugar) pa zato trazim pojacanje, tj. obezbedio sam 3 mesta za
+imao posla vezan za taj alat. Sada hoću da radim sa većim timom (za sada je tu
+samo moj brat i drugar) pa zato tražim pojačanje, tj. obezbedio sam 3 mesta za
 stolom.
 
 Kurs za početnike u Rubiju počinje 1 marta i traje mesec dana, 6 sati dnevno
@@ -62,8 +63,8 @@ Uslovi:
 Biramo 3 polaznika koji su spremni da uče i da usavršavaju svoje znanje iz
 programiranja.
 
-Da bi ste aplicirali, pošaljite email na <a href="mailto:{{ site.email }}">{{ site.email }}</a> sa odgovorom na sledeća
-pitanja:
+Da bi ste aplicirali, pošaljite email na <a href="mailto:{{ site.email }}">{{ site.email }}</a>
+sa odgovorom na sledeća pitanja:
 - Koje je vaše dosadašnje iskustvo sa HTML, Javascript i Ruby jezikom
 - Linkovi ka dosadašnjem radu: github profil, primeri sajtova na kom ste radili ako postoje
 - Šta očekujete od prakse, koji su vam planovi za zaposlenje i ukratko o sebi
