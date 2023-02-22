@@ -9,10 +9,12 @@ vacancies the only way to move the kids to another kindergarten is to find
 someone else who also wants to move. Existing app source is
 [https://github.com/trkin/premesti.se](https://github.com/trkin/premesti.se) and
 we are rebuilding to use latest tools like [Turbo](https://turbo.hotwired.dev/)
+Source code is on github
+
+[https://github.com/trkin/kindergarten-exchange](https://github.com/trkin/kindergarten-exchange)
 
 Main tools that we will use:
-* [Ruby on rails]({% link _posts/2023-01-24-learning-materials-for-ruby-and-rails.md %})
-  as a server side engine
+* Ruby on Rails as a server side engine
 * Github projects for organizing tasks
 * Neo4j graph database to find matches in rotations
 * Figma for designs
@@ -22,8 +24,6 @@ Main tools that we will use:
 
 All practicioners should choose one area in which to become a master so they can
 teach other teammates.
-
-Source code is on github https://github.com/trkin/kindergarten-exchange
 
 Main features should be:
 * user registration using various ways: phone number, email, social buttons
