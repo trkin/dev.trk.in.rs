@@ -19,3 +19,5 @@ Main tools that we will use:
 
 All practicioners should choose one area in which to become a master so they can
 teach other teammates.
+
+Source code is on github https://github.com/trkin/kindergarten-exchange
