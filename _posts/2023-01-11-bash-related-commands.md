@@ -25,6 +25,7 @@ Install rbenv and openssl 1.1
 brew install rbenv ruby-build openssl@1.1
 ```
 Remove rvm and install rbenv https://gist.github.com/akdetrick/7604130
+Make sure rbenv is a local installation, visible from terminal!
 ```
 # follow steps
 rbenv init
