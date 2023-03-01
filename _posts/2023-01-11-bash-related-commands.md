@@ -13,10 +13,9 @@ https://brew.sh/
 ```
 
 ```
-# run those three commands, just replace 'dule' with your username
-echo '# Set PATH, MANPATH, etc., for Homebrew.' >> /home/dule/.profile
-echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/dule/.profile
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
+echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/$USER/.bashrc
+
 ```
 
 # Rbenv
@@ -29,10 +28,7 @@ Remove rvm and install rbenv https://gist.github.com/akdetrick/7604130
 ```
 # follow steps
 rbenv init
-```
-
-For rbenv to be able to find bin from gems you need to add
-```
+# rbenv to be able to find bin from gems you need to add
 # .bashrc
 export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
