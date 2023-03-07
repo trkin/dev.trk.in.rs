@@ -1,0 +1,422 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>TRK RAILS</title>
+    <description>TRK IN NOVI SAD
+</description>
+    <link>https://dev.trk.in.rs/</link>
+    <atom:link href="https://dev.trk.in.rs/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Tue, 07 Mar 2023 13:13:53 +0000</pubDate>
+    <lastBuildDate>Tue, 07 Mar 2023 13:13:53 +0000</lastBuildDate>
+    <generator>Jekyll v4.3.2</generator>
+    
+      <item>
+        <title>Cloudflare Tunnel</title>
+        <description>&lt;p&gt;Ngrok is a service which gives you random url whenever you start a new tunnel.
+&lt;a href=&quot;https://www.cloudflare.com/products/tunnel/&quot;&gt;Clodflare tunnel&lt;/a&gt; is a free
+service that you can use as ngrok alternative.&lt;/p&gt;
+
+&lt;p&gt;You can create a temporary tunnel with random url&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cloudflared tunnel --url http://localhost:3000
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;and it will be available under .trycloudflare.com like
+https://request-composer-pools-requirements.trycloudflare.com&lt;/p&gt;
+
+&lt;p&gt;For long living tunnels which uses the same url you should use
+https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cloudflared tunnel login
+# when you authorize it will create ~/.cloudflared/cert.pem
+
+# list all tunnels created on web
+cloudflared tunnel list
+
+# create tunnel and config.json file
+cloudflared tunnel create mytunnel
+# Tunnel credentials written to /home/dule/.cloudflared/asd....asd.json
+
+
+cat &amp;gt; ~/.cloudflared/config.yaml &amp;lt;&amp;lt; &apos;HERE_DOC&apos;
+url: http://localhost:8000
+tunnel: mytunnel
+credentials-file: ~/.cloudflared/asd....asd.json
+HERE_DOC
+
+# create DNS CNAME record to route to tunnel
+cloudflared tunnel route dns mytunnel mytunnel.trk.in.rs
+
+# start the tunnel
+cloudflared tunnel run mytunnel
+
+# check tunnel status
+cloudflared tunnel info mytunnel
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;If you install as a service than you need to stop that service&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;systemctl status cloudflared
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</description>
+        <pubDate>Thu, 23 Feb 2023 00:00:00 +0000</pubDate>
+        <link>https://dev.trk.in.rs/2023/02/23/cloudflare-tunnel.html</link>
+        <guid isPermaLink="true">https://dev.trk.in.rs/2023/02/23/cloudflare-tunnel.html</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>Build Kindergarten Exchange App</title>
+        <description>&lt;p&gt;As a practice task in our &lt;a href=&quot;/2023/01/04/internship.html&quot;&gt;first intership&lt;/a&gt;
+we are rebuilding a webapp that will help parents organize themselves and find
+free places in kindergartens that are closer to them. When there are no
+vacancies the only way to move the kids to another kindergarten is to find
+someone else who also wants to move. Existing app source is
+&lt;a href=&quot;https://github.com/trkin/premesti.se&quot;&gt;https://github.com/trkin/premesti.se&lt;/a&gt; and
+we are rebuilding to use latest tools like &lt;a href=&quot;https://turbo.hotwired.dev/&quot;&gt;Turbo&lt;/a&gt;
+Source code is on github&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/trkin/kindergarten-exchange&quot;&gt;https://github.com/trkin/kindergarten-exchange&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Main tools that we will use:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Ruby on Rails as a server side engine&lt;/li&gt;
+  &lt;li&gt;Github projects for organizing tasks&lt;/li&gt;
+  &lt;li&gt;Neo4j graph database to find matches in rotations&lt;/li&gt;
+  &lt;li&gt;Figma for designs&lt;/li&gt;
+  &lt;li&gt;Tailwind for styles&lt;/li&gt;
+  &lt;li&gt;Jekyll for blog&lt;/li&gt;
+  &lt;li&gt;Turbo and Stimulus for registration and chat&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;All practicioners should choose one area in which to become a master so they can
+teach other teammates.&lt;/p&gt;
+
+&lt;p&gt;Main features should be:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;user registration using various ways: phone number, email, social buttons&lt;/li&gt;
+  &lt;li&gt;user select &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;move&lt;/code&gt; ie kindergarten in which they are interested in&lt;/li&gt;
+  &lt;li&gt;user can share their moves on social networks&lt;/li&gt;
+  &lt;li&gt;graph engine that calculates matches for each new &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;move&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;for each match a new &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;chat&lt;/code&gt; is created and notifications are sent&lt;/li&gt;
+  &lt;li&gt;admin pages to invite users to register, to send promotional emails and users
+can unsubscribe to them&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Advanced features:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;enable payment so moves that includes at least one premium move can chat
+immediatelly, and moves that are all free are waiting one week for
+notification and chat (send email to buy premium or to wait).
+Premium can be obtained by sharing on social networks. Use other features for
+premium like: free sms notification&lt;/li&gt;
+  &lt;li&gt;create mobile apps for Android and iOS&lt;/li&gt;
+  &lt;li&gt;create Viber app for registration&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;App should be using I18n transations and covered with tests.&lt;/p&gt;
+</description>
+        <pubDate>Tue, 21 Feb 2023 00:00:00 +0000</pubDate>
+        <link>https://dev.trk.in.rs/2023/02/21/build-kindergarten-exchange-app.html</link>
+        <guid isPermaLink="true">https://dev.trk.in.rs/2023/02/21/build-kindergarten-exchange-app.html</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>Learning Materials For Ruby And Rails</title>
+        <description>&lt;h1 id=&quot;ruby&quot;&gt;Ruby&lt;/h1&gt;
+
+&lt;p&gt;To start learning Ruby, you can try with:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.freecodecamp.org/news/learning-ruby-from-zero-to-hero-90ad4eecc82d/&quot;&gt;FreeCodeCamp Learning Ruby: From Zero to Hero&lt;/a&gt; (text)&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=wI-hfFW9hfI&quot;&gt;The Nerdy Dev Learn Ruby Programming in 3 hours FULL COURSE&lt;/a&gt; (video)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;To Install on your machine the best is using &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;rbenv&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h1 id=&quot;ruby-on-rails&quot;&gt;Ruby on Rails&lt;/h1&gt;
+
+&lt;p&gt;The best way for using some tools is to read it’s documentation. So for RoR you
+should start from&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://guides.rubyonrails.org/&quot;&gt;https://guides.rubyonrails.org/&lt;/a&gt; (text)
+You can start with &lt;a href=&quot;https://guides.rubyonrails.org/getting_started.html&quot;&gt;Getting started with
+Rails&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.youtube.com/@Deanin&quot;&gt;https://www.youtube.com/@Deanin&lt;/a&gt; Deanin
+youtube channel. You can start with &lt;a href=&quot;https://www.youtube.com/watch?v=TlgSp2XPCY4&amp;amp;list=PL3mtAHT_eRezB9fnoIcKS4vYFjm23vddb&amp;amp;index=1&quot;&gt;Intro to Ruby on Rails 7 Fullstack
+Tutorial | Rails for Beginners Part 1&lt;/a&gt;.
+Note that some videos can be found in other playlists for example &lt;a href=&quot;https://www.youtube.com/watch?v=4GjXSI6jcLI&amp;amp;list=PL3mtAHT_eRexG8W__yiMgv3tcIdbLlwho&amp;amp;index=50&quot;&gt;The VSCode Rails Extensions
+Used In This Series | Intro To Ruby On Rails For Beginners Part 17
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Tue, 24 Jan 2023 00:00:00 +0000</pubDate>
+        <link>https://dev.trk.in.rs/2023/01/24/learning-materials-for-ruby-and-rails.html</link>
+        <guid isPermaLink="true">https://dev.trk.in.rs/2023/01/24/learning-materials-for-ruby-and-rails.html</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>Bash Related Commands</title>
+        <description>&lt;h1 id=&quot;brew&quot;&gt;Brew&lt;/h1&gt;
+
+&lt;p&gt;Use brew instead of manually install packages so all users can use the same libs
+https://brew.sh/&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;/bin/bash -c &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)&quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+echo &apos;eval &quot;$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)&quot;&apos; &amp;gt;&amp;gt; /home/$USER/.bashrc
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h1 id=&quot;rbenv&quot;&gt;Rbenv&lt;/h1&gt;
+
+&lt;p&gt;Install rbenv and openssl 1.1&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;brew install rbenv ruby-build openssl@1.1
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Remove rvm and install rbenv https://gist.github.com/akdetrick/7604130
+Make sure rbenv is a local installation, visible from terminal!&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# follow steps
+rbenv init
+# rbenv to be able to find bin from gems you need to add
+# .bashrc
+export PATH=&quot;$HOME/.rbenv/bin:$PATH&quot;
+eval &quot;$(rbenv init -)&quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;When you install new gems, sometimes you need to rehash to create new shims
+https://github.com/rbenv/rbenv#rbenv-rehash&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;gem install jekyll
+rbenv rehash
+jekyll
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Install and change to that version&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;rbenv install 3.2.0
+rbenv shell 3.2.0 # this export RBENV_VERSION=3.2.0
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;For compilers to find openssl@1.1 you may need to set (this is needed for rvm):&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;export LDFLAGS=&quot;-L/home/linuxbrew/.linuxbrew/opt/openssl@1.1/lib&quot;
+export CPPFLAGS=&quot;-I/home/linuxbrew/.linuxbrew/opt/openssl@1.1/include&quot;
+export PKG_CONFIG_PATH=&quot;/home/linuxbrew/.linuxbrew/opt/openssl@1.1/lib/pkgconfig&quot;
+
+# To install version of ruby that uses openssl 1.1 we need to use RUBY_CONFIGURE_OPTS
+export RUBY_CONFIGURE_OPTS=&quot;--with-openssl-dir=`brew --prefix openssl@1.1`&quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h1 id=&quot;wall&quot;&gt;Wall&lt;/h1&gt;
+
+&lt;p&gt;Enable tty group so user can send messages
+https://unix.stackexchange.com/a/313558/150895&lt;/p&gt;
+</description>
+        <pubDate>Wed, 11 Jan 2023 00:00:00 +0000</pubDate>
+        <link>https://dev.trk.in.rs/2023/01/11/bash-related-commands.html</link>
+        <guid isPermaLink="true">https://dev.trk.in.rs/2023/01/11/bash-related-commands.html</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>Keyboard Shortcuts And Switch Windows</title>
+        <description>&lt;h1 id=&quot;shortcuts-for-linux&quot;&gt;Shortcuts for linux&lt;/h1&gt;
+
+</description>
+        <pubDate>Fri, 06 Jan 2023 00:00:00 +0000</pubDate>
+        <link>https://dev.trk.in.rs/2023/01/06/keyboard-shortcuts-and-switch-windows.html</link>
+        <guid isPermaLink="true">https://dev.trk.in.rs/2023/01/06/keyboard-shortcuts-and-switch-windows.html</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>Ubuntu Multiseat</title>
+        <description>&lt;p&gt;We started with multiseat
+https://www.apalrd.net/posts/2022/multiseat_intro/&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;man loginctl
+loginctl list-seats
+loginctl seat-status seat0 &amp;gt; seat_status_initial.txt
+
+lspci | grep VGA
+03:00.0 VGA compatible controller: Advanced Micro Devices, Inc. [AMD/ATI] Cape Verde PRO [Radeon HD 7750/8740 / R7 250E]
+04:00.0 VGA compatible controller: Advanced Micro Devices, Inc. [AMD/ATI] Cape Verde PRO [Radeon HD 7750/8740 / R7 250E]
+
+radeontop -b 03
+# Graphic pipe 10,00%
+# this should remain in seat0 which will be default
+radeontop -b 04
+# Graphic pipe 0,00%
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;You need to attach MASTER devices (ie graphic cards) otherwise new seat will not
+be created.
+Search for &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;drm&lt;/code&gt; and look at last number (in this case &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;04&lt;/code&gt;)
+Also need to attach &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;render&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;fb&lt;/code&gt; (frame buffer)&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo loginctl attach seat1 /sys/devices/pci0000:00/0000:00:01.0/0000:01:00.0/0000:02:10.0/0000:04:00.0/drm/card1
+sudo loginctl attach seat1 /sys/devices/pci0000:00/0000:00:01.0/0000:01:00.0/0000:02:10.0/0000:04:00.0/drm/renderD129
+sudo loginctl attach seat1 /sys/devices/pci0000:00/0000:00:01.0/0000:01:00.0/0000:02:10.0/0000:04:00.0/graphics/fb1
+
+sudo loginctl attach seat1 /sys/devices/pci0000:00/0000:00:01.0/0000:01:00.0/0000:02:10.0/0000:04:00.1/sound/card2
+
+loginctl attach seat1 /sys/devices/pci0000:00/0000:00:1d.0/usb2
+
+loginctl seat-status seat1
+# this should show all 04 devices
+
+loginctl seat-status seat0
+# this should not show any 04 devices
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;For usb you should attach arduino and find Bus for each port&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;lsusb | grep Arduino
+Bus 003 Device 008: ID 2341:0043 Arduino SA Uno R3 (CDC ACM)
+
+loginctl seat-status seat0 | grep ttyACM
+		  │ │ └─/sys/devices/pci0000:00/0000:00:14.0/usb3/3-1/3-1:1.0/tty/ttyACM0
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;for example on my comp front bottom is usb1, front top is usb2, back bottom is
+usb3, back middle and top are usb1&lt;/p&gt;
+
+&lt;p&gt;When someone logs out than all users will log out and only seat0 will get
+login screen. Solution is to log in and log out as seat0&lt;/p&gt;
+
+&lt;p&gt;When you remove graphic card, than that seat will be discarted and all it’s
+devices will be assigned to default seat seat0.
+When you want to remove all seats and attach to default&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;loginctl flush-devices
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;To remove one specific device from seat, you need to attach to another seat (you
+need to know it’s path)&lt;/p&gt;
+
+&lt;h1 id=&quot;usb-dock&quot;&gt;USB Dock&lt;/h1&gt;
+
+&lt;p&gt;Download Display Link software from https://www.synaptics.com/products/displaylink-graphics/downloads/ubuntu
+and follow https://support.displaylink.com/knowledgebase/articles/1944022-how-to-install-displaylink-software-on-ubuntu-20-0&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo ./displaylink-driver-5.3.0.xx.run
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;When you move the between seats only difference is that it moves sound:card and
+usb (all attached usb devices will show up under this usb device)&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;		  │   │ ├─/sys/devices/pci0000:00/0000:00:1a.0/usb1/1-1/1-1.2/1-1.2.2
+		  │   │ │ usb:1-1.2.2
+		  │   │ │ ├─/sys/devices/pci0000:00/0000:00:1a.0/usb1/1-1/1-1.2/1-1.2.2/1-1.2.2.1/1-1.2.2.1:1.2/sound/card6
+		  │   │ │ │ sound:card6 &quot;Dock&quot;
+		  │   │ │ └─/sys/devices/pci0000:00/0000:00:1a.0/usb1/1-1/1-1.2/1-1.2.2/1-1.2.2.4
+		  │   │ │   usb:1-1.2.2.4
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;other devices stays the same.
+And there is no change when we start or stop the driver.&lt;/p&gt;
+
+&lt;p&gt;Driver page is https://github.com/DisplayLink/evdi&lt;/p&gt;
+
+&lt;p&gt;You can stop start the driver with&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo service displaylink-driver stop
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;You can attach specific evdi drm to new seats https://askubuntu.com/a/1304701/40031&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</description>
+        <pubDate>Thu, 05 Jan 2023 00:00:00 +0000</pubDate>
+        <link>https://dev.trk.in.rs/2023/01/05/ubuntu-multiseat.html</link>
+        <guid isPermaLink="true">https://dev.trk.in.rs/2023/01/05/ubuntu-multiseat.html</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>Internship</title>
+        <description>&lt;p&gt;Do you want to know how to create web sites ? Try “Ruby on Rails” tool with me,
+at Liman 3, Novi Sad.&lt;/p&gt;
+
+&lt;p&gt;Intership for beginners in Ruby in March 2023 is free for selected participants.&lt;/p&gt;
+
+&lt;p&gt;Requirements:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;experience with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;HTML&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;CSS&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Ruby on Rails&lt;/code&gt; (bonus if you are
+using &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;vim&lt;/code&gt;, develop with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;testing&lt;/code&gt; approach)&lt;/li&gt;
+  &lt;li&gt;good communication skills, knowledge sharing, honesty (nice person)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Benefits:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;1 hour a day of mentoring&lt;/li&gt;
+  &lt;li&gt;work on our open source projects like Movebase.link (listing of sport events)&lt;/li&gt;
+  &lt;li&gt;experince so you can apply for a job (hopefully in our company)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;We select participants based on our assessment of whether they are ready to
+master Ruby on Rails material during the internship.&lt;/p&gt;
+
+&lt;p&gt;We hope that at the end of the internship participants will be ready enough to
+apply for client jobs.&lt;/p&gt;
+
+&lt;p&gt;Send an application to &lt;a href=&quot;mailto:salji@trk.in.rs&quot;&gt;salji@trk.in.rs&lt;/a&gt;
+with answers to;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;You experience with HTML, Javascript and Ruby language&lt;/li&gt;
+  &lt;li&gt;Links to your work; github profile and sites that you take a part of (if
+exists)&lt;/li&gt;
+  &lt;li&gt;When do you expect from the intership, what are you plans and something about you&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Deadline for application is Februar 20 2023.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#srpski&quot;&gt;Srpski&lt;/a&gt;&lt;/p&gt;
+
+&lt;hr id=&quot;srpski&quot; /&gt;
+
+&lt;p&gt;Želiš li da naučiš da praviš sajtove ? Probaj “Ruby on Rails” alat sa mnom, na
+Limanu 3, Novi Sad.&lt;/p&gt;
+
+&lt;p&gt;Ja sam krenuo sa Ruby on Rails framework pre desetak godina i do sada sam uvek
+imao posla vezan za taj alat. Sada hoću da radim sa većim timom (za sada je tu
+samo moj brat i drugar) pa zato tražim pojačanje, tj. obezbedio sam 3 mesta za
+stolom.&lt;/p&gt;
+
+&lt;p&gt;Kurs za početnike u Rubiju počinje 1 marta i traje mesec dana, 6 sati dnevno
+svaki radni dan.&lt;/p&gt;
+
+&lt;p&gt;Uslovi:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Iskustvo sa &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;HTML&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;CSS&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Javascript&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Ruby on Rails&lt;/code&gt; (nije neophodno
+sve da znate). Na &lt;a href=&quot;/2023/01/24/learning-materials-for-ruby-and-rails.html&quot;&gt;Learning materials for Ruby on Rails&lt;/a&gt;  mozete naci neke
+materijale&lt;/li&gt;
+  &lt;li&gt;Dobre komunikacione sposobnosti, deljenje znanja, iskrenost&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Šta dobijate:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;1 sat svakog dana mentoring&lt;/li&gt;
+  &lt;li&gt;Rad na opensource projektima&lt;/li&gt;
+  &lt;li&gt;Iskustvo koje vam može pomoći u apliciranju za naredni posao (nadamo se kod
+nas)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Biramo 3 polaznika koji su spremni da uče i da usavršavaju svoje znanje iz
+programiranja.&lt;/p&gt;
+
+&lt;p&gt;Da bi ste aplicirali, pošaljite email na &lt;a href=&quot;mailto:salji@trk.in.rs&quot;&gt;salji@trk.in.rs&lt;/a&gt;
+sa odgovorom na sledeća pitanja:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Koje je vaše dosadašnje iskustvo sa HTML, Javascript i Ruby jezikom&lt;/li&gt;
+  &lt;li&gt;Linkovi ka dosadašnjem radu: github profil, primeri sajtova na kom ste radili ako postoje&lt;/li&gt;
+  &lt;li&gt;Šta očekujete od prakse, koji su vam planovi za zaposlenje i ukratko o sebi&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Rok za prijavu je 20 Februar 2023.&lt;/p&gt;
+</description>
+        <pubDate>Wed, 04 Jan 2023 00:00:00 +0000</pubDate>
+        <link>https://dev.trk.in.rs/2023/01/04/internship.html</link>
+        <guid isPermaLink="true">https://dev.trk.in.rs/2023/01/04/internship.html</guid>
+        
+        
+      </item>
+    
+  </channel>
+</rss>

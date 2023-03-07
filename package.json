@@ -1,0 +1,19 @@
+{
+  "name": "dev.trk.in.rs",
+  "version": "1.0.0",
+  "description": "This is repository used to host all our tips for web development.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/trkin/dev.trk.in.rs.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/trkin/dev.trk.in.rs/issues"
+  },
+  "homepage": "https://github.com/trkin/dev.trk.in.rs#readme"
+}
