@@ -1,19 +1,11 @@
-# Trk.in.rs
+# dev.trk.in.rs
 
-Project is on bitbucket
+This is repository used to host all our tips for web development.
 
-~~~
-git clone git@bitbucket.org:duleorlovic/trk.in.rs.git
-~~~
+Repository is on Github
 
-Deployment is to gh-pages
+https://github.com/trkin/dev.trk.in.rs
 
-~~~
-git remote add github git@kgithub.com:kulakajak/trk.in.rs.git
-~~~
+Live url is
 
-so run Rakefile to automate deployment
-
-~~~
-rake
-~~~
+http://dev.trk.in.rs/
