@@ -114,18 +114,21 @@ cat ~/.bashrc # you should see above line
 echo export PATH="$HOME/.rbenv/bin:$PATH" &gt;&gt; ~/.bashrc
 echo eval "$(rbenv init -)" &gt;&gt; ~/.bashrc
 </code></pre></div></div>
+
 <p>When you install new gems, sometimes you need to rehash to create new shims
 <a href="https://github.com/rbenv/rbenv#rbenv-rehash">https://github.com/rbenv/rbenv#rbenv-rehash</a></p>
+
+<p>Install and change to that version</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rbenv install 3.2.0
+rbenv shell 3.2.0 # this will the same as export RBENV_VERSION=3.2.0
+</code></pre></div></div>
+
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gem install jekyll
 Command 'jekyll' not found, but can be installed with:
 
 rbenv rehash
 jekyll # now it works
-</code></pre></div></div>
-
-<p>Install and change to that version</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rbenv install 3.2.0
-rbenv shell 3.2.0 # this will the same as export RBENV_VERSION=3.2.0
 </code></pre></div></div>
 
 <p>For compilers to find openssl@1.1 you may need to set (this is needed for rvm):</p>
