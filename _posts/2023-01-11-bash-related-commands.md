@@ -54,20 +54,23 @@ echo 3.0.1 > ~/.ruby-version
 echo export PATH="$HOME/.rbenv/bin:$PATH" >> ~/.bashrc
 echo eval "$(rbenv init -)" >> ~/.bashrc
 ```
+
 When you install new gems, sometimes you need to rehash to create new shims
 [https://github.com/rbenv/rbenv#rbenv-rehash](https://github.com/rbenv/rbenv#rbenv-rehash)
+
+Install and change to that version
+
+```
+rbenv install 3.2.0
+rbenv shell 3.2.0 # this will the same as export RBENV_VERSION=3.2.0
+```
+
 ```
 gem install jekyll
 Command 'jekyll' not found, but can be installed with:
 
 rbenv rehash
 jekyll # now it works
-```
-
-Install and change to that version
-```
-rbenv install 3.2.0
-rbenv shell 3.2.0 # this will the same as export RBENV_VERSION=3.2.0
 ```
 
 For compilers to find openssl@1.1 you may need to set (this is needed for rvm):
