@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>Ubuntu Multiseat</title>
-  <meta name="description" content="We started with multiseathttps://www.apalrd.net/posts/2022/multiseat_intro/">
+  <meta name="description" content="You can easilly start with multiseat. Here is a nice bloghttps://www.apalrd.net/posts/2022/multiseat_intro/You can use this script to get all statusessudo lo...">
 
   <link rel="stylesheet" href="/css/main.css">
   <link rel="canonical" href="https://dev.trk.in.rs/2023/01/05/ubuntu-multiseat.html">
@@ -69,14 +69,40 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
-    <p>We started with multiseat
-https://www.apalrd.net/posts/2022/multiseat_intro/</p>
+    <p>You can easilly start with multiseat. Here is a nice blog
+https://www.apalrd.net/posts/2022/multiseat_intro/
+You can use this script to get all statuses
+sudo loginctl seat-status seat3 &gt; ~/config/loginctl/seat3.seat-status.txt</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># ~/config/loginctl_seats/seat_statuses.sh
+set -x # Show command being executed              
 
+sudo loginctl seat-status seat0 &gt; ~/config/loginstl_seats/seat0.seat-status.txt
+sudo loginctl seat-status seat1 &gt; ~/config/loginstl_seats/seat1.seat-status.txt
+sudo loginctl seat-status seat2 &gt; ~/config/loginstl_seats/seat2.seat-status.txt
+sudo loginctl seat-status seat3 &gt; ~/config/loginstl_seats/seat3.seat-status.txt                                                                                       
+</code></pre></div></div>
+<p>Before setting the seats you can read some info about command</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>man loginctl
 loginctl list-seats
-loginctl seat-status seat0 &gt; seat_status_initial.txt
+# when you want to remove all seats and attach to default
+loginctl flush-devices
+</code></pre></div></div>
 
-lspci | grep VGA
+<p>Let’s store configuration in tmp folder which is tracked with git, for example</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mkdir ~/config/loginctl_seats
+cd ~/config/loginctl_seats
+git init .
+</code></pre></div></div>
+
+<h2 id="steps">Steps</h2>
+
+<p>Lets generate info</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./seat_statuses.sh
+git add .
+git diff --staged
+</code></pre></div></div>
+<p>here is example seat status</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>lspci | grep VGA
 03:00.0 VGA compatible controller: Advanced Micro Devices, Inc. [AMD/ATI] Cape Verde PRO [Radeon HD 7750/8740 / R7 250E]
 04:00.0 VGA compatible controller: Advanced Micro Devices, Inc. [AMD/ATI] Cape Verde PRO [Radeon HD 7750/8740 / R7 250E]
 
@@ -91,41 +117,36 @@ radeontop -b 04
 <p>You need to attach MASTER devices (ie graphic cards) otherwise new seat will not
 be created.
 Search for <code class="language-plaintext highlighter-rouge">drm</code> and look at last number (in this case <code class="language-plaintext highlighter-rouge">04</code>)
-Also need to attach <code class="language-plaintext highlighter-rouge">render</code> and <code class="language-plaintext highlighter-rouge">fb</code> (frame buffer)</p>
+Also need to attach <code class="language-plaintext highlighter-rouge">render</code> and <code class="language-plaintext highlighter-rouge">fb</code> (frame buffer, if exists) and sound
+Also find the ports that you want to assign. If you have usb dock station than you do have to allocate only one port. All devices attached to docking station will be under that port (also the soud and microphone).
+Put that in <code class="language-plaintext highlighter-rouge">attach_seats.sh</code> file so we can modify and run easilly</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo loginctl attach seat1 /sys/devices/pci0000:00/0000:00:01.0/0000:01:00.0/0000:02:10.0/0000:04:00.0/drm/card1
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># attach_seats.sh
+sudo loginctl attach seat1 /sys/devices/pci0000:00/0000:00:01.0/0000:01:00.0/0000:02:10.0/0000:04:00.0/drm/card1
 sudo loginctl attach seat1 /sys/devices/pci0000:00/0000:00:01.0/0000:01:00.0/0000:02:10.0/0000:04:00.0/drm/renderD129
 sudo loginctl attach seat1 /sys/devices/pci0000:00/0000:00:01.0/0000:01:00.0/0000:02:10.0/0000:04:00.0/graphics/fb1
 
 sudo loginctl attach seat1 /sys/devices/pci0000:00/0000:00:01.0/0000:01:00.0/0000:02:10.0/0000:04:00.1/sound/card2
 
-loginctl attach seat1 /sys/devices/pci0000:00/0000:00:1d.0/usb2
-
-loginctl seat-status seat1
-# this should show all 04 devices
-
-loginctl seat-status seat0
-# this should not show any 04 devices
+# those usb porst are two first rows on the back
+sudo loginctl attach seat1 /sys/devices/pci0000:00/0000:00:1d.0/usb2
 </code></pre></div></div>
 
-<p>For usb you should attach arduino and find Bus for each port</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>lsusb | grep Arduino
-Bus 003 Device 008: ID 2341:0043 Arduino SA Uno R3 (CDC ACM)
+<p>When you run attach you should not see any 04 devices on seat0</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./attach_seats.sh
 
-loginctl seat-status seat0 | grep ttyACM
-		  │ │ └─/sys/devices/pci0000:00/0000:00:14.0/usb3/3-1/3-1:1.0/tty/ttyACM0
+# restart
+./seat_statuses.sh &amp;&amp; git diff
+git add .
 </code></pre></div></div>
-<p>for example on my comp front bottom is usb1, front top is usb2, back bottom is
-usb3, back middle and top are usb1</p>
+
+<h2 id="issues">Issues</h2>
 
 <p>When someone logs out than all users will log out and only seat0 will get
-login screen. Solution is to log in and log out as seat0</p>
+login screen. Sometimes it helps that seat0 log in and log out. The best is to use Lock instead of Log out.</p>
 
-<p>When you remove graphic card, than that seat will be discarted and all it’s
-devices will be assigned to default seat seat0.
-When you want to remove all seats and attach to default</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>loginctl flush-devices
-</code></pre></div></div>
+<p>When you remove graphic card, than that seat will be discarded and all it’s
+devices will be assigned to default seat seat0.</p>
 
 <p>To remove one specific device from seat, you need to attach to another seat (you
 need to know it’s path)</p>

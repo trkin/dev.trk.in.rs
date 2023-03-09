@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>Bash Related Commands</title>
-  <meta name="description" content="Brew">
+  <meta name="description" content="First steps on new Ubuntu machine">
 
   <link rel="stylesheet" href="/css/main.css">
   <link rel="canonical" href="https://dev.trk.in.rs/2023/01/11/bash-related-commands.html">
@@ -69,7 +69,28 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
-    <h1 id="brew">Brew</h1>
+    <h1 id="first-steps-on-new-ubuntu-machine">First steps on new Ubuntu machine</h1>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># git is used to code collaboration
+sudo apt install -y git curl
+# nice editor
+sudo apt install vim
+# enable ssh to localhost
+sudo apt install openssh-server
+# generate ~/ssh/id_rsa and ~/ssh/id_rsa.pub to add to
+ssh-keygen
+
+# network tool to find all open ports and ip addresses, eg  nmap -F 192.168.1.-
+sudo apt install nmap
+
+# for building ruby
+sudo apt install -y build-essential libz-dev
+</code></pre></div></div>
+
+<p>Install google chrome from https://www.google.com/chrome/
+Right click on .deb file in Downloads, select Properties and in ‘Open With’ tab select ‘Software Install’ and click ‘Set as default’. Exit and double click on the .deb file to install Chrome.</p>
+
+<h1 id="brew">Brew</h1>
 
 <p>Use brew instead of manually install packages so all users can use the same libs
 https://brew.sh/</p>
@@ -77,35 +98,34 @@ https://brew.sh/</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 </code></pre></div></div>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' &gt;&gt; /home/$USER/.bashrc
-
+<p>Add to your <code class="language-plaintext highlighter-rouge">.bashrc</code> and restart terminal</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' &gt;&gt; /home/$USER/.bashrc
+cat ~/.bashrc # you should see above line
+</code></pre></div></div>
+<p>Install rbenv and openssl 1.1</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew install rbenv ruby-build openssl@1.1
 </code></pre></div></div>
 
 <h1 id="rbenv">Rbenv</h1>
 
-<p>Install rbenv and openssl 1.1</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew install rbenv ruby-build openssl@1.1
-</code></pre></div></div>
-<p>Remove rvm and install rbenv https://gist.github.com/akdetrick/7604130
-Make sure rbenv is a local installation, visible from terminal!</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># follow steps
-rbenv init
-# rbenv to be able to find bin from gems you need to add
-# .bashrc
-export PATH="$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init -)"
+<p>Rbenv is using <code class="language-plaintext highlighter-rouge">.ruby-version</code> file in current or any parent folder, so set to your ruby, also add those two kubes to .bashrc</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>echo 3.0.1 &gt; ~/.ruby-version
+
+echo export PATH="$HOME/.rbenv/bin:$PATH" &gt;&gt; ~/.bashrc
+echo eval "$(rbenv init -)" &gt;&gt; ~/.bashrc
 </code></pre></div></div>
 <p>When you install new gems, sometimes you need to rehash to create new shims
-https://github.com/rbenv/rbenv#rbenv-rehash</p>
+<a href="https://github.com/rbenv/rbenv#rbenv-rehash">https://github.com/rbenv/rbenv#rbenv-rehash</a></p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gem install jekyll
+Command 'jekyll' not found, but can be installed with:
+
 rbenv rehash
-jekyll
+jekyll # now it works
 </code></pre></div></div>
 
 <p>Install and change to that version</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rbenv install 3.2.0
-rbenv shell 3.2.0 # this export RBENV_VERSION=3.2.0
+rbenv shell 3.2.0 # this will the same as export RBENV_VERSION=3.2.0
 </code></pre></div></div>
 
 <p>For compilers to find openssl@1.1 you may need to set (this is needed for rvm):</p>
@@ -116,6 +136,21 @@ export PKG_CONFIG_PATH="/home/linuxbrew/.linuxbrew/opt/openssl@1.1/lib/pkgconfig
 # To install version of ruby that uses openssl 1.1 we need to use RUBY_CONFIGURE_OPTS
 export RUBY_CONFIGURE_OPTS="--with-openssl-dir=`brew --prefix openssl@1.1`"
 </code></pre></div></div>
+
+<h1 id="nvm-node-yarn">NVM node yarn</h1>
+
+<p>Install nvm https://github.com/nvm-sh/nvm</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
+</code></pre></div></div>
+<p>than restart shell (ie open new shell) install node</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>nvm install 14
+npm install -g yarn
+</code></pre></div></div>
+
+<p>Old node-sass has some issues with node 16 (it can not find python even python2
+is installed)
+<a href="https://stackoverflow.com/questions/67241196/error-no-template-named-remove-cv-t-in-namespace-std-did-you-mean-remove">stackoverflow</a></p>
 
 <h1 id="wall">Wall</h1>
 
