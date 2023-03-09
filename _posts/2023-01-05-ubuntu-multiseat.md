@@ -2,14 +2,44 @@
 layout: post
 ---
 
-We started with multiseat
+You can easilly start with multiseat. Here is a nice blog
 https://www.apalrd.net/posts/2022/multiseat_intro/
+You can use this script to get all statuses
+sudo loginctl seat-status seat3 > ~/config/loginctl/seat3.seat-status.txt                                                                                       
+```
+# ~/config/loginctl_seats/seat_statuses.sh
+set -x # Show command being executed              
 
+sudo loginctl seat-status seat0 > ~/config/loginstl_seats/seat0.seat-status.txt
+sudo loginctl seat-status seat1 > ~/config/loginstl_seats/seat1.seat-status.txt
+sudo loginctl seat-status seat2 > ~/config/loginstl_seats/seat2.seat-status.txt
+sudo loginctl seat-status seat3 > ~/config/loginstl_seats/seat3.seat-status.txt                                                                                       
+```
+Before setting the seats you can read some info about command
 ```
 man loginctl
 loginctl list-seats
-loginctl seat-status seat0 > seat_status_initial.txt
+# when you want to remove all seats and attach to default
+loginctl flush-devices
+```
 
+Let's store configuration in tmp folder which is tracked with git, for example
+```
+mkdir ~/config/loginctl_seats
+cd ~/config/loginctl_seats
+git init .
+```
+
+## Steps
+
+Lets generate info
+```
+./seat_statuses.sh
+git add .
+git diff --staged
+```
+here is example seat status
+```
 lspci | grep VGA
 03:00.0 VGA compatible controller: Advanced Micro Devices, Inc. [AMD/ATI] Cape Verde PRO [Radeon HD 7750/8740 / R7 250E]
 04:00.0 VGA compatible controller: Advanced Micro Devices, Inc. [AMD/ATI] Cape Verde PRO [Radeon HD 7750/8740 / R7 250E]
@@ -25,48 +55,41 @@ radeontop -b 04
 You need to attach MASTER devices (ie graphic cards) otherwise new seat will not
 be created.
 Search for `drm` and look at last number (in this case `04`)
-Also need to attach `render` and `fb` (frame buffer)
+Also need to attach `render` and `fb` (frame buffer, if exists) and sound
+Also find the ports that you want to assign. If you have usb dock station than you do have to allocate only one port. All devices attached to docking station will be under that port (also the soud and microphone).
+Put that in `attach_seats.sh` file so we can modify and run easilly
 
 ```
+# attach_seats.sh
 sudo loginctl attach seat1 /sys/devices/pci0000:00/0000:00:01.0/0000:01:00.0/0000:02:10.0/0000:04:00.0/drm/card1
 sudo loginctl attach seat1 /sys/devices/pci0000:00/0000:00:01.0/0000:01:00.0/0000:02:10.0/0000:04:00.0/drm/renderD129
 sudo loginctl attach seat1 /sys/devices/pci0000:00/0000:00:01.0/0000:01:00.0/0000:02:10.0/0000:04:00.0/graphics/fb1
 
 sudo loginctl attach seat1 /sys/devices/pci0000:00/0000:00:01.0/0000:01:00.0/0000:02:10.0/0000:04:00.1/sound/card2
 
-loginctl attach seat1 /sys/devices/pci0000:00/0000:00:1d.0/usb2
-
-loginctl seat-status seat1
-# this should show all 04 devices
-
-loginctl seat-status seat0
-# this should not show any 04 devices
+# those usb porst are two first rows on the back
+sudo loginctl attach seat1 /sys/devices/pci0000:00/0000:00:1d.0/usb2
 ```
 
-For usb you should attach arduino and find Bus for each port
+When you run attach you should not see any 04 devices on seat0
 ```
-lsusb | grep Arduino
-Bus 003 Device 008: ID 2341:0043 Arduino SA Uno R3 (CDC ACM)
+./attach_seats.sh
 
-loginctl seat-status seat0 | grep ttyACM
-		  │ │ └─/sys/devices/pci0000:00/0000:00:14.0/usb3/3-1/3-1:1.0/tty/ttyACM0
+# restart
+./seat_statuses.sh && git diff
+git add .
 ```
-for example on my comp front bottom is usb1, front top is usb2, back bottom is
-usb3, back middle and top are usb1
+
+## Issues
 
 When someone logs out than all users will log out and only seat0 will get
-login screen. Solution is to log in and log out as seat0
+login screen. Sometimes it helps that seat0 log in and log out. The best is to use Lock instead of Log out.
 
-When you remove graphic card, than that seat will be discarted and all it's
+When you remove graphic card, than that seat will be discarded and all it's
 devices will be assigned to default seat seat0.
-When you want to remove all seats and attach to default
-```
-loginctl flush-devices
-```
 
 To remove one specific device from seat, you need to attach to another seat (you
 need to know it's path)
-
 
 # USB Dock
 
