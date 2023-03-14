@@ -45,6 +45,27 @@ Install rbenv and openssl 1.1
 brew install rbenv ruby-build openssl@1.1
 ```
 
+When you install some package, you can use it
+
+```
+If you need to have openssl@3 first in your PATH, run:
+  echo 'export PATH="/home/linuxbrew/.linuxbrew/opt/openssl@3/bin:$PATH"' >> /home/dule/.bash_profile
+
+For compilers to find openssl@3 you may need to set:
+  export LDFLAGS="-L/home/linuxbrew/.linuxbrew/opt/openssl@3/lib"
+  export CPPFLAGS="-I/home/linuxbrew/.linuxbrew/opt/openssl@3/include"
+
+For pkg-config to find openssl@3 you may need to set:
+  export PKG_CONFIG_PATH="/home/linuxbrew/.linuxbrew/opt/openssl@3/lib/pkgconfig"
+```
+
+so for example for compiling Ruby 3.2.0 you should use
+```
+brew install openssl@3
+export PKG_CONFIG_PATH="/home/linuxbrew/.linuxbrew/opt/openssl@3/lib/pkgconfig"
+rbenv install 3.2.0
+```
+
 # Rbenv
 
 Rbenv is using `.ruby-version` file in current or any parent folder, so set to your ruby, also add those two kubes to .bashrc
