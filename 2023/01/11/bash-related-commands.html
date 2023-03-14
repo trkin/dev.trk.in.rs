@@ -106,6 +106,25 @@ cat ~/.bashrc # you should see above line
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew install rbenv ruby-build openssl@1.1
 </code></pre></div></div>
 
+<p>When you install some package, you can use it</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>If you need to have openssl@3 first in your PATH, run:
+  echo 'export PATH="/home/linuxbrew/.linuxbrew/opt/openssl@3/bin:$PATH"' &gt;&gt; /home/dule/.bash_profile
+
+For compilers to find openssl@3 you may need to set:
+  export LDFLAGS="-L/home/linuxbrew/.linuxbrew/opt/openssl@3/lib"
+  export CPPFLAGS="-I/home/linuxbrew/.linuxbrew/opt/openssl@3/include"
+
+For pkg-config to find openssl@3 you may need to set:
+  export PKG_CONFIG_PATH="/home/linuxbrew/.linuxbrew/opt/openssl@3/lib/pkgconfig"
+</code></pre></div></div>
+
+<p>so for example for compiling Ruby 3.2.0 you should use</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew install openssl@3
+export PKG_CONFIG_PATH="/home/linuxbrew/.linuxbrew/opt/openssl@3/lib/pkgconfig"
+rbenv install 3.2.0
+</code></pre></div></div>
+
 <h1 id="rbenv">Rbenv</h1>
 
 <p>Rbenv is using <code class="language-plaintext highlighter-rouge">.ruby-version</code> file in current or any parent folder, so set to your ruby, also add those two kubes to .bashrc</p>

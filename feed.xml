@@ -6,8 +6,8 @@
 </description>
     <link>https://dev.trk.in.rs/</link>
     <atom:link href="https://dev.trk.in.rs/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 09 Mar 2023 18:52:52 +0000</pubDate>
-    <lastBuildDate>Thu, 09 Mar 2023 18:52:52 +0000</lastBuildDate>
+    <pubDate>Tue, 14 Mar 2023 12:50:32 +0000</pubDate>
+    <lastBuildDate>Tue, 14 Mar 2023 12:50:32 +0000</lastBuildDate>
     <generator>Jekyll v4.3.2</generator>
     
       <item>
@@ -193,6 +193,25 @@ cat ~/.bashrc # you should see above line
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;p&gt;Install rbenv and openssl 1.1&lt;/p&gt;
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;brew install rbenv ruby-build openssl@1.1
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;When you install some package, you can use it&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;If you need to have openssl@3 first in your PATH, run:
+  echo &apos;export PATH=&quot;/home/linuxbrew/.linuxbrew/opt/openssl@3/bin:$PATH&quot;&apos; &amp;gt;&amp;gt; /home/dule/.bash_profile
+
+For compilers to find openssl@3 you may need to set:
+  export LDFLAGS=&quot;-L/home/linuxbrew/.linuxbrew/opt/openssl@3/lib&quot;
+  export CPPFLAGS=&quot;-I/home/linuxbrew/.linuxbrew/opt/openssl@3/include&quot;
+
+For pkg-config to find openssl@3 you may need to set:
+  export PKG_CONFIG_PATH=&quot;/home/linuxbrew/.linuxbrew/opt/openssl@3/lib/pkgconfig&quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;so for example for compiling Ruby 3.2.0 you should use&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;brew install openssl@3
+export PKG_CONFIG_PATH=&quot;/home/linuxbrew/.linuxbrew/opt/openssl@3/lib/pkgconfig&quot;
+rbenv install 3.2.0
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;h1 id=&quot;rbenv&quot;&gt;Rbenv&lt;/h1&gt;
