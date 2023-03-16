@@ -59,11 +59,34 @@ For pkg-config to find openssl@3 you may need to set:
   export PKG_CONFIG_PATH="/home/linuxbrew/.linuxbrew/opt/openssl@3/lib/pkgconfig"
 ```
 
-so for example for compiling Ruby 3.2.0 you should use
+so for example for compiling Ruby 3.2.0 you should use openssl 3
 ```
 brew install openssl@3
 export PKG_CONFIG_PATH="/home/linuxbrew/.linuxbrew/opt/openssl@3/lib/pkgconfig"
 rbenv install 3.2.0
+```
+so if you notice an error when you are using `rails s` command
+```
+LoadError: libssl.so.1.1: cannot open shared object file: No such file or directory - /home/dule/.rbenv/versions/3.2.0/lib/ruby/gems/3.2.0/gems/puma-5.6.5/lib/puma/puma_http11.so
+```
+you should remote puma gem and install with correct LD and CPP flags pointing to
+openssl 3.
+```
+gem uninstall puma
+
+export LDFLAGS="-L$(brew --prefix openssl@3)/lib"
+export CPPFLAGS="-I$(brew --prefix openssl@3)/include"
+
+bundle
+
+# or you can install specific version using arguments to `gem install`
+gem install puma -v 5.6.5 -- --with-cppflags=-I`brew --prefix openssl@3`/include --with-ldflags=-L`brew --prefix openssl@3`/lib
+```
+
+Alternative solution is to disable SSL when installing puma
+```
+gem uninstall puma
+DISABLE_SSL=1 bundle
 ```
 
 # Rbenv
