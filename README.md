@@ -20,3 +20,5 @@ git checkout -b new_page
 git commit -am'New page'
 git push -u origin new_page
 ```
+
+Make a pull requests and ask other to review.
