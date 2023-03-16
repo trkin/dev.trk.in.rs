@@ -6,8 +6,8 @@
 </description>
     <link>https://dev.trk.in.rs/</link>
     <atom:link href="https://dev.trk.in.rs/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 16 Mar 2023 09:34:08 +0000</pubDate>
-    <lastBuildDate>Thu, 16 Mar 2023 09:34:08 +0000</lastBuildDate>
+    <pubDate>Thu, 16 Mar 2023 09:58:11 +0000</pubDate>
+    <lastBuildDate>Thu, 16 Mar 2023 09:58:11 +0000</lastBuildDate>
     <generator>Jekyll v4.3.2</generator>
     
       <item>
@@ -190,7 +190,7 @@ Used In This Series | Intro To Ruby On Rails For Beginners Part 17
       </item>
     
       <item>
-        <title>Bash Related Commands</title>
+        <title>Install Ruby Using Brew Rbenv</title>
         <description>&lt;h1 id=&quot;first-steps-on-new-ubuntu-machine&quot;&gt;First steps on new Ubuntu machine&lt;/h1&gt;
 
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# git is used to code collaboration
@@ -241,10 +241,30 @@ For pkg-config to find openssl@3 you may need to set:
   export PKG_CONFIG_PATH=&quot;/home/linuxbrew/.linuxbrew/opt/openssl@3/lib/pkgconfig&quot;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;so for example for compiling Ruby 3.2.0 you should use&lt;/p&gt;
+&lt;p&gt;so for example for compiling Ruby 3.2.0 you should use openssl 3&lt;/p&gt;
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;brew install openssl@3
 export PKG_CONFIG_PATH=&quot;/home/linuxbrew/.linuxbrew/opt/openssl@3/lib/pkgconfig&quot;
 rbenv install 3.2.0
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;so if you notice an error when you are using &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;rails s&lt;/code&gt; command&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;LoadError: libssl.so.1.1: cannot open shared object file: No such file or directory - /home/dule/.rbenv/versions/3.2.0/lib/ruby/gems/3.2.0/gems/puma-5.6.5/lib/puma/puma_http11.so
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;you should remote puma gem and install with correct LD and CPP flags pointing to
+openssl 3.&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;gem uninstall puma
+
+export LDFLAGS=&quot;-L$(brew --prefix openssl@3)/lib&quot;
+export CPPFLAGS=&quot;-I$(brew --prefix openssl@3)/include&quot;
+
+bundle
+
+# or you can install specific version using arguments to `gem install`
+gem install puma -v 5.6.5 -- --with-cppflags=-I`brew --prefix openssl@3`/include --with-ldflags=-L`brew --prefix openssl@3`/lib
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Alternative solution is to disable SSL when installing puma&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;gem uninstall puma
+DISABLE_SSL=1 bundle
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;h1 id=&quot;rbenv&quot;&gt;Rbenv&lt;/h1&gt;
@@ -302,8 +322,8 @@ is installed)
 https://unix.stackexchange.com/a/313558/150895&lt;/p&gt;
 </description>
         <pubDate>Wed, 11 Jan 2023 00:00:00 +0000</pubDate>
-        <link>https://dev.trk.in.rs/2023/01/11/bash-related-commands.html</link>
-        <guid isPermaLink="true">https://dev.trk.in.rs/2023/01/11/bash-related-commands.html</guid>
+        <link>https://dev.trk.in.rs/2023/01/11/install-ruby-using-brew-rbenv.html</link>
+        <guid isPermaLink="true">https://dev.trk.in.rs/2023/01/11/install-ruby-using-brew-rbenv.html</guid>
         
         
       </item>
