@@ -3,13 +3,18 @@ layout: post
 ---
 
 
-# First steps on new Ubuntu machine
+## First steps on new Ubuntu machine
 
 ```
 # git is used to code collaboration
 sudo apt install -y git curl
+# necessary if you want to commit to any project
+git config --global user.email "you@example.com"
+git config --global user.name "Your Name"
 # nice editor
 sudo apt install vim
+# if you want to change default editor from nano to something else
+sudo update-alternatives --config editor
 # enable ssh to localhost
 sudo apt install openssh-server
 # generate ~/ssh/id_rsa and ~/ssh/id_rsa.pub to add to
@@ -25,47 +30,118 @@ sudo apt install -y build-essential libz-dev
 Install google chrome from https://www.google.com/chrome/
 Right click on .deb file in Downloads, select Properties and in 'Open With' tab select 'Software Install' and click 'Set as default'. Exit and double click on the .deb file to install Chrome.
 
-# Brew
+## Brew
 
 Use brew instead of manually install packages so all users can use the same libs
 https://brew.sh/
-
 
 ```
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
-Add to your `.bashrc` and restart terminal
+Add to your `.bashrc` and reopen terminal. Typing `reset` won't work
+
 ```
 echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/$USER/.bashrc
 cat ~/.bashrc # you should see above line
 ```
-Install rbenv and openssl 1.1
+Now you can use `brew` every time you open terminal
+
+## Install rbenv
 ```
-brew install rbenv ruby-build openssl@1.1
+brew install rbenv ruby-build libyaml openssl@1.1
 ```
 
 When you install some package, you can use it
 
-```
-If you need to have openssl@3 first in your PATH, run:
-  echo 'export PATH="/home/linuxbrew/.linuxbrew/opt/openssl@3/bin:$PATH"' >> /home/dule/.bash_profile
+## Installing Ruby using rbenv
 
-For compilers to find openssl@3 you may need to set:
-  export LDFLAGS="-L/home/linuxbrew/.linuxbrew/opt/openssl@3/lib"
-  export CPPFLAGS="-I/home/linuxbrew/.linuxbrew/opt/openssl@3/include"
+# Ruby 3.2.0
 
-For pkg-config to find openssl@3 you may need to set:
-  export PKG_CONFIG_PATH="/home/linuxbrew/.linuxbrew/opt/openssl@3/lib/pkgconfig"
-```
+For compiling Ruby 3.2.0 you should use openssl@3
+Check [rbenv/ruby-build](https://github.com/rbenv/ruby-build/wiki) wiki for additional info
 
-so for example for compiling Ruby 3.2.0 you should use openssl 3
 ```
 brew install openssl@3
-export PKG_CONFIG_PATH="/home/linuxbrew/.linuxbrew/opt/openssl@3/lib/pkgconfig"
+
 rbenv install 3.2.0
+rbenv versions # check all installed versions
+rbenv shell 3.2.0 # this will the same as export RBENV_VERSION=3.2.0
 ```
-so if you notice an error when you are using `rails s` command
+
+If you need to have openssl@3 first in your PATH, run:
+```
+echo 'export PATH="/home/linuxbrew/.linuxbrew/opt/openssl@3/bin:$PATH"' >> /home/$USER/.bash_profile
+```
+
+Export these variables, **don't** save them in your `.bash_profile` it won't work for every Ruby version so to be on the safe side just export them every time you want to install new Ruby version
+
+For compilers to find openssl@3
+```
+export LDFLAGS="-L/home/linuxbrew/.linuxbrew/opt/openssl@3/lib"
+export CPPFLAGS="-I/home/linuxbrew/.linuxbrew/opt/openssl@3/include"
+```
+
+For pkg-config to find openssl@3
+```
+export PKG_CONFIG_PATH="/home/linuxbrew/.linuxbrew/opt/openssl@3/lib/pkgconfig"
+```
+
+Note: **Do not restart terminal** if you are exporting variables, it won't persist in the next session
+
+**Important:**
+Add this to your `~/.bash_profile` so you can access Ruby commands
+
+```
+echo export PATH="$HOME/.rbenv/bin:$PATH" >> ~/.bashrc
+echo eval "$(rbenv init -)" >> ~/.bashrc
+```
+
+# Installing Ruby version that uses openssl@1.1
+
+To install version of ruby that uses openssl@1.1 we need to use RUBY_CONFIGURE_OPTS
+
+```
+export RUBY_CONFIGURE_OPTS="--with-openssl-dir=`brew --prefix openssl@1.1`"
+```
+
+Then run 
+```
+rbenv install ruby-version-you-need
+```
+
+For compilers to find openssl@1.1 you may need to export (this is needed for rvm):
+
+```
+export LDFLAGS="-L/home/linuxbrew/.linuxbrew/opt/openssl@1.1/lib"
+export CPPFLAGS="-I/home/linuxbrew/.linuxbrew/opt/openssl@1.1/include"
+export PKG_CONFIG_PATH="/home/linuxbrew/.linuxbrew/opt/openssl@1.1/lib/pkgconfig"
+```
+
+Rbenv will check for `.ruby-version` file if it exists in the project and will automatically set it to that version. If you don't have Ruby version specified in `.ruby-version` it will prompt you to install it.
+
+Create `/.ruby-version and version number to a project
+
+```
+echo 3.0.1 > ~/.ruby-version
+```
+
+## Jekyll
+
+When you install new gems, sometimes you need to rehash to create new shims
+[https://github.com/rbenv/rbenv#rbenv-rehash](https://github.com/rbenv/rbenv#rbenv-rehash)
+
+```
+gem install jekyll
+Command 'jekyll' not found, but can be installed with:
+
+rbenv rehash
+jekyll # now it works
+```
+
+## Rails
+
+If you notice an error when you are using `rails s` command
 ```
 LoadError: libssl.so.1.1: cannot open shared object file: No such file or directory - /home/dule/.rbenv/versions/3.2.0/lib/ruby/gems/3.2.0/gems/puma-5.6.5/lib/puma/puma_http11.so
 ```
@@ -89,46 +165,7 @@ gem uninstall puma
 DISABLE_SSL=1 bundle
 ```
 
-# Rbenv
-
-Rbenv is using `.ruby-version` file in current or any parent folder, so set to your ruby, also add those two kubes to .bashrc
-```
-echo 3.0.1 > ~/.ruby-version
-
-echo export PATH="$HOME/.rbenv/bin:$PATH" >> ~/.bashrc
-echo eval "$(rbenv init -)" >> ~/.bashrc
-```
-
-When you install new gems, sometimes you need to rehash to create new shims
-[https://github.com/rbenv/rbenv#rbenv-rehash](https://github.com/rbenv/rbenv#rbenv-rehash)
-
-Install and change to that version
-
-```
-rbenv install 3.2.0
-rbenv shell 3.2.0 # this will the same as export RBENV_VERSION=3.2.0
-```
-
-```
-gem install jekyll
-Command 'jekyll' not found, but can be installed with:
-
-rbenv rehash
-jekyll # now it works
-```
-
-For compilers to find openssl@1.1 you may need to set (this is needed for rvm):
-```
-export LDFLAGS="-L/home/linuxbrew/.linuxbrew/opt/openssl@1.1/lib"
-export CPPFLAGS="-I/home/linuxbrew/.linuxbrew/opt/openssl@1.1/include"
-export PKG_CONFIG_PATH="/home/linuxbrew/.linuxbrew/opt/openssl@1.1/lib/pkgconfig"
-
-# To install version of ruby that uses openssl 1.1 we need to use RUBY_CONFIGURE_OPTS
-export RUBY_CONFIGURE_OPTS="--with-openssl-dir=`brew --prefix openssl@1.1`"
-```
-
-
-# NVM node yarn
+## NVM node yarn
 
 Install nvm https://github.com/nvm-sh/nvm
 
@@ -145,7 +182,7 @@ Old node-sass has some issues with node 16 (it can not find python even python2
 is installed)
 [stackoverflow](https://stackoverflow.com/questions/67241196/error-no-template-named-remove-cv-t-in-namespace-std-did-you-mean-remove)
 
-# Wall
+## Wall
 
 Enable tty group so user can send messages
 https://unix.stackexchange.com/a/313558/150895
