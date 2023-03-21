@@ -3,7 +3,7 @@ layout: post
 ---
 
 You can easilly start with multiseat. Here is a nice blog
-https://www.apalrd.net/posts/2022/multiseat_intro/
+<https://www.apalrd.net/posts/2022/multiseat_intro/>
 You can use this script to get all statuses
 sudo loginctl seat-status seat3 > ~/config/loginctl/seat3.seat-status.txt                                                                                       
 ```
@@ -93,8 +93,8 @@ need to know it's path)
 
 # USB Dock
 
-Download Display Link software from https://www.synaptics.com/products/displaylink-graphics/downloads/ubuntu
-and follow https://support.displaylink.com/knowledgebase/articles/1944022-how-to-install-displaylink-software-on-ubuntu-20-0
+Download Display Link software from <https://www.synaptics.com/products/displaylink-graphics/downloads/ubuntu>
+and follow <https://support.displaylink.com/knowledgebase/articles/1944022-how-to-install-displaylink-software-on-ubuntu-20-0>
 
 ```
 sudo ./displaylink-driver-5.3.0.xx.run
@@ -113,13 +113,13 @@ usb (all attached usb devices will show up under this usb device)
 other devices stays the same.
 And there is no change when we start or stop the driver.
 
-Driver page is https://github.com/DisplayLink/evdi
+Driver page is <https://github.com/DisplayLink/evdi>
 
 You can stop start the driver with
 ```
 sudo service displaylink-driver stop
 ```
 
-You can attach specific evdi drm to new seats https://askubuntu.com/a/1304701/40031
+You can attach specific evdi drm to new seats <https://askubuntu.com/a/1304701/40031>
 ```
 ```

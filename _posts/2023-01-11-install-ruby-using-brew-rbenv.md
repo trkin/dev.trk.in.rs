@@ -27,13 +27,13 @@ sudo apt install nmap
 sudo apt install -y build-essential libz-dev
 ```
 
-Install google chrome from https://www.google.com/chrome/
+Install google chrome from <https://www.google.com/chrome/>
 Right click on .deb file in Downloads, select Properties and in 'Open With' tab select 'Software Install' and click 'Set as default'. Exit and double click on the .deb file to install Chrome.
 
 ## Brew
 
 Use brew instead of manually install packages so all users can use the same libs
-https://brew.sh/
+<https://brew.sh/>
 
 ```
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
@@ -167,7 +167,7 @@ DISABLE_SSL=1 bundle
 
 ## NVM node yarn
 
-Install nvm https://github.com/nvm-sh/nvm
+Install nvm <https://github.com/nvm-sh/nvm>
 
 ```
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
@@ -185,4 +185,4 @@ is installed)
 ## Wall
 
 Enable tty group so user can send messages
-https://unix.stackexchange.com/a/313558/150895
+<https://unix.stackexchange.com/a/313558/150895>
