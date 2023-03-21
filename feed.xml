@@ -6,8 +6,8 @@
 </description>
     <link>https://dev.trk.in.rs/</link>
     <atom:link href="https://dev.trk.in.rs/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 21 Mar 2023 10:17:06 +0000</pubDate>
-    <lastBuildDate>Tue, 21 Mar 2023 10:17:06 +0000</lastBuildDate>
+    <pubDate>Tue, 21 Mar 2023 14:27:45 +0000</pubDate>
+    <lastBuildDate>Tue, 21 Mar 2023 14:27:45 +0000</lastBuildDate>
     <generator>Jekyll v4.3.2</generator>
     
       <item>
@@ -17,13 +17,13 @@
 &lt;p&gt;For Git we follows this guides&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;https://github.com/thoughtbot/guides/tree/main/git&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/thoughtbot/guides/tree/main/git&quot;&gt;https://github.com/thoughtbot/guides/tree/main/git&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;For code review&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;https://github.com/thoughtbot/guides/tree/main/code-review&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/thoughtbot/guides/tree/main/code-review&quot;&gt;https://github.com/thoughtbot/guides/tree/main/code-review&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;When working on some task, for example issue 123 than we usually create a branch
@@ -46,7 +46,7 @@ start from &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ma
 &lt;p&gt;Nice tutorial:&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow&quot;&gt;https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h2 id=&quot;github-cli&quot;&gt;Github cli&lt;/h2&gt;
@@ -68,9 +68,9 @@ start from &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ma
         <description>&lt;p&gt;For Ruby we are following&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;https://github.com/thoughtbot/guides/tree/main/ruby&lt;/li&gt;
-  &lt;li&gt;https://github.com/Shopify/ruby-style-guide&lt;/li&gt;
-  &lt;li&gt;https://github.com/airbnb/ruby&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/thoughtbot/guides/tree/main/ruby&quot;&gt;https://github.com/thoughtbot/guides/tree/main/ruby&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/Shopify/ruby-style-guide&quot;&gt;https://github.com/Shopify/ruby-style-guide&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/airbnb/ruby&quot;&gt;https://github.com/airbnb/ruby&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;For automated way of controlling code styles we use
@@ -94,10 +94,10 @@ service that you can use as ngrok alternative.&lt;/p&gt;
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cloudflared tunnel --url http://localhost:3000
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;p&gt;and it will be available under .trycloudflare.com like
-https://request-composer-pools-requirements.trycloudflare.com&lt;/p&gt;
+&lt;a href=&quot;https://request-composer-pools-requirements.trycloudflare.com&quot;&gt;https://request-composer-pools-requirements.trycloudflare.com&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;For long living tunnels which uses the same url you should use
-https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/&lt;/p&gt;
+&lt;a href=&quot;https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/&quot;&gt;https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/&lt;/a&gt;&lt;/p&gt;
 
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cloudflared tunnel login
 # when you authorize it will create ~/.cloudflared/cert.pem
@@ -255,13 +255,13 @@ sudo apt install nmap
 sudo apt install -y build-essential libz-dev
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;Install google chrome from https://www.google.com/chrome/
+&lt;p&gt;Install google chrome from &lt;a href=&quot;https://www.google.com/chrome/&quot;&gt;https://www.google.com/chrome/&lt;/a&gt;
 Right click on .deb file in Downloads, select Properties and in ‘Open With’ tab select ‘Software Install’ and click ‘Set as default’. Exit and double click on the .deb file to install Chrome.&lt;/p&gt;
 
 &lt;h2 id=&quot;brew&quot;&gt;Brew&lt;/h2&gt;
 
 &lt;p&gt;Use brew instead of manually install packages so all users can use the same libs
-https://brew.sh/&lt;/p&gt;
+&lt;a href=&quot;https://brew.sh/&quot;&gt;https://brew.sh/&lt;/a&gt;&lt;/p&gt;
 
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;/bin/bash -c &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)&quot;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
@@ -379,7 +379,7 @@ DISABLE_SSL=1 bundle
 
 &lt;h2 id=&quot;nvm-node-yarn&quot;&gt;NVM node yarn&lt;/h2&gt;
 
-&lt;p&gt;Install nvm https://github.com/nvm-sh/nvm&lt;/p&gt;
+&lt;p&gt;Install nvm &lt;a href=&quot;https://github.com/nvm-sh/nvm&quot;&gt;https://github.com/nvm-sh/nvm&lt;/a&gt;&lt;/p&gt;
 
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
@@ -395,7 +395,7 @@ is installed)
 &lt;h2 id=&quot;wall&quot;&gt;Wall&lt;/h2&gt;
 
 &lt;p&gt;Enable tty group so user can send messages
-https://unix.stackexchange.com/a/313558/150895&lt;/p&gt;
+&lt;a href=&quot;https://unix.stackexchange.com/a/313558/150895&quot;&gt;https://unix.stackexchange.com/a/313558/150895&lt;/a&gt;&lt;/p&gt;
 </description>
         <pubDate>Wed, 11 Jan 2023 00:00:00 +0000</pubDate>
         <link>https://dev.trk.in.rs/2023/01/11/install-ruby-using-brew-rbenv.html</link>
@@ -419,7 +419,7 @@ https://unix.stackexchange.com/a/313558/150895&lt;/p&gt;
       <item>
         <title>Ubuntu Multiseat</title>
         <description>&lt;p&gt;You can easilly start with multiseat. Here is a nice blog
-https://www.apalrd.net/posts/2022/multiseat_intro/
+&lt;a href=&quot;https://www.apalrd.net/posts/2022/multiseat_intro/&quot;&gt;https://www.apalrd.net/posts/2022/multiseat_intro/&lt;/a&gt;
 You can use this script to get all statuses
 sudo loginctl seat-status seat3 &amp;gt; ~/config/loginctl/seat3.seat-status.txt&lt;/p&gt;
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# ~/config/loginctl_seats/seat_statuses.sh
@@ -502,8 +502,8 @@ need to know it’s path)&lt;/p&gt;
 
 &lt;h1 id=&quot;usb-dock&quot;&gt;USB Dock&lt;/h1&gt;
 
-&lt;p&gt;Download Display Link software from https://www.synaptics.com/products/displaylink-graphics/downloads/ubuntu
-and follow https://support.displaylink.com/knowledgebase/articles/1944022-how-to-install-displaylink-software-on-ubuntu-20-0&lt;/p&gt;
+&lt;p&gt;Download Display Link software from &lt;a href=&quot;https://www.synaptics.com/products/displaylink-graphics/downloads/ubuntu&quot;&gt;https://www.synaptics.com/products/displaylink-graphics/downloads/ubuntu&lt;/a&gt;
+and follow &lt;a href=&quot;https://support.displaylink.com/knowledgebase/articles/1944022-how-to-install-displaylink-software-on-ubuntu-20-0&quot;&gt;https://support.displaylink.com/knowledgebase/articles/1944022-how-to-install-displaylink-software-on-ubuntu-20-0&lt;/a&gt;&lt;/p&gt;
 
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo ./displaylink-driver-5.3.0.xx.run
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
@@ -520,13 +520,13 @@ usb (all attached usb devices will show up under this usb device)&lt;/p&gt;
 &lt;p&gt;other devices stays the same.
 And there is no change when we start or stop the driver.&lt;/p&gt;
 
-&lt;p&gt;Driver page is https://github.com/DisplayLink/evdi&lt;/p&gt;
+&lt;p&gt;Driver page is &lt;a href=&quot;https://github.com/DisplayLink/evdi&quot;&gt;https://github.com/DisplayLink/evdi&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;You can stop start the driver with&lt;/p&gt;
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo service displaylink-driver stop
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;You can attach specific evdi drm to new seats https://askubuntu.com/a/1304701/40031&lt;/p&gt;
+&lt;p&gt;You can attach specific evdi drm to new seats &lt;a href=&quot;https://askubuntu.com/a/1304701/40031&quot;&gt;https://askubuntu.com/a/1304701/40031&lt;/a&gt;&lt;/p&gt;
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 </description>
         <pubDate>Thu, 05 Jan 2023 00:00:00 +0000</pubDate>
