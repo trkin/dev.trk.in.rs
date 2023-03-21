@@ -6,11 +6,11 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Code Style Guides</title>
-  <meta name="description" content="For Ruby we are following">
+  <title>Git Tips</title>
+  <meta name="description" content="Git style">
 
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="canonical" href="https://dev.trk.in.rs/2023/03/15/code-style-guides.html">
+  <link rel="canonical" href="https://dev.trk.in.rs/2023/03/21/git-tips.html">
   <link rel="alternate" type="application/rss+xml" title="TRK RAILS" href="https://dev.trk.in.rs/feed.xml">
 </head>
 
@@ -64,22 +64,54 @@
         <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title" itemprop="name headline">Code Style Guides</h1>
-    <p class="post-meta"><time datetime="2023-03-15T00:00:00+00:00" itemprop="datePublished">Mar 15, 2023</time></p>
+    <h1 class="post-title" itemprop="name headline">Git Tips</h1>
+    <p class="post-meta"><time datetime="2023-03-21T00:00:00+00:00" itemprop="datePublished">Mar 21, 2023</time></p>
   </header>
 
   <div class="post-content" itemprop="articleBody">
-    <p>For Ruby we are following</p>
+    <h2 id="git-style">Git style</h2>
+
+<p>For Git we follows this guides</p>
 
 <ul>
-  <li>https://github.com/thoughtbot/guides/tree/main/ruby</li>
-  <li>https://github.com/Shopify/ruby-style-guide</li>
-  <li>https://github.com/airbnb/ruby</li>
+  <li>https://github.com/thoughtbot/guides/tree/main/git</li>
 </ul>
 
-<p>For automated way of controlling code styles we use
-<a href="https://github.com/testdouble/standard">Standard</a> which Rubocop underneath.</p>
+<p>For code review</p>
 
+<ul>
+  <li>https://github.com/thoughtbot/guides/tree/main/code-review</li>
+</ul>
+
+<p>When working on some task, for example issue 123 than we usually create a branch
+that looks like <code class="language-plaintext highlighter-rouge">i#{issue number}_#{description}</code> and use commit number at the
+end <code class="language-plaintext highlighter-rouge">git commit -m'#{some description} ##{issue number}</code>
+For example</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git checkout -b i123_add_test_for_signup
+# make changes
+git commit -m'Add test for signup #123`
+git push -u origin i123_add_test_for_signup
+</code></pre></div></div>
+
+<h2 id="gitflow">Gitflow</h2>
+
+<p>For big projects we follow GitFlow
+so all PR are done on <code class="language-plaintext highlighter-rouge">develop</code> branch. Only <code class="language-plaintext highlighter-rouge">i123_hotfix_something</code> branch
+start from <code class="language-plaintext highlighter-rouge">main</code> and merged back to <code class="language-plaintext highlighter-rouge">develop</code> and <code class="language-plaintext highlighter-rouge">main</code>.</p>
+
+<p>Nice tutorial:</p>
+
+<ul>
+  <li>https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow</li>
+</ul>
+
+<h2 id="github-cli">Github cli</h2>
+
+<p>We also use gh cli</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gh pr merge -r -d
+</code></pre></div></div>
 
   </div>
 
