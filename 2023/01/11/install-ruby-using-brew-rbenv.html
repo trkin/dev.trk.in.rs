@@ -69,12 +69,17 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
-    <h1 id="first-steps-on-new-ubuntu-machine">First steps on new Ubuntu machine</h1>
+    <h2 id="first-steps-on-new-ubuntu-machine">First steps on new Ubuntu machine</h2>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># git is used to code collaboration
 sudo apt install -y git curl
+# necessary if you want to commit to any project
+git config --global user.email "you@example.com"
+git config --global user.name "Your Name"
 # nice editor
 sudo apt install vim
+# if you want to change default editor from nano to something else
+sudo update-alternatives --config editor
 # enable ssh to localhost
 sudo apt install openssh-server
 # generate ~/ssh/id_rsa and ~/ssh/id_rsa.pub to add to
@@ -90,7 +95,7 @@ sudo apt install -y build-essential libz-dev
 <p>Install google chrome from https://www.google.com/chrome/
 Right click on .deb file in Downloads, select Properties and in ‘Open With’ tab select ‘Software Install’ and click ‘Set as default’. Exit and double click on the .deb file to install Chrome.</p>
 
-<h1 id="brew">Brew</h1>
+<h2 id="brew">Brew</h2>
 
 <p>Use brew instead of manually install packages so all users can use the same libs
 https://brew.sh/</p>
@@ -98,33 +103,97 @@ https://brew.sh/</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 </code></pre></div></div>
 
-<p>Add to your <code class="language-plaintext highlighter-rouge">.bashrc</code> and restart terminal</p>
+<p>Add to your <code class="language-plaintext highlighter-rouge">.bashrc</code> and reopen terminal. Typing <code class="language-plaintext highlighter-rouge">reset</code> won’t work</p>
+
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' &gt;&gt; /home/$USER/.bashrc
 cat ~/.bashrc # you should see above line
 </code></pre></div></div>
-<p>Install rbenv and openssl 1.1</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew install rbenv ruby-build openssl@1.1
+<p>Now you can use <code class="language-plaintext highlighter-rouge">brew</code> every time you open terminal</p>
+
+<h2 id="install-rbenv">Install rbenv</h2>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew install rbenv ruby-build libyaml openssl@1.1
 </code></pre></div></div>
 
 <p>When you install some package, you can use it</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>If you need to have openssl@3 first in your PATH, run:
-  echo 'export PATH="/home/linuxbrew/.linuxbrew/opt/openssl@3/bin:$PATH"' &gt;&gt; /home/dule/.bash_profile
+<h2 id="installing-ruby-using-rbenv">Installing Ruby using rbenv</h2>
 
-For compilers to find openssl@3 you may need to set:
-  export LDFLAGS="-L/home/linuxbrew/.linuxbrew/opt/openssl@3/lib"
-  export CPPFLAGS="-I/home/linuxbrew/.linuxbrew/opt/openssl@3/include"
+<h1 id="ruby-320">Ruby 3.2.0</h1>
 
-For pkg-config to find openssl@3 you may need to set:
-  export PKG_CONFIG_PATH="/home/linuxbrew/.linuxbrew/opt/openssl@3/lib/pkgconfig"
-</code></pre></div></div>
+<p>For compiling Ruby 3.2.0 you should use openssl@3
+Check <a href="https://github.com/rbenv/ruby-build/wiki">rbenv/ruby-build</a> wiki for additional info</p>
 
-<p>so for example for compiling Ruby 3.2.0 you should use openssl 3</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew install openssl@3
-export PKG_CONFIG_PATH="/home/linuxbrew/.linuxbrew/opt/openssl@3/lib/pkgconfig"
+
 rbenv install 3.2.0
+rbenv versions # check all installed versions
+rbenv shell 3.2.0 # this will the same as export RBENV_VERSION=3.2.0
 </code></pre></div></div>
-<p>so if you notice an error when you are using <code class="language-plaintext highlighter-rouge">rails s</code> command</p>
+
+<p>If you need to have openssl@3 first in your PATH, run:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>echo 'export PATH="/home/linuxbrew/.linuxbrew/opt/openssl@3/bin:$PATH"' &gt;&gt; /home/$USER/.bash_profile
+</code></pre></div></div>
+
+<p>Export these variables, <strong>don’t</strong> save them in your <code class="language-plaintext highlighter-rouge">.bash_profile</code> it won’t work for every Ruby version so to be on the safe side just export them every time you want to install new Ruby version</p>
+
+<p>For compilers to find openssl@3</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>export LDFLAGS="-L/home/linuxbrew/.linuxbrew/opt/openssl@3/lib"
+export CPPFLAGS="-I/home/linuxbrew/.linuxbrew/opt/openssl@3/include"
+</code></pre></div></div>
+
+<p>For pkg-config to find openssl@3</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>export PKG_CONFIG_PATH="/home/linuxbrew/.linuxbrew/opt/openssl@3/lib/pkgconfig"
+</code></pre></div></div>
+
+<p>Note: <strong>Do not restart terminal</strong> if you are exporting variables, it won’t persist in the next session</p>
+
+<p><strong>Important:</strong>
+Add this to your <code class="language-plaintext highlighter-rouge">~/.bash_profile</code> so you can access Ruby commands</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>echo export PATH="$HOME/.rbenv/bin:$PATH" &gt;&gt; ~/.bashrc
+echo eval "$(rbenv init -)" &gt;&gt; ~/.bashrc
+</code></pre></div></div>
+
+<h1 id="installing-ruby-version-that-uses-openssl11">Installing Ruby version that uses openssl@1.1</h1>
+
+<p>To install version of ruby that uses openssl@1.1 we need to use RUBY_CONFIGURE_OPTS</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>export RUBY_CONFIGURE_OPTS="--with-openssl-dir=`brew --prefix openssl@1.1`"
+</code></pre></div></div>
+
+<p>Then run</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rbenv install ruby-version-you-need
+</code></pre></div></div>
+
+<p>For compilers to find openssl@1.1 you may need to export (this is needed for rvm):</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>export LDFLAGS="-L/home/linuxbrew/.linuxbrew/opt/openssl@1.1/lib"
+export CPPFLAGS="-I/home/linuxbrew/.linuxbrew/opt/openssl@1.1/include"
+export PKG_CONFIG_PATH="/home/linuxbrew/.linuxbrew/opt/openssl@1.1/lib/pkgconfig"
+</code></pre></div></div>
+
+<p>Rbenv will check for <code class="language-plaintext highlighter-rouge">.ruby-version</code> file if it exists in the project and will automatically set it to that version. If you don’t have Ruby version specified in <code class="language-plaintext highlighter-rouge">.ruby-version</code> it will prompt you to install it.</p>
+
+<p>Create `/.ruby-version and version number to a project</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>echo 3.0.1 &gt; ~/.ruby-version
+</code></pre></div></div>
+
+<h2 id="jekyll">Jekyll</h2>
+
+<p>When you install new gems, sometimes you need to rehash to create new shims
+<a href="https://github.com/rbenv/rbenv#rbenv-rehash">https://github.com/rbenv/rbenv#rbenv-rehash</a></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gem install jekyll
+Command 'jekyll' not found, but can be installed with:
+
+rbenv rehash
+jekyll # now it works
+</code></pre></div></div>
+
+<h2 id="rails">Rails</h2>
+
+<p>If you notice an error when you are using <code class="language-plaintext highlighter-rouge">rails s</code> command</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>LoadError: libssl.so.1.1: cannot open shared object file: No such file or directory - /home/dule/.rbenv/versions/3.2.0/lib/ruby/gems/3.2.0/gems/puma-5.6.5/lib/puma/puma_http11.so
 </code></pre></div></div>
 <p>you should remote puma gem and install with correct LD and CPP flags pointing to
@@ -145,41 +214,7 @@ gem install puma -v 5.6.5 -- --with-cppflags=-I`brew --prefix openssl@3`/include
 DISABLE_SSL=1 bundle
 </code></pre></div></div>
 
-<h1 id="rbenv">Rbenv</h1>
-
-<p>Rbenv is using <code class="language-plaintext highlighter-rouge">.ruby-version</code> file in current or any parent folder, so set to your ruby, also add those two kubes to .bashrc</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>echo 3.0.1 &gt; ~/.ruby-version
-
-echo export PATH="$HOME/.rbenv/bin:$PATH" &gt;&gt; ~/.bashrc
-echo eval "$(rbenv init -)" &gt;&gt; ~/.bashrc
-</code></pre></div></div>
-
-<p>When you install new gems, sometimes you need to rehash to create new shims
-<a href="https://github.com/rbenv/rbenv#rbenv-rehash">https://github.com/rbenv/rbenv#rbenv-rehash</a></p>
-
-<p>Install and change to that version</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rbenv install 3.2.0
-rbenv shell 3.2.0 # this will the same as export RBENV_VERSION=3.2.0
-</code></pre></div></div>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gem install jekyll
-Command 'jekyll' not found, but can be installed with:
-
-rbenv rehash
-jekyll # now it works
-</code></pre></div></div>
-
-<p>For compilers to find openssl@1.1 you may need to set (this is needed for rvm):</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>export LDFLAGS="-L/home/linuxbrew/.linuxbrew/opt/openssl@1.1/lib"
-export CPPFLAGS="-I/home/linuxbrew/.linuxbrew/opt/openssl@1.1/include"
-export PKG_CONFIG_PATH="/home/linuxbrew/.linuxbrew/opt/openssl@1.1/lib/pkgconfig"
-
-# To install version of ruby that uses openssl 1.1 we need to use RUBY_CONFIGURE_OPTS
-export RUBY_CONFIGURE_OPTS="--with-openssl-dir=`brew --prefix openssl@1.1`"
-</code></pre></div></div>
-
-<h1 id="nvm-node-yarn">NVM node yarn</h1>
+<h2 id="nvm-node-yarn">NVM node yarn</h2>
 
 <p>Install nvm https://github.com/nvm-sh/nvm</p>
 
@@ -194,7 +229,7 @@ npm install -g yarn
 is installed)
 <a href="https://stackoverflow.com/questions/67241196/error-no-template-named-remove-cv-t-in-namespace-std-did-you-mean-remove">stackoverflow</a></p>
 
-<h1 id="wall">Wall</h1>
+<h2 id="wall">Wall</h2>
 
 <p>Enable tty group so user can send messages
 https://unix.stackexchange.com/a/313558/150895</p>

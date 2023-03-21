@@ -6,8 +6,8 @@
 </description>
     <link>https://dev.trk.in.rs/</link>
     <atom:link href="https://dev.trk.in.rs/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 16 Mar 2023 09:58:11 +0000</pubDate>
-    <lastBuildDate>Thu, 16 Mar 2023 09:58:11 +0000</lastBuildDate>
+    <pubDate>Tue, 21 Mar 2023 08:14:07 +0000</pubDate>
+    <lastBuildDate>Tue, 21 Mar 2023 08:14:07 +0000</lastBuildDate>
     <generator>Jekyll v4.3.2</generator>
     
       <item>
@@ -191,12 +191,17 @@ Used In This Series | Intro To Ruby On Rails For Beginners Part 17
     
       <item>
         <title>Install Ruby Using Brew Rbenv</title>
-        <description>&lt;h1 id=&quot;first-steps-on-new-ubuntu-machine&quot;&gt;First steps on new Ubuntu machine&lt;/h1&gt;
+        <description>&lt;h2 id=&quot;first-steps-on-new-ubuntu-machine&quot;&gt;First steps on new Ubuntu machine&lt;/h2&gt;
 
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# git is used to code collaboration
 sudo apt install -y git curl
+# necessary if you want to commit to any project
+git config --global user.email &quot;you@example.com&quot;
+git config --global user.name &quot;Your Name&quot;
 # nice editor
 sudo apt install vim
+# if you want to change default editor from nano to something else
+sudo update-alternatives --config editor
 # enable ssh to localhost
 sudo apt install openssh-server
 # generate ~/ssh/id_rsa and ~/ssh/id_rsa.pub to add to
@@ -212,7 +217,7 @@ sudo apt install -y build-essential libz-dev
 &lt;p&gt;Install google chrome from https://www.google.com/chrome/
 Right click on .deb file in Downloads, select Properties and in ‘Open With’ tab select ‘Software Install’ and click ‘Set as default’. Exit and double click on the .deb file to install Chrome.&lt;/p&gt;
 
-&lt;h1 id=&quot;brew&quot;&gt;Brew&lt;/h1&gt;
+&lt;h2 id=&quot;brew&quot;&gt;Brew&lt;/h2&gt;
 
 &lt;p&gt;Use brew instead of manually install packages so all users can use the same libs
 https://brew.sh/&lt;/p&gt;
@@ -220,33 +225,97 @@ https://brew.sh/&lt;/p&gt;
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;/bin/bash -c &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)&quot;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;Add to your &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.bashrc&lt;/code&gt; and restart terminal&lt;/p&gt;
+&lt;p&gt;Add to your &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.bashrc&lt;/code&gt; and reopen terminal. Typing &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;reset&lt;/code&gt; won’t work&lt;/p&gt;
+
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;echo &apos;eval &quot;$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)&quot;&apos; &amp;gt;&amp;gt; /home/$USER/.bashrc
 cat ~/.bashrc # you should see above line
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;Install rbenv and openssl 1.1&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;brew install rbenv ruby-build openssl@1.1
+&lt;p&gt;Now you can use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;brew&lt;/code&gt; every time you open terminal&lt;/p&gt;
+
+&lt;h2 id=&quot;install-rbenv&quot;&gt;Install rbenv&lt;/h2&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;brew install rbenv ruby-build libyaml openssl@1.1
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;When you install some package, you can use it&lt;/p&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;If you need to have openssl@3 first in your PATH, run:
-  echo &apos;export PATH=&quot;/home/linuxbrew/.linuxbrew/opt/openssl@3/bin:$PATH&quot;&apos; &amp;gt;&amp;gt; /home/dule/.bash_profile
+&lt;h2 id=&quot;installing-ruby-using-rbenv&quot;&gt;Installing Ruby using rbenv&lt;/h2&gt;
 
-For compilers to find openssl@3 you may need to set:
-  export LDFLAGS=&quot;-L/home/linuxbrew/.linuxbrew/opt/openssl@3/lib&quot;
-  export CPPFLAGS=&quot;-I/home/linuxbrew/.linuxbrew/opt/openssl@3/include&quot;
+&lt;h1 id=&quot;ruby-320&quot;&gt;Ruby 3.2.0&lt;/h1&gt;
 
-For pkg-config to find openssl@3 you may need to set:
-  export PKG_CONFIG_PATH=&quot;/home/linuxbrew/.linuxbrew/opt/openssl@3/lib/pkgconfig&quot;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;For compiling Ruby 3.2.0 you should use openssl@3
+Check &lt;a href=&quot;https://github.com/rbenv/ruby-build/wiki&quot;&gt;rbenv/ruby-build&lt;/a&gt; wiki for additional info&lt;/p&gt;
 
-&lt;p&gt;so for example for compiling Ruby 3.2.0 you should use openssl 3&lt;/p&gt;
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;brew install openssl@3
-export PKG_CONFIG_PATH=&quot;/home/linuxbrew/.linuxbrew/opt/openssl@3/lib/pkgconfig&quot;
+
 rbenv install 3.2.0
+rbenv versions # check all installed versions
+rbenv shell 3.2.0 # this will the same as export RBENV_VERSION=3.2.0
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;so if you notice an error when you are using &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;rails s&lt;/code&gt; command&lt;/p&gt;
+
+&lt;p&gt;If you need to have openssl@3 first in your PATH, run:&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;echo &apos;export PATH=&quot;/home/linuxbrew/.linuxbrew/opt/openssl@3/bin:$PATH&quot;&apos; &amp;gt;&amp;gt; /home/$USER/.bash_profile
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Export these variables, &lt;strong&gt;don’t&lt;/strong&gt; save them in your &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.bash_profile&lt;/code&gt; it won’t work for every Ruby version so to be on the safe side just export them every time you want to install new Ruby version&lt;/p&gt;
+
+&lt;p&gt;For compilers to find openssl@3&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;export LDFLAGS=&quot;-L/home/linuxbrew/.linuxbrew/opt/openssl@3/lib&quot;
+export CPPFLAGS=&quot;-I/home/linuxbrew/.linuxbrew/opt/openssl@3/include&quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;For pkg-config to find openssl@3&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;export PKG_CONFIG_PATH=&quot;/home/linuxbrew/.linuxbrew/opt/openssl@3/lib/pkgconfig&quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Note: &lt;strong&gt;Do not restart terminal&lt;/strong&gt; if you are exporting variables, it won’t persist in the next session&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Important:&lt;/strong&gt;
+Add this to your &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;~/.bash_profile&lt;/code&gt; so you can access Ruby commands&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;echo export PATH=&quot;$HOME/.rbenv/bin:$PATH&quot; &amp;gt;&amp;gt; ~/.bashrc
+echo eval &quot;$(rbenv init -)&quot; &amp;gt;&amp;gt; ~/.bashrc
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h1 id=&quot;installing-ruby-version-that-uses-openssl11&quot;&gt;Installing Ruby version that uses openssl@1.1&lt;/h1&gt;
+
+&lt;p&gt;To install version of ruby that uses openssl@1.1 we need to use RUBY_CONFIGURE_OPTS&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;export RUBY_CONFIGURE_OPTS=&quot;--with-openssl-dir=`brew --prefix openssl@1.1`&quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Then run&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;rbenv install ruby-version-you-need
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;For compilers to find openssl@1.1 you may need to export (this is needed for rvm):&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;export LDFLAGS=&quot;-L/home/linuxbrew/.linuxbrew/opt/openssl@1.1/lib&quot;
+export CPPFLAGS=&quot;-I/home/linuxbrew/.linuxbrew/opt/openssl@1.1/include&quot;
+export PKG_CONFIG_PATH=&quot;/home/linuxbrew/.linuxbrew/opt/openssl@1.1/lib/pkgconfig&quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Rbenv will check for &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.ruby-version&lt;/code&gt; file if it exists in the project and will automatically set it to that version. If you don’t have Ruby version specified in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.ruby-version&lt;/code&gt; it will prompt you to install it.&lt;/p&gt;
+
+&lt;p&gt;Create `/.ruby-version and version number to a project&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;echo 3.0.1 &amp;gt; ~/.ruby-version
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;jekyll&quot;&gt;Jekyll&lt;/h2&gt;
+
+&lt;p&gt;When you install new gems, sometimes you need to rehash to create new shims
+&lt;a href=&quot;https://github.com/rbenv/rbenv#rbenv-rehash&quot;&gt;https://github.com/rbenv/rbenv#rbenv-rehash&lt;/a&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;gem install jekyll
+Command &apos;jekyll&apos; not found, but can be installed with:
+
+rbenv rehash
+jekyll # now it works
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;rails&quot;&gt;Rails&lt;/h2&gt;
+
+&lt;p&gt;If you notice an error when you are using &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;rails s&lt;/code&gt; command&lt;/p&gt;
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;LoadError: libssl.so.1.1: cannot open shared object file: No such file or directory - /home/dule/.rbenv/versions/3.2.0/lib/ruby/gems/3.2.0/gems/puma-5.6.5/lib/puma/puma_http11.so
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;p&gt;you should remote puma gem and install with correct LD and CPP flags pointing to
@@ -267,41 +336,7 @@ gem install puma -v 5.6.5 -- --with-cppflags=-I`brew --prefix openssl@3`/include
 DISABLE_SSL=1 bundle
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;h1 id=&quot;rbenv&quot;&gt;Rbenv&lt;/h1&gt;
-
-&lt;p&gt;Rbenv is using &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.ruby-version&lt;/code&gt; file in current or any parent folder, so set to your ruby, also add those two kubes to .bashrc&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;echo 3.0.1 &amp;gt; ~/.ruby-version
-
-echo export PATH=&quot;$HOME/.rbenv/bin:$PATH&quot; &amp;gt;&amp;gt; ~/.bashrc
-echo eval &quot;$(rbenv init -)&quot; &amp;gt;&amp;gt; ~/.bashrc
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;When you install new gems, sometimes you need to rehash to create new shims
-&lt;a href=&quot;https://github.com/rbenv/rbenv#rbenv-rehash&quot;&gt;https://github.com/rbenv/rbenv#rbenv-rehash&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;Install and change to that version&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;rbenv install 3.2.0
-rbenv shell 3.2.0 # this will the same as export RBENV_VERSION=3.2.0
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;gem install jekyll
-Command &apos;jekyll&apos; not found, but can be installed with:
-
-rbenv rehash
-jekyll # now it works
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;For compilers to find openssl@1.1 you may need to set (this is needed for rvm):&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;export LDFLAGS=&quot;-L/home/linuxbrew/.linuxbrew/opt/openssl@1.1/lib&quot;
-export CPPFLAGS=&quot;-I/home/linuxbrew/.linuxbrew/opt/openssl@1.1/include&quot;
-export PKG_CONFIG_PATH=&quot;/home/linuxbrew/.linuxbrew/opt/openssl@1.1/lib/pkgconfig&quot;
-
-# To install version of ruby that uses openssl 1.1 we need to use RUBY_CONFIGURE_OPTS
-export RUBY_CONFIGURE_OPTS=&quot;--with-openssl-dir=`brew --prefix openssl@1.1`&quot;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h1 id=&quot;nvm-node-yarn&quot;&gt;NVM node yarn&lt;/h1&gt;
+&lt;h2 id=&quot;nvm-node-yarn&quot;&gt;NVM node yarn&lt;/h2&gt;
 
 &lt;p&gt;Install nvm https://github.com/nvm-sh/nvm&lt;/p&gt;
 
@@ -316,7 +351,7 @@ npm install -g yarn
 is installed)
 &lt;a href=&quot;https://stackoverflow.com/questions/67241196/error-no-template-named-remove-cv-t-in-namespace-std-did-you-mean-remove&quot;&gt;stackoverflow&lt;/a&gt;&lt;/p&gt;
 
-&lt;h1 id=&quot;wall&quot;&gt;Wall&lt;/h1&gt;
+&lt;h2 id=&quot;wall&quot;&gt;Wall&lt;/h2&gt;
 
 &lt;p&gt;Enable tty group so user can send messages
 https://unix.stackexchange.com/a/313558/150895&lt;/p&gt;
