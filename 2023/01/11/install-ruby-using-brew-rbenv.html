@@ -69,7 +69,22 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
-    <h2 id="first-steps-on-new-ubuntu-machine">First steps on new Ubuntu machine</h2>
+    <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h2"><a href="#first-steps-on-new-ubuntu-machine">First steps on new Ubuntu machine</a></li>
+<li class="toc-entry toc-h2"><a href="#brew">Brew</a></li>
+<li class="toc-entry toc-h2"><a href="#install-rbenv">Install rbenv</a></li>
+<li class="toc-entry toc-h2"><a href="#installing-ruby-using-rbenv">Installing Ruby using rbenv</a></li>
+<li class="toc-entry toc-h1"><a href="#ruby-320">Ruby 3.2.0</a></li>
+<li class="toc-entry toc-h1"><a href="#installing-ruby-version-that-uses-openssl11">Installing Ruby version that uses openssl@1.1</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#jekyll">Jekyll</a></li>
+<li class="toc-entry toc-h2"><a href="#rails">Rails</a></li>
+<li class="toc-entry toc-h2"><a href="#nvm-node-yarn">NVM node yarn</a></li>
+<li class="toc-entry toc-h2"><a href="#wall">Wall</a></li>
+</ul>
+</li>
+</ul><h2 id="first-steps-on-new-ubuntu-machine">
+<a class="anchor" href="#first-steps-on-new-ubuntu-machine" aria-hidden="true"><span class="octicon octicon-link"></span></a>First steps on new Ubuntu machine</h2>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># git is used to code collaboration
 sudo apt install -y git curl
@@ -95,7 +110,8 @@ sudo apt install -y build-essential libz-dev
 <p>Install google chrome from https://www.google.com/chrome/
 Right click on .deb file in Downloads, select Properties and in ‘Open With’ tab select ‘Software Install’ and click ‘Set as default’. Exit and double click on the .deb file to install Chrome.</p>
 
-<h2 id="brew">Brew</h2>
+<h2 id="brew">
+<a class="anchor" href="#brew" aria-hidden="true"><span class="octicon octicon-link"></span></a>Brew</h2>
 
 <p>Use brew instead of manually install packages so all users can use the same libs
 https://brew.sh/</p>
@@ -110,15 +126,18 @@ cat ~/.bashrc # you should see above line
 </code></pre></div></div>
 <p>Now you can use <code class="language-plaintext highlighter-rouge">brew</code> every time you open terminal</p>
 
-<h2 id="install-rbenv">Install rbenv</h2>
+<h2 id="install-rbenv">
+<a class="anchor" href="#install-rbenv" aria-hidden="true"><span class="octicon octicon-link"></span></a>Install rbenv</h2>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew install rbenv ruby-build libyaml openssl@1.1
 </code></pre></div></div>
 
 <p>When you install some package, you can use it</p>
 
-<h2 id="installing-ruby-using-rbenv">Installing Ruby using rbenv</h2>
+<h2 id="installing-ruby-using-rbenv">
+<a class="anchor" href="#installing-ruby-using-rbenv" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installing Ruby using rbenv</h2>
 
-<h1 id="ruby-320">Ruby 3.2.0</h1>
+<h1 id="ruby-320">
+<a class="anchor" href="#ruby-320" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ruby 3.2.0</h1>
 
 <p>For compiling Ruby 3.2.0 you should use openssl@3
 Check <a href="https://github.com/rbenv/ruby-build/wiki">rbenv/ruby-build</a> wiki for additional info</p>
@@ -154,7 +173,8 @@ Add this to your <code class="language-plaintext highlighter-rouge">~/.bash_prof
 echo eval "$(rbenv init -)" &gt;&gt; ~/.bashrc
 </code></pre></div></div>
 
-<h1 id="installing-ruby-version-that-uses-openssl11">Installing Ruby version that uses openssl@1.1</h1>
+<h1 id="installing-ruby-version-that-uses-openssl11">
+<a class="anchor" href="#installing-ruby-version-that-uses-openssl11" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installing Ruby version that uses openssl@1.1</h1>
 
 <p>To install version of ruby that uses openssl@1.1 we need to use RUBY_CONFIGURE_OPTS</p>
 
@@ -179,7 +199,8 @@ export PKG_CONFIG_PATH="/home/linuxbrew/.linuxbrew/opt/openssl@1.1/lib/pkgconfig
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>echo 3.0.1 &gt; ~/.ruby-version
 </code></pre></div></div>
 
-<h2 id="jekyll">Jekyll</h2>
+<h2 id="jekyll">
+<a class="anchor" href="#jekyll" aria-hidden="true"><span class="octicon octicon-link"></span></a>Jekyll</h2>
 
 <p>When you install new gems, sometimes you need to rehash to create new shims
 <a href="https://github.com/rbenv/rbenv#rbenv-rehash">https://github.com/rbenv/rbenv#rbenv-rehash</a></p>
@@ -191,7 +212,8 @@ rbenv rehash
 jekyll # now it works
 </code></pre></div></div>
 
-<h2 id="rails">Rails</h2>
+<h2 id="rails">
+<a class="anchor" href="#rails" aria-hidden="true"><span class="octicon octicon-link"></span></a>Rails</h2>
 
 <p>If you notice an error when you are using <code class="language-plaintext highlighter-rouge">rails s</code> command</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>LoadError: libssl.so.1.1: cannot open shared object file: No such file or directory - /home/dule/.rbenv/versions/3.2.0/lib/ruby/gems/3.2.0/gems/puma-5.6.5/lib/puma/puma_http11.so
@@ -214,7 +236,8 @@ gem install puma -v 5.6.5 -- --with-cppflags=-I`brew --prefix openssl@3`/include
 DISABLE_SSL=1 bundle
 </code></pre></div></div>
 
-<h2 id="nvm-node-yarn">NVM node yarn</h2>
+<h2 id="nvm-node-yarn">
+<a class="anchor" href="#nvm-node-yarn" aria-hidden="true"><span class="octicon octicon-link"></span></a>NVM node yarn</h2>
 
 <p>Install nvm https://github.com/nvm-sh/nvm</p>
 
@@ -229,7 +252,8 @@ npm install -g yarn
 is installed)
 <a href="https://stackoverflow.com/questions/67241196/error-no-template-named-remove-cv-t-in-namespace-std-did-you-mean-remove">stackoverflow</a></p>
 
-<h2 id="wall">Wall</h2>
+<h2 id="wall">
+<a class="anchor" href="#wall" aria-hidden="true"><span class="octicon octicon-link"></span></a>Wall</h2>
 
 <p>Enable tty group so user can send messages
 https://unix.stackexchange.com/a/313558/150895</p>
