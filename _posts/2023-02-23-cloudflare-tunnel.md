@@ -11,10 +11,10 @@ You can create a temporary tunnel with random url
 cloudflared tunnel --url http://localhost:3000
 ```
 and it will be available under .trycloudflare.com like
-https://request-composer-pools-requirements.trycloudflare.com
+<https://request-composer-pools-requirements.trycloudflare.com>
 
 For long living tunnels which uses the same url you should use
-https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/
+<https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/>
 
 ```
 cloudflared tunnel login
