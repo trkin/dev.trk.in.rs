@@ -17,3 +17,12 @@ github_username:  duleorlovic
 
 # Build settings
 markdown: kramdown
+
+plugins:
+  - jekyll-toc
+
+defaults:
+  - scope:
+      path: ''
+    values:
+      toc: true
