@@ -6,8 +6,8 @@
 </description>
     <link>https://dev.trk.in.rs/</link>
     <atom:link href="https://dev.trk.in.rs/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 21 Mar 2023 14:27:45 +0000</pubDate>
-    <lastBuildDate>Tue, 21 Mar 2023 14:27:45 +0000</lastBuildDate>
+    <pubDate>Fri, 24 Mar 2023 11:21:24 +0000</pubDate>
+    <lastBuildDate>Fri, 24 Mar 2023 11:21:24 +0000</lastBuildDate>
     <generator>Jekyll v4.3.2</generator>
     
       <item>
@@ -274,14 +274,31 @@ cat ~/.bashrc # you should see above line
 &lt;p&gt;Now you can use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;brew&lt;/code&gt; every time you open terminal&lt;/p&gt;
 
 &lt;h2 id=&quot;install-rbenv&quot;&gt;Install rbenv&lt;/h2&gt;
+
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;brew install rbenv ruby-build libyaml openssl@1.1
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;When you install some package, you can use it&lt;/p&gt;
+&lt;p&gt;Add this to your &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;~/.bashrc&lt;/code&gt; so you can access rbenv commands&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;echo export PATH=&quot;$HOME/.rbenv/bin:$PATH&quot; &amp;gt;&amp;gt; ~/.bashrc
+echo eval &quot;$(rbenv init -)&quot; &amp;gt;&amp;gt; ~/.bashrc
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;h2 id=&quot;installing-ruby-using-rbenv&quot;&gt;Installing Ruby using rbenv&lt;/h2&gt;
 
-&lt;h1 id=&quot;ruby-320&quot;&gt;Ruby 3.2.0&lt;/h1&gt;
+&lt;p&gt;To change ruby version you can use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.ruby-version&lt;/code&gt; file in current or any parent
+folder. For example you can set default version with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.ruby-version&lt;/code&gt; in your
+home folder &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;~/&lt;/code&gt;&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;echo 3.2.0 &amp;gt; ~/.ruby-version
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;You can also change ruby version with this command or env variable&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;rbenv shell 3.2.0
+
+# this is the same as export RBENV_VERSION=3.2.0
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;ruby-320&quot;&gt;Ruby 3.2.0&lt;/h3&gt;
 
 &lt;p&gt;For compiling Ruby 3.2.0 you should use openssl@3
 Check &lt;a href=&quot;https://github.com/rbenv/ruby-build/wiki&quot;&gt;rbenv/ruby-build&lt;/a&gt; wiki for additional info&lt;/p&gt;
@@ -290,14 +307,13 @@ Check &lt;a href=&quot;https://github.com/rbenv/ruby-build/wiki&quot;&gt;rbenv/r
 
 rbenv install 3.2.0
 rbenv versions # check all installed versions
-rbenv shell 3.2.0 # this will the same as export RBENV_VERSION=3.2.0
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;If you need to have openssl@3 first in your PATH, run:&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;echo &apos;export PATH=&quot;/home/linuxbrew/.linuxbrew/opt/openssl@3/bin:$PATH&quot;&apos; &amp;gt;&amp;gt; /home/$USER/.bash_profile
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;echo &apos;export PATH=&quot;/home/linuxbrew/.linuxbrew/opt/openssl@3/bin:$PATH&quot;&apos; &amp;gt;&amp;gt; /home/$USER/.bashrc
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;Export these variables, &lt;strong&gt;don’t&lt;/strong&gt; save them in your &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.bash_profile&lt;/code&gt; it won’t work for every Ruby version so to be on the safe side just export them every time you want to install new Ruby version&lt;/p&gt;
+&lt;p&gt;Export these variables, &lt;strong&gt;don’t&lt;/strong&gt; save them in your &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.bashrc&lt;/code&gt; it won’t work for every Ruby version so to be on the safe side just export them every time you want to install new Ruby version&lt;/p&gt;
 
 &lt;p&gt;For compilers to find openssl@3&lt;/p&gt;
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;export LDFLAGS=&quot;-L/home/linuxbrew/.linuxbrew/opt/openssl@3/lib&quot;
@@ -310,14 +326,7 @@ export CPPFLAGS=&quot;-I/home/linuxbrew/.linuxbrew/opt/openssl@3/include&quot;
 
 &lt;p&gt;Note: &lt;strong&gt;Do not restart terminal&lt;/strong&gt; if you are exporting variables, it won’t persist in the next session&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;Important:&lt;/strong&gt;
-Add this to your &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;~/.bash_profile&lt;/code&gt; so you can access Ruby commands&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;echo export PATH=&quot;$HOME/.rbenv/bin:$PATH&quot; &amp;gt;&amp;gt; ~/.bashrc
-echo eval &quot;$(rbenv init -)&quot; &amp;gt;&amp;gt; ~/.bashrc
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h1 id=&quot;installing-ruby-version-that-uses-openssl11&quot;&gt;Installing Ruby version that uses openssl@1.1&lt;/h1&gt;
+&lt;h3 id=&quot;installing-ruby-version-that-uses-openssl11&quot;&gt;Installing Ruby version that uses openssl@1.1&lt;/h3&gt;
 
 &lt;p&gt;To install version of ruby that uses openssl@1.1 we need to use RUBY_CONFIGURE_OPTS&lt;/p&gt;
 
@@ -333,13 +342,6 @@ echo eval &quot;$(rbenv init -)&quot; &amp;gt;&amp;gt; ~/.bashrc
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;export LDFLAGS=&quot;-L/home/linuxbrew/.linuxbrew/opt/openssl@1.1/lib&quot;
 export CPPFLAGS=&quot;-I/home/linuxbrew/.linuxbrew/opt/openssl@1.1/include&quot;
 export PKG_CONFIG_PATH=&quot;/home/linuxbrew/.linuxbrew/opt/openssl@1.1/lib/pkgconfig&quot;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Rbenv will check for &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.ruby-version&lt;/code&gt; file if it exists in the project and will automatically set it to that version. If you don’t have Ruby version specified in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.ruby-version&lt;/code&gt; it will prompt you to install it.&lt;/p&gt;
-
-&lt;p&gt;Create `/.ruby-version and version number to a project&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;echo 3.0.1 &amp;gt; ~/.ruby-version
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;h2 id=&quot;jekyll&quot;&gt;Jekyll&lt;/h2&gt;
@@ -359,7 +361,7 @@ jekyll # now it works
 &lt;p&gt;If you notice an error when you are using &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;rails s&lt;/code&gt; command&lt;/p&gt;
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;LoadError: libssl.so.1.1: cannot open shared object file: No such file or directory - /home/dule/.rbenv/versions/3.2.0/lib/ruby/gems/3.2.0/gems/puma-5.6.5/lib/puma/puma_http11.so
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;you should remote puma gem and install with correct LD and CPP flags pointing to
+&lt;p&gt;you should remove puma gem and install with correct LD and CPP flags pointing to
 openssl 3.&lt;/p&gt;
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;gem uninstall puma
 
@@ -396,6 +398,21 @@ is installed)
 
 &lt;p&gt;Enable tty group so user can send messages
 &lt;a href=&quot;https://unix.stackexchange.com/a/313558/150895&quot;&gt;https://unix.stackexchange.com/a/313558/150895&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;python&quot;&gt;Python&lt;/h2&gt;
+
+&lt;p&gt;You can install python using pyenv https://github.com/pyenv/pyenv similar to
+rbenv&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;brew install pyenv
+pyenv install 2.7.18
+# pyenv global 2.7.18
+pyenv shell 2.7.18
+pyenv versions
+
+# Add to .bashrc
+# PATH=$(pyenv root)/shims:$PATH
+# eval &quot;$(pyenv init -)&quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 </description>
         <pubDate>Wed, 11 Jan 2023 00:00:00 +0000</pubDate>
         <link>https://dev.trk.in.rs/2023/01/11/install-ruby-using-brew-rbenv.html</link>

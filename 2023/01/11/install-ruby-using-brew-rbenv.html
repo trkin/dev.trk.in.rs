@@ -73,16 +73,17 @@
 <li class="toc-entry toc-h2"><a href="#first-steps-on-new-ubuntu-machine">First steps on new Ubuntu machine</a></li>
 <li class="toc-entry toc-h2"><a href="#brew">Brew</a></li>
 <li class="toc-entry toc-h2"><a href="#install-rbenv">Install rbenv</a></li>
-<li class="toc-entry toc-h2"><a href="#installing-ruby-using-rbenv">Installing Ruby using rbenv</a></li>
-<li class="toc-entry toc-h1"><a href="#ruby-320">Ruby 3.2.0</a></li>
-<li class="toc-entry toc-h1"><a href="#installing-ruby-version-that-uses-openssl11">Installing Ruby version that uses openssl@1.1</a>
+<li class="toc-entry toc-h2"><a href="#installing-ruby-using-rbenv">Installing Ruby using rbenv</a>
 <ul>
+<li class="toc-entry toc-h3"><a href="#ruby-320">Ruby 3.2.0</a></li>
+<li class="toc-entry toc-h3"><a href="#installing-ruby-version-that-uses-openssl11">Installing Ruby version that uses openssl@1.1</a></li>
+</ul>
+</li>
 <li class="toc-entry toc-h2"><a href="#jekyll">Jekyll</a></li>
 <li class="toc-entry toc-h2"><a href="#rails">Rails</a></li>
 <li class="toc-entry toc-h2"><a href="#nvm-node-yarn">NVM node yarn</a></li>
 <li class="toc-entry toc-h2"><a href="#wall">Wall</a></li>
-</ul>
-</li>
+<li class="toc-entry toc-h2"><a href="#python">Python</a></li>
 </ul><h2 id="first-steps-on-new-ubuntu-machine">
 <a class="anchor" href="#first-steps-on-new-ubuntu-machine" aria-hidden="true"><span class="octicon octicon-link"></span></a>First steps on new Ubuntu machine</h2>
 
@@ -128,16 +129,33 @@ cat ~/.bashrc # you should see above line
 
 <h2 id="install-rbenv">
 <a class="anchor" href="#install-rbenv" aria-hidden="true"><span class="octicon octicon-link"></span></a>Install rbenv</h2>
+
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew install rbenv ruby-build libyaml openssl@1.1
 </code></pre></div></div>
 
-<p>When you install some package, you can use it</p>
+<p>Add this to your <code class="language-plaintext highlighter-rouge">~/.bashrc</code> so you can access rbenv commands</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>echo export PATH="$HOME/.rbenv/bin:$PATH" &gt;&gt; ~/.bashrc
+echo eval "$(rbenv init -)" &gt;&gt; ~/.bashrc
+</code></pre></div></div>
 
 <h2 id="installing-ruby-using-rbenv">
 <a class="anchor" href="#installing-ruby-using-rbenv" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installing Ruby using rbenv</h2>
 
-<h1 id="ruby-320">
-<a class="anchor" href="#ruby-320" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ruby 3.2.0</h1>
+<p>To change ruby version you can use <code class="language-plaintext highlighter-rouge">.ruby-version</code> file in current or any parent
+folder. For example you can set default version with <code class="language-plaintext highlighter-rouge">.ruby-version</code> in your
+home folder <code class="language-plaintext highlighter-rouge">~/</code></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>echo 3.2.0 &gt; ~/.ruby-version
+</code></pre></div></div>
+
+<p>You can also change ruby version with this command or env variable</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rbenv shell 3.2.0
+
+# this is the same as export RBENV_VERSION=3.2.0
+</code></pre></div></div>
+
+<h3 id="ruby-320">
+<a class="anchor" href="#ruby-320" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ruby 3.2.0</h3>
 
 <p>For compiling Ruby 3.2.0 you should use openssl@3
 Check <a href="https://github.com/rbenv/ruby-build/wiki">rbenv/ruby-build</a> wiki for additional info</p>
@@ -146,14 +164,13 @@ Check <a href="https://github.com/rbenv/ruby-build/wiki">rbenv/ruby-build</a> wi
 
 rbenv install 3.2.0
 rbenv versions # check all installed versions
-rbenv shell 3.2.0 # this will the same as export RBENV_VERSION=3.2.0
 </code></pre></div></div>
 
 <p>If you need to have openssl@3 first in your PATH, run:</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>echo 'export PATH="/home/linuxbrew/.linuxbrew/opt/openssl@3/bin:$PATH"' &gt;&gt; /home/$USER/.bash_profile
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>echo 'export PATH="/home/linuxbrew/.linuxbrew/opt/openssl@3/bin:$PATH"' &gt;&gt; /home/$USER/.bashrc
 </code></pre></div></div>
 
-<p>Export these variables, <strong>don’t</strong> save them in your <code class="language-plaintext highlighter-rouge">.bash_profile</code> it won’t work for every Ruby version so to be on the safe side just export them every time you want to install new Ruby version</p>
+<p>Export these variables, <strong>don’t</strong> save them in your <code class="language-plaintext highlighter-rouge">.bashrc</code> it won’t work for every Ruby version so to be on the safe side just export them every time you want to install new Ruby version</p>
 
 <p>For compilers to find openssl@3</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>export LDFLAGS="-L/home/linuxbrew/.linuxbrew/opt/openssl@3/lib"
@@ -166,15 +183,8 @@ export CPPFLAGS="-I/home/linuxbrew/.linuxbrew/opt/openssl@3/include"
 
 <p>Note: <strong>Do not restart terminal</strong> if you are exporting variables, it won’t persist in the next session</p>
 
-<p><strong>Important:</strong>
-Add this to your <code class="language-plaintext highlighter-rouge">~/.bash_profile</code> so you can access Ruby commands</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>echo export PATH="$HOME/.rbenv/bin:$PATH" &gt;&gt; ~/.bashrc
-echo eval "$(rbenv init -)" &gt;&gt; ~/.bashrc
-</code></pre></div></div>
-
-<h1 id="installing-ruby-version-that-uses-openssl11">
-<a class="anchor" href="#installing-ruby-version-that-uses-openssl11" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installing Ruby version that uses openssl@1.1</h1>
+<h3 id="installing-ruby-version-that-uses-openssl11">
+<a class="anchor" href="#installing-ruby-version-that-uses-openssl11" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installing Ruby version that uses openssl@1.1</h3>
 
 <p>To install version of ruby that uses openssl@1.1 we need to use RUBY_CONFIGURE_OPTS</p>
 
@@ -190,13 +200,6 @@ echo eval "$(rbenv init -)" &gt;&gt; ~/.bashrc
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>export LDFLAGS="-L/home/linuxbrew/.linuxbrew/opt/openssl@1.1/lib"
 export CPPFLAGS="-I/home/linuxbrew/.linuxbrew/opt/openssl@1.1/include"
 export PKG_CONFIG_PATH="/home/linuxbrew/.linuxbrew/opt/openssl@1.1/lib/pkgconfig"
-</code></pre></div></div>
-
-<p>Rbenv will check for <code class="language-plaintext highlighter-rouge">.ruby-version</code> file if it exists in the project and will automatically set it to that version. If you don’t have Ruby version specified in <code class="language-plaintext highlighter-rouge">.ruby-version</code> it will prompt you to install it.</p>
-
-<p>Create `/.ruby-version and version number to a project</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>echo 3.0.1 &gt; ~/.ruby-version
 </code></pre></div></div>
 
 <h2 id="jekyll">
@@ -218,7 +221,7 @@ jekyll # now it works
 <p>If you notice an error when you are using <code class="language-plaintext highlighter-rouge">rails s</code> command</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>LoadError: libssl.so.1.1: cannot open shared object file: No such file or directory - /home/dule/.rbenv/versions/3.2.0/lib/ruby/gems/3.2.0/gems/puma-5.6.5/lib/puma/puma_http11.so
 </code></pre></div></div>
-<p>you should remote puma gem and install with correct LD and CPP flags pointing to
+<p>you should remove puma gem and install with correct LD and CPP flags pointing to
 openssl 3.</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gem uninstall puma
 
@@ -257,6 +260,22 @@ is installed)
 
 <p>Enable tty group so user can send messages
 <a href="https://unix.stackexchange.com/a/313558/150895">https://unix.stackexchange.com/a/313558/150895</a></p>
+
+<h2 id="python">
+<a class="anchor" href="#python" aria-hidden="true"><span class="octicon octicon-link"></span></a>Python</h2>
+
+<p>You can install python using pyenv https://github.com/pyenv/pyenv similar to
+rbenv</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew install pyenv
+pyenv install 2.7.18
+# pyenv global 2.7.18
+pyenv shell 2.7.18
+pyenv versions
+
+# Add to .bashrc
+# PATH=$(pyenv root)/shims:$PATH
+# eval "$(pyenv init -)"
+</code></pre></div></div>
 
   </div>
 
