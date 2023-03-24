@@ -48,15 +48,35 @@ cat ~/.bashrc # you should see above line
 Now you can use `brew` every time you open terminal
 
 ## Install rbenv
+
 ```
 brew install rbenv ruby-build libyaml openssl@1.1
 ```
 
-When you install some package, you can use it
+Add this to your `~/.bashrc` so you can access rbenv commands
+
+```
+echo export PATH="$HOME/.rbenv/bin:$PATH" >> ~/.bashrc
+echo eval "$(rbenv init -)" >> ~/.bashrc
+```
 
 ## Installing Ruby using rbenv
 
-# Ruby 3.2.0
+To change ruby version you can use `.ruby-version` file in current or any parent
+folder. For example you can set default version with `.ruby-version` in your
+home folder `~/`
+```
+echo 3.2.0 > ~/.ruby-version
+```
+
+You can also change ruby version with this command or env variable
+```
+rbenv shell 3.2.0
+
+# this is the same as export RBENV_VERSION=3.2.0
+```
+
+### Ruby 3.2.0
 
 For compiling Ruby 3.2.0 you should use openssl@3
 Check [rbenv/ruby-build](https://github.com/rbenv/ruby-build/wiki) wiki for additional info
@@ -66,15 +86,14 @@ brew install openssl@3
 
 rbenv install 3.2.0
 rbenv versions # check all installed versions
-rbenv shell 3.2.0 # this will the same as export RBENV_VERSION=3.2.0
 ```
 
 If you need to have openssl@3 first in your PATH, run:
 ```
-echo 'export PATH="/home/linuxbrew/.linuxbrew/opt/openssl@3/bin:$PATH"' >> /home/$USER/.bash_profile
+echo 'export PATH="/home/linuxbrew/.linuxbrew/opt/openssl@3/bin:$PATH"' >> /home/$USER/.bashrc
 ```
 
-Export these variables, **don't** save them in your `.bash_profile` it won't work for every Ruby version so to be on the safe side just export them every time you want to install new Ruby version
+Export these variables, **don't** save them in your `.bashrc` it won't work for every Ruby version so to be on the safe side just export them every time you want to install new Ruby version
 
 For compilers to find openssl@3
 ```
@@ -89,15 +108,7 @@ export PKG_CONFIG_PATH="/home/linuxbrew/.linuxbrew/opt/openssl@3/lib/pkgconfig"
 
 Note: **Do not restart terminal** if you are exporting variables, it won't persist in the next session
 
-**Important:**
-Add this to your `~/.bash_profile` so you can access Ruby commands
-
-```
-echo export PATH="$HOME/.rbenv/bin:$PATH" >> ~/.bashrc
-echo eval "$(rbenv init -)" >> ~/.bashrc
-```
-
-# Installing Ruby version that uses openssl@1.1
+### Installing Ruby version that uses openssl@1.1
 
 To install version of ruby that uses openssl@1.1 we need to use RUBY_CONFIGURE_OPTS
 
@@ -105,7 +116,7 @@ To install version of ruby that uses openssl@1.1 we need to use RUBY_CONFIGURE_O
 export RUBY_CONFIGURE_OPTS="--with-openssl-dir=`brew --prefix openssl@1.1`"
 ```
 
-Then run 
+Then run
 ```
 rbenv install ruby-version-you-need
 ```
@@ -116,14 +127,6 @@ For compilers to find openssl@1.1 you may need to export (this is needed for rvm
 export LDFLAGS="-L/home/linuxbrew/.linuxbrew/opt/openssl@1.1/lib"
 export CPPFLAGS="-I/home/linuxbrew/.linuxbrew/opt/openssl@1.1/include"
 export PKG_CONFIG_PATH="/home/linuxbrew/.linuxbrew/opt/openssl@1.1/lib/pkgconfig"
-```
-
-Rbenv will check for `.ruby-version` file if it exists in the project and will automatically set it to that version. If you don't have Ruby version specified in `.ruby-version` it will prompt you to install it.
-
-Create `/.ruby-version and version number to a project
-
-```
-echo 3.0.1 > ~/.ruby-version
 ```
 
 ## Jekyll
@@ -145,7 +148,7 @@ If you notice an error when you are using `rails s` command
 ```
 LoadError: libssl.so.1.1: cannot open shared object file: No such file or directory - /home/dule/.rbenv/versions/3.2.0/lib/ruby/gems/3.2.0/gems/puma-5.6.5/lib/puma/puma_http11.so
 ```
-you should remote puma gem and install with correct LD and CPP flags pointing to
+you should remove puma gem and install with correct LD and CPP flags pointing to
 openssl 3.
 ```
 gem uninstall puma
@@ -186,3 +189,19 @@ is installed)
 
 Enable tty group so user can send messages
 <https://unix.stackexchange.com/a/313558/150895>
+
+## Python
+
+You can install python using pyenv https://github.com/pyenv/pyenv similar to
+rbenv
+```
+brew install pyenv
+pyenv install 2.7.18
+# pyenv global 2.7.18
+pyenv shell 2.7.18
+pyenv versions
+
+# Add to .bashrc
+# PATH=$(pyenv root)/shims:$PATH
+# eval "$(pyenv init -)"
+```
