@@ -129,6 +129,12 @@ export CPPFLAGS="-I/home/linuxbrew/.linuxbrew/opt/openssl@1.1/include"
 export PKG_CONFIG_PATH="/home/linuxbrew/.linuxbrew/opt/openssl@1.1/lib/pkgconfig"
 ```
 
+
+For latest ruby install on mac you might need
+```
+RUBY_CONFIGURE_OPTS="--with-openssl-dir=`brew --prefix openssl` --with-readline-dir=`brew --prefix readline`"
+```
+
 ## Jekyll
 
 When you install new gems, sometimes you need to rehash to create new shims
