@@ -121,18 +121,25 @@ Then run
 rbenv install ruby-version-you-need
 ```
 
-For compilers to find openssl@1.1 you may need to export (this is needed for rvm):
+For compilers to find openssl@1.1 you may need to export:
 
 ```
-export LDFLAGS="-L/home/linuxbrew/.linuxbrew/opt/openssl@1.1/lib"
-export CPPFLAGS="-I/home/linuxbrew/.linuxbrew/opt/openssl@1.1/include"
-export PKG_CONFIG_PATH="/home/linuxbrew/.linuxbrew/opt/openssl@1.1/lib/pkgconfig"
+export LDFLAGS="-L`brew --prefix openssl@1.1`/lib"
+export CPPFLAGS="-I`brew --prefix openssl@1.1`/include"
+export PKG_CONFIG_PATH="`brew --prefix openssl@1.1`/lib/pkgconfig"
 ```
 
 
-For latest ruby install on mac you might need
+For Ruby 3.2.1 on ubuntu you might need to use define readline location
 ```
-RUBY_CONFIGURE_OPTS="--with-openssl-dir=`brew --prefix openssl` --with-readline-dir=`brew --prefix readline`"
+export RUBY_CONFIGURE_OPTS="--with-openssl-dir=`brew --prefix openssl` --with-readline-dir=`brew --prefix readline`"
+```
+On macOS you, ruby 3.2.1 can be installed `rbenv install 3.2.1` but make sure
+you are not using Rosseta (Finder > Menu Go > Utilities > Terminal > right click
+Get Info > uncheck Open using Rosetta) so the output is arm
+```
+uname -m
+arm64
 ```
 
 ## Jekyll
