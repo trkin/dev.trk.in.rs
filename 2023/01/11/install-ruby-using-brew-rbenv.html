@@ -195,11 +195,21 @@ export CPPFLAGS="-I/home/linuxbrew/.linuxbrew/opt/openssl@3/include"
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rbenv install ruby-version-you-need
 </code></pre></div></div>
 
-<p>For compilers to find openssl@1.1 you may need to export (this is needed for rvm):</p>
+<p>For compilers to find openssl@1.1 you may need to export:</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>export LDFLAGS="-L/home/linuxbrew/.linuxbrew/opt/openssl@1.1/lib"
-export CPPFLAGS="-I/home/linuxbrew/.linuxbrew/opt/openssl@1.1/include"
-export PKG_CONFIG_PATH="/home/linuxbrew/.linuxbrew/opt/openssl@1.1/lib/pkgconfig"
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>export LDFLAGS="-L`brew --prefix openssl@1.1`/lib"
+export CPPFLAGS="-I`brew --prefix openssl@1.1`/include"
+export PKG_CONFIG_PATH="`brew --prefix openssl@1.1`/lib/pkgconfig"
+</code></pre></div></div>
+
+<p>For Ruby 3.2.1 on ubuntu you might need to use define readline location</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>export RUBY_CONFIGURE_OPTS="--with-openssl-dir=`brew --prefix openssl` --with-readline-dir=`brew --prefix readline`"
+</code></pre></div></div>
+<p>On macOS you, ruby 3.2.1 can be installed <code class="language-plaintext highlighter-rouge">rbenv install 3.2.1</code> but make sure
+you are not using Rosseta (Finder &gt; Menu Go &gt; Utilities &gt; Terminal &gt; right click
+Get Info &gt; uncheck Open using Rosetta) so the output is arm</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>uname -m
+arm64
 </code></pre></div></div>
 
 <h2 id="jekyll">

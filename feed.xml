@@ -6,9 +6,106 @@
 </description>
     <link>https://dev.trk.in.rs/</link>
     <atom:link href="https://dev.trk.in.rs/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 24 Mar 2023 11:21:24 +0000</pubDate>
-    <lastBuildDate>Fri, 24 Mar 2023 11:21:24 +0000</lastBuildDate>
+    <pubDate>Wed, 29 Mar 2023 15:05:07 +0000</pubDate>
+    <lastBuildDate>Wed, 29 Mar 2023 15:05:07 +0000</lastBuildDate>
     <generator>Jekyll v4.3.2</generator>
+    
+      <item>
+        <title>Aws Cli</title>
+        <description>&lt;h1 id=&quot;install-and-configure-aws-cli&quot;&gt;Install and configure AWS cli&lt;/h1&gt;
+
+&lt;p&gt;Install and enable completion&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# Ubuntu
+sudo apt install awscli
+
+# .bash_profile should source .bashrc
+echo complete -C &apos;/usr/local/bin/aws_completer&apos; aws &amp;gt; ~/.bashrc
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;You need keys to connect and configure will store them in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;~/.aws/credentials&lt;/code&gt;&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;aws configure
+AWS Access Key ID [None]: 123....4P5Q
+AWS Secret Access Key [None]: 123...TCzr
+Default region name [None]: us-east-1
+Default output format [None]:
+
+cat ~/.aws/credentials
+[default]
+aws_access_key_id = 123...4P5Q
+aws_secret_access_key = 123...TCzr
+
+cat ~/.aws/config
+[default]
+region = us-east-1
+
+aws configure
+AWS Access Key ID [**************4P5Q]:
+AWS Secret Access Key [****************TCzr]:
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;You can have several profiles in additional to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;[default]&lt;/code&gt;.
+To add another profile&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;aws configure --profile duleorlovic
+# this will add [profile duleorlovic] to ~/.aws/config
+# and [duleorlovic] to ~/.aws/credentials
+# you can use in terraform provider &quot;aws&quot; { profile = &quot;duleorlovic&quot; }
+aws ec2 describe-vpcs --profile duleorlovic
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;You can check which profile you are using&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# show current profile settings
+aws configure list
+
+# list all profile names
+aws configure list-profile
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;To change profile in shell you can export&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;export AWS_PROFILE=duleorlovic
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Another way to change profile is to use different credentials file&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;AWS_SHARED_CREDENTIALS_FILE=~/.aws/credentials_duleorlovic aws s3 ls s3://my-trk-bucket
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;You can extract data with query to parse json for example
+Find other examples on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;aws ec2 describe-instances help&lt;/code&gt;
+TODO: add examples&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;[*]&lt;/code&gt; array&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.attribute&lt;/code&gt;
+you can have &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;--output text&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;--output json&lt;/code&gt; or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;--output table&lt;/code&gt;, or you can
+use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;jq&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# list all public instances, using * returns array of arrays
+aws ec2 describe-instances --query &quot;Reservations[*].Instances[*].PublicIpAddress&quot; --output=text
+# this returns inline results since it is single array
+aws ec2 describe-instances --query &quot;Reservations[].Instances[].PublicIpAddress&quot; --output=text
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;You can combine columns, for example to show ARN&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;aws ec2 describe-instances --region us-east-1 | jq -r &apos;.Reservations[] | .OwnerId as $OwnerId | ( .Instances[] | { &quot;ARN&quot;: &quot;arn:aws:ec2:\(.Placement.AvailabilityZone[:-1]):\($OwnerId):instance/\(.InstanceId)&quot;, &quot;AvailabilityZone&quot;: &quot;\(.Placement.AvailabilityZone)&quot;, InstanceId, PublicDnsName, PrivateDnsName, Tags} )&apos; | jq -s .
+[
+  {
+    &quot;ARN&quot;: &quot;arn:aws:ec2:us-east-1:606470370249:instance/i-0b7175eed059b8f41&quot;,
+    &quot;AvailabilityZone&quot;: &quot;us-east-1a&quot;,
+    &quot;InstanceId&quot;: &quot;i-0b7175eed059b8f41&quot;,
+    &quot;PublicDnsName&quot;: &quot;ec2-34-230-46-141.compute-1.amazonaws.com&quot;,
+    &quot;PrivateDnsName&quot;: &quot;ip-172-31-90-19.ec2.internal&quot;,
+    &quot;Tags&quot;: [
+      {
+        &quot;Key&quot;: &quot;Name&quot;,
+        &quot;Value&quot;: &quot;test&quot;
+      }
+    ]
+  }
+]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+</description>
+        <pubDate>Sun, 26 Mar 2023 00:00:00 +0000</pubDate>
+        <link>https://dev.trk.in.rs/2023/03/26/aws-cli.html</link>
+        <guid isPermaLink="true">https://dev.trk.in.rs/2023/03/26/aws-cli.html</guid>
+        
+        
+      </item>
     
       <item>
         <title>Git Tips</title>
@@ -74,8 +171,23 @@ start from &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ma
 &lt;/ul&gt;
 
 &lt;p&gt;For automated way of controlling code styles we use
-&lt;a href=&quot;https://github.com/testdouble/standard&quot;&gt;Standard&lt;/a&gt; which Rubocop underneath.&lt;/p&gt;
+&lt;a href=&quot;https://github.com/testdouble/standard&quot;&gt;Standard&lt;/a&gt; which uses Rubocop underneath
+and it is installed with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bundle add standard&lt;/code&gt; and configured:&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# .rubocop.yml
+require: standard
 
+inherit_gem:
+  standard: config/base.yml
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h1 id=&quot;text-syntax-on-buttons-and-messages&quot;&gt;Text syntax on buttons and messages&lt;/h1&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;labels on buttons, titles,…  should be upper case with no period: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;This Job
+Is Paused&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;sentences on error messages, flash messages…  should have period at the end:
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Job has been copied successfully.&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
 </description>
         <pubDate>Wed, 15 Mar 2023 00:00:00 +0000</pubDate>
         <link>https://dev.trk.in.rs/2023/03/15/code-style-guides.html</link>
@@ -90,6 +202,21 @@ start from &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ma
 &lt;a href=&quot;https://www.cloudflare.com/products/tunnel/&quot;&gt;Clodflare tunnel&lt;/a&gt; is a free
 service that you can use as ngrok alternative.&lt;/p&gt;
 
+&lt;h1 id=&quot;install-cloudflared&quot;&gt;Install cloudflared&lt;/h1&gt;
+
+&lt;p&gt;https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# mac
+brew install cloudflare/cloudflare/cloudflared
+
+# linux
+wget -q https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb &amp;amp;&amp;amp; dpkg -i cloudflared-linux-amd64.deb
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Run&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cloudflared tunnel login
+# when you authorize it will create ~/.cloudflared/cert.pem
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
 &lt;p&gt;You can create a temporary tunnel with random url&lt;/p&gt;
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cloudflared tunnel --url http://localhost:3000
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
@@ -99,19 +226,16 @@ service that you can use as ngrok alternative.&lt;/p&gt;
 &lt;p&gt;For long living tunnels which uses the same url you should use
 &lt;a href=&quot;https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/&quot;&gt;https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/&lt;/a&gt;&lt;/p&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cloudflared tunnel login
-# when you authorize it will create ~/.cloudflared/cert.pem
-
-# list all tunnels created on web
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# list all tunnels created previously using cloudflared cli on web
 cloudflared tunnel list
 
 # create tunnel and config.json file
 cloudflared tunnel create mytunnel
 # Tunnel credentials written to /home/dule/.cloudflared/asd....asd.json
 
-
+# create config file that uses this credentials and tunnel name
 cat &amp;gt; ~/.cloudflared/config.yaml &amp;lt;&amp;lt; &apos;HERE_DOC&apos;
-url: http://localhost:8000
+url: http://localhost:3000
 tunnel: mytunnel
 credentials-file: ~/.cloudflared/asd....asd.json
 HERE_DOC
@@ -337,11 +461,21 @@ export CPPFLAGS=&quot;-I/home/linuxbrew/.linuxbrew/opt/openssl@3/include&quot;
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;rbenv install ruby-version-you-need
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;For compilers to find openssl@1.1 you may need to export (this is needed for rvm):&lt;/p&gt;
+&lt;p&gt;For compilers to find openssl@1.1 you may need to export:&lt;/p&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;export LDFLAGS=&quot;-L/home/linuxbrew/.linuxbrew/opt/openssl@1.1/lib&quot;
-export CPPFLAGS=&quot;-I/home/linuxbrew/.linuxbrew/opt/openssl@1.1/include&quot;
-export PKG_CONFIG_PATH=&quot;/home/linuxbrew/.linuxbrew/opt/openssl@1.1/lib/pkgconfig&quot;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;export LDFLAGS=&quot;-L`brew --prefix openssl@1.1`/lib&quot;
+export CPPFLAGS=&quot;-I`brew --prefix openssl@1.1`/include&quot;
+export PKG_CONFIG_PATH=&quot;`brew --prefix openssl@1.1`/lib/pkgconfig&quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;For Ruby 3.2.1 on ubuntu you might need to use define readline location&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;export RUBY_CONFIGURE_OPTS=&quot;--with-openssl-dir=`brew --prefix openssl` --with-readline-dir=`brew --prefix readline`&quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;On macOS you, ruby 3.2.1 can be installed &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;rbenv install 3.2.1&lt;/code&gt; but make sure
+you are not using Rosseta (Finder &amp;gt; Menu Go &amp;gt; Utilities &amp;gt; Terminal &amp;gt; right click
+Get Info &amp;gt; uncheck Open using Rosetta) so the output is arm&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;uname -m
+arm64
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;h2 id=&quot;jekyll&quot;&gt;Jekyll&lt;/h2&gt;

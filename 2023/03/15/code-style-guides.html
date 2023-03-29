@@ -70,6 +70,7 @@
 
   <div class="post-content" itemprop="articleBody">
     <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h1"><a href="#text-syntax-on-buttons-and-messages">Text syntax on buttons and messages</a></li>
 </ul><p>For Ruby we are following</p>
 
 <ul>
@@ -79,8 +80,26 @@
 </ul>
 
 <p>For automated way of controlling code styles we use
-<a href="https://github.com/testdouble/standard">Standard</a> which Rubocop underneath.</p>
+<a href="https://github.com/testdouble/standard">Standard</a> which uses Rubocop underneath
+and it is installed with <code class="language-plaintext highlighter-rouge">bundle add standard</code> and configured:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># .rubocop.yml
+require: standard
 
+inherit_gem:
+  standard: config/base.yml
+</code></pre></div></div>
+
+<h1 id="text-syntax-on-buttons-and-messages">
+<a class="anchor" href="#text-syntax-on-buttons-and-messages" aria-hidden="true"><span class="octicon octicon-link"></span></a>Text syntax on buttons and messages</h1>
+
+<ul>
+  <li>labels on buttons, titles,…  should be upper case with no period: <code class="language-plaintext highlighter-rouge">This Job
+Is Paused</code>
+</li>
+  <li>sentences on error messages, flash messages…  should have period at the end:
+<code class="language-plaintext highlighter-rouge">Job has been copied successfully.</code>
+</li>
+</ul>
 
   </div>
 
