@@ -6,12 +6,11 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>TRK RAILS</title>
-  <meta name="description" content="TRK IN NOVI SAD
-">
+  <title>Build Kindergarten Exchange App</title>
+  <meta name="description" content="As a practice task in our first intershipwe are rebuilding a webapp that will help parents organize themselves and findfree places in kindergartens that are ...">
 
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="canonical" href="https://dev.trk.in.rs/404.html">
+  <link rel="canonical" href="https://dev.trk.in.rs/2023/02/21/build-kindergarten-exchange-app/">
   <link rel="alternate" type="application/rss+xml" title="TRK RAILS" href="https://dev.trk.in.rs/feed.xml">
 </head>
 
@@ -62,30 +61,64 @@
 
     <div class="page-content">
       <div class="wrapper">
-        <article class="post">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title"></h1>
+    <h1 class="post-title" itemprop="name headline">Build Kindergarten Exchange App</h1>
+    <p class="post-meta"><time datetime="2023-02-21T00:00:00+00:00" itemprop="datePublished">Feb 21, 2023</time></p>
   </header>
 
-  <div class="post-content">
-    <p>Hi, sorry, can’t find this page</p>
+  <div class="post-content" itemprop="articleBody">
+    <ul id="toc" class="section-nav">
+</ul><p>As a practice task in our <a href="/2023/01/04/internship/">first intership</a>
+we are rebuilding a webapp that will help parents organize themselves and find
+free places in kindergartens that are closer to them. When there are no
+vacancies the only way to move the kids to another kindergarten is to find
+someone else who also wants to move. Existing app source is
+<a href="https://github.com/trkin/premesti.se">https://github.com/trkin/premesti.se</a> and
+we are rebuilding to use latest tools like <a href="https://turbo.hotwired.dev/">Turbo</a>
+Source code is on github</p>
 
-<p>Redirecting to home in <span id="timer">3</span> seconds.</p>
+<p><a href="https://github.com/trkin/kindergarten-exchange">https://github.com/trkin/kindergarten-exchange</a></p>
 
-<script>
-var remainSeconds = 3;
-document.getElementById('timer').innerHTML = remainSeconds;
-setInterval(function() {
-  remainSeconds -= 1;
-  document.getElementById('timer').innerHTML = remainSeconds;
-  if (remainSeconds == 0) {
-    clearInterval();
-    location.assign('/');
-  }
-}, 1000);
-</script>
+<p>Main tools that we will use:</p>
+<ul>
+  <li>Ruby on Rails as a server side engine</li>
+  <li>Github projects for organizing tasks</li>
+  <li>Neo4j graph database to find matches in rotations</li>
+  <li>Figma for designs</li>
+  <li>Tailwind for styles</li>
+  <li>Jekyll for blog</li>
+  <li>Turbo and Stimulus for registration and chat</li>
+</ul>
 
+<p>All practicioners should choose one area in which to become a master so they can
+teach other teammates.</p>
+
+<p>Main features should be:</p>
+<ul>
+  <li>user registration using various ways: phone number, email, social buttons</li>
+  <li>user select <code class="language-plaintext highlighter-rouge">move</code> ie kindergarten in which they are interested in</li>
+  <li>user can share their moves on social networks</li>
+  <li>graph engine that calculates matches for each new <code class="language-plaintext highlighter-rouge">move</code>
+</li>
+  <li>for each match a new <code class="language-plaintext highlighter-rouge">chat</code> is created and notifications are sent</li>
+  <li>admin pages to invite users to register, to send promotional emails and users
+can unsubscribe to them</li>
+</ul>
+
+<p>Advanced features:</p>
+<ul>
+  <li>enable payment so moves that includes at least one premium move can chat
+immediatelly, and moves that are all free are waiting one week for
+notification and chat (send email to buy premium or to wait).
+Premium can be obtained by sharing on social networks. Use other features for
+premium like: free sms notification</li>
+  <li>create mobile apps for Android and iOS</li>
+  <li>create Viber app for registration</li>
+</ul>
+
+<p>App should be using I18n transations and covered with tests.</p>
 
   </div>
 

@@ -10,7 +10,7 @@
   <meta name="description" content="Git style">
 
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="canonical" href="https://dev.trk.in.rs/2023/03/21/git-tips.html">
+  <link rel="canonical" href="https://dev.trk.in.rs/2023/03/21/git-tips/">
   <link rel="alternate" type="application/rss+xml" title="TRK RAILS" href="https://dev.trk.in.rs/feed.xml">
 </head>
 
@@ -71,6 +71,7 @@
   <div class="post-content" itemprop="articleBody">
     <ul id="toc" class="section-nav">
 <li class="toc-entry toc-h2"><a href="#git-style">Git style</a></li>
+<li class="toc-entry toc-h2"><a href="#git-hooks">Git hooks</a></li>
 <li class="toc-entry toc-h2"><a href="#gitflow">Gitflow</a></li>
 <li class="toc-entry toc-h2"><a href="#github-cli">Github cli</a></li>
 </ul><h2 id="git-style">
@@ -99,6 +100,45 @@ git commit -m'Add test for signup #123`
 git push -u origin i123_add_test_for_signup
 </code></pre></div></div>
 
+<h2 id="git-hooks">
+<a class="anchor" href="#git-hooks" aria-hidden="true"><span class="octicon octicon-link"></span></a>Git hooks</h2>
+
+<p>We use git hook for commit message so the issue number is automatically added to
+commit message.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cat &gt; .git/hooks/prepare-commit-msg &lt; 'HERE_DOC'
+#!/bin/bash
+#
+# Source https://dev.trk.in.rs/2023/03/21/git-tips#git-hooks
+#
+# https://gist.github.com/jimschubert/9073276
+# Automatically adds branch name to every commit message.
+# Modified from the stackoverflow answer here: http://stackoverflow.com/a/11524807/151445
+#
+
+# Get branch name, use sed to strip name and keep only numbers
+# i123_my_branch_name -&gt; 123
+issueNumber=$(git branch | grep '*' | grep -o '[0-9]*')
+# issueNumber=$(git branch --show-current)
+
+# Get the first line, ex: from ammending or mmm from git commit -am'mmm'
+firstLine=$(head -n1 $1)
+
+if ! [[ $firstLine =~ $issueNumber ]] ; then
+  # Prepend issueNumber to COMMIT_MSG
+  echo "i#$issueNumber"' '$(cat "$1"| sed '/^#.*/d') &gt; "$1"
+  #
+  # Append issueNumber to COMMIT_MSG
+  # echo -n "i#$issueNumber" &gt;&gt; "$1" # this will add at the end
+  # echo $(cat "$1" | sed '/^#.*/d')' '"i#$issueNumber" &gt; "$1"
+
+  # Insert issueNumber at the end of the commit message file
+  # sed -i "1s@^@\n\n$issueNumber@" $1
+fi
+HERE_DOC
+
+chmod +x .git/hooks/prepare-commit-msg
+</code></pre></div></div>
+
 <h2 id="gitflow">
 <a class="anchor" href="#gitflow" aria-hidden="true"><span class="octicon octicon-link"></span></a>Gitflow</h2>
 
@@ -117,7 +157,14 @@ start from <code class="language-plaintext highlighter-rouge">main</code> and me
 
 <p>We also use gh cli</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gh pr merge -r -d
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># create PR and put commit messages as comment
+gh pr create --fill
+
+# assign reviewers
+gh pr edit
+
+# rebase and delete local and remote branch
+gh pr merge -r -d
 </code></pre></div></div>
 
   </div>

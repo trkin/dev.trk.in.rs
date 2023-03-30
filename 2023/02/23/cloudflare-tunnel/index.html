@@ -10,7 +10,7 @@
   <meta name="description" content="Ngrok is a service which gives you random url whenever you start a new tunnel.Clodflare tunnel is a freeservice that you can use as ngrok alternative.">
 
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="canonical" href="https://dev.trk.in.rs/2023/02/23/cloudflare-tunnel.html">
+  <link rel="canonical" href="https://dev.trk.in.rs/2023/02/23/cloudflare-tunnel/">
   <link rel="alternate" type="application/rss+xml" title="TRK RAILS" href="https://dev.trk.in.rs/feed.xml">
 </head>
 
@@ -70,25 +70,12 @@
 
   <div class="post-content" itemprop="articleBody">
     <ul id="toc" class="section-nav">
-<li class="toc-entry toc-h1"><a href="#install-cloudflared">Install cloudflared</a></li>
 </ul><p>Ngrok is a service which gives you random url whenever you start a new tunnel.
 <a href="https://www.cloudflare.com/products/tunnel/">Clodflare tunnel</a> is a free
 service that you can use as ngrok alternative.</p>
 
-<h1 id="install-cloudflared">
-<a class="anchor" href="#install-cloudflared" aria-hidden="true"><span class="octicon octicon-link"></span></a>Install cloudflared</h1>
-
-<p>https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># mac
-brew install cloudflare/cloudflare/cloudflared
-
-# linux
-wget -q https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb &amp;&amp; dpkg -i cloudflared-linux-amd64.deb
-</code></pre></div></div>
-
-<p>Run</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cloudflared tunnel login
-# when you authorize it will create ~/.cloudflared/cert.pem
+<p>Install</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew install cloudflared
 </code></pre></div></div>
 
 <p>You can create a temporary tunnel with random url</p>

@@ -6,11 +6,11 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Keyboard Shortcuts And Switch Windows</title>
-  <meta name="description" content="Shortcuts for linux">
+  <title>Docker Tips</title>
+  <meta name="description" content="Install on ubuntu">
 
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="canonical" href="https://dev.trk.in.rs/2023/01/06/keyboard-shortcuts-and-switch-windows.html">
+  <link rel="canonical" href="https://dev.trk.in.rs/2023/03/30/docker-tips/">
   <link rel="alternate" type="application/rss+xml" title="TRK RAILS" href="https://dev.trk.in.rs/feed.xml">
 </head>
 
@@ -64,16 +64,49 @@
         <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title" itemprop="name headline">Keyboard Shortcuts And Switch Windows</h1>
-    <p class="post-meta"><time datetime="2023-01-06T00:00:00+00:00" itemprop="datePublished">Jan 6, 2023</time></p>
+    <h1 class="post-title" itemprop="name headline">Docker Tips</h1>
+    <p class="post-meta"><time datetime="2023-03-30T00:00:00+00:00" itemprop="datePublished">Mar 30, 2023</time></p>
   </header>
 
   <div class="post-content" itemprop="articleBody">
     <ul id="toc" class="section-nav">
-<li class="toc-entry toc-h1"><a href="#shortcuts-for-linux">Shortcuts for linux</a></li>
-</ul><h1 id="shortcuts-for-linux">
-<a class="anchor" href="#shortcuts-for-linux" aria-hidden="true"><span class="octicon octicon-link"></span></a>Shortcuts for linux</h1>
+<li class="toc-entry toc-h2"><a href="#install-on-ubuntu">Install on ubuntu</a></li>
+</ul><h2 id="install-on-ubuntu">
+<a class="anchor" href="#install-on-ubuntu" aria-hidden="true"><span class="octicon octicon-link"></span></a>Install on ubuntu</h2>
 
+<p>Follow instructions on <a href="https://docs.docker.com/engine/install/ubuntu/">https://docs.docker.com/engine/install/ubuntu/</a>
+After adding GPG key and repo you can run</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+sudo docker run hello-world
+Hello from Docker!
+</code></pre></div></div>
+
+<p>or you can use convenience script</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl -fsSL https://get.docker.com -o get-docker.sh
+sudo sh ./get-docker.sh --dry-run
+</code></pre></div></div>
+
+<p>Uninstall with</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt-get purge docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin docker-ce-rootless-extras
+sudo rm -rf /var/lib/docker
+sudo rm -rf /var/lib/containerd
+</code></pre></div></div>
+
+<p>To enable users to run use docker engine without sudo
+https://docs.docker.com/engine/install/linux-postinstall/</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo usermod -aG docker $USER
+</code></pre></div></div>
+
+<ul>
+  <li>run ubuntu shell
+    <div class="language-plaintext highlighter-rouge">
+<div class="highlight"><pre class="highlight"><code>docker run -it ubuntu /bin/bash
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<p>https://docs.docker.com/engine/install/linux-postinstall/</p>
 
   </div>
 

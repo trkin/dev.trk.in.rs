@@ -10,7 +10,7 @@
   <meta name="description" content="You can easilly start with multiseat. Here is a nice bloghttps://www.apalrd.net/posts/2022/multiseat_intro/You can use this script to get all statusessudo lo...">
 
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="canonical" href="https://dev.trk.in.rs/2023/01/05/ubuntu-multiseat.html">
+  <link rel="canonical" href="https://dev.trk.in.rs/2023/01/05/ubuntu-multiseat/">
   <link rel="alternate" type="application/rss+xml" title="TRK RAILS" href="https://dev.trk.in.rs/feed.xml">
 </head>
 
@@ -122,8 +122,11 @@ radeontop -b 04
 <p>You need to attach MASTER devices (ie graphic cards) otherwise new seat will not
 be created.
 Search for <code class="language-plaintext highlighter-rouge">drm</code> and look at last number (in this case <code class="language-plaintext highlighter-rouge">04</code>)
-Also need to attach <code class="language-plaintext highlighter-rouge">render</code> and <code class="language-plaintext highlighter-rouge">fb</code> (frame buffer, if exists) and sound
-Also find the ports that you want to assign. If you have usb dock station than you do have to allocate only one port. All devices attached to docking station will be under that port (also the soud and microphone).
+Also need to attach <code class="language-plaintext highlighter-rouge">render</code> and <code class="language-plaintext highlighter-rouge">fb</code> (frame buffer, if exists) and sound Also
+find the ports that you want to assign. If you have usb dock station than you do
+have to allocate only one port. All devices attached to docking station will be
+under that port (also the soud and microphone). You can use headset with
+microphone and with one 3.5mm cable you have stable sound connection.
 Put that in <code class="language-plaintext highlighter-rouge">attach_seats.sh</code> file so we can modify and run easilly</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># attach_seats.sh
@@ -164,7 +167,56 @@ need to know it’s path)</p>
 and follow <a href="https://support.displaylink.com/knowledgebase/articles/1944022-how-to-install-displaylink-software-on-ubuntu-20-0">https://support.displaylink.com/knowledgebase/articles/1944022-how-to-install-displaylink-software-on-ubuntu-20-0</a></p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo ./displaylink-driver-5.3.0.xx.run
+# this will install libdrm-dev lipciaccess-dev
+
+Installing
+[ Installing EVDI ]
+[[ Installing EVDI DKMS module ]]
+Creating symlink /var/lib/dkms/evdi/1.12.0/source -&gt; /usr/src/evdi-1.12.0
+
+Kernel preparation unnecessary for this kernel. Skipping...
+
+Building module:
+cleaning build area...
+make -j24 KERNELRELEASE=5.19.0-35-generic all INCLUDEDIR=/lib/modules/5.19.0-35-generic/build/include KVERSION=5.19.0-35-generic DKMS_BUILD=1...
+Signing module:
+ - /var/lib/dkms/evdi/1.12.0/5.19.0-35-generic/x86_64/module/evdi.ko
+EFI variables are not supported on this system
+/sys/firmware/efi/efivars not found, aborting.
+cleaning build area...
+
+evdi.ko:
+Running module version sanity check.
+ - Original module
+   - No original module exists within this kernel
+ - Installation
+   - Installing to /lib/modules/5.19.0-35-generic/updates/dkms/
+
+depmod....
+[[ Installing module configuration files ]]
+[[ Installing EVDI library ]]
+make: Entering directory '/tmp/tmp.XS3WN4Qt0Q/evdi/library'
+cc -I../module -std=gnu99 -fPIC -D_FILE_OFFSET_BITS=64    -c -o evdi_lib.o evdi_lib.c
+cc evdi_lib.o -shared -Wl,-soname,libevdi.so.0 -o libevdi.so.1.12.0 -lc -lgcc 
+cp libevdi.so.1.12.0 libevdi.so
+make: Leaving directory '/tmp/tmp.XS3WN4Qt0Q/evdi/library'
+[ Installing x64-ubuntu-1604/DisplayLinkManager ]
+[ Installing libraries ]
+[ Installing firmware packages ]
+[ Installing licence file ]
+[ Adding udev rule for DisplayLink DL-3xxx/4xxx/5xxx/6xxx devices ]
+[ Adding upstart and powermanager sctripts ]
+
+Please read the FAQ
+http://support.displaylink.com/knowledgebase/topics/103927-troubleshooting-ubuntu
+
+Installation complete!
+
+Please reboot your computer if you're intending to use Xorg.
 </code></pre></div></div>
+
+<p>Read FAQ
+https://support.displaylink.com/knowledgebase/topics/103927-troubleshooting-ubuntu</p>
 
 <p>When you move the between seats only difference is that it moves sound:card and
 usb (all attached usb devices will show up under this usb device)</p>

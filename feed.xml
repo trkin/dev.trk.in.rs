@@ -6,9 +6,53 @@
 </description>
     <link>https://dev.trk.in.rs/</link>
     <atom:link href="https://dev.trk.in.rs/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 29 Mar 2023 15:05:07 +0000</pubDate>
-    <lastBuildDate>Wed, 29 Mar 2023 15:05:07 +0000</lastBuildDate>
+    <pubDate>Thu, 30 Mar 2023 11:25:52 +0000</pubDate>
+    <lastBuildDate>Thu, 30 Mar 2023 11:25:52 +0000</lastBuildDate>
     <generator>Jekyll v4.3.2</generator>
+    
+      <item>
+        <title>Docker Tips</title>
+        <description>&lt;h2 id=&quot;install-on-ubuntu&quot;&gt;Install on ubuntu&lt;/h2&gt;
+
+&lt;p&gt;Follow instructions on &lt;a href=&quot;https://docs.docker.com/engine/install/ubuntu/&quot;&gt;https://docs.docker.com/engine/install/ubuntu/&lt;/a&gt;
+After adding GPG key and repo you can run&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+sudo docker run hello-world
+Hello from Docker!
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;or you can use convenience script&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;curl -fsSL https://get.docker.com -o get-docker.sh
+sudo sh ./get-docker.sh --dry-run
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Uninstall with&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo apt-get purge docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin docker-ce-rootless-extras
+sudo rm -rf /var/lib/docker
+sudo rm -rf /var/lib/containerd
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;To enable users to run use docker engine without sudo
+https://docs.docker.com/engine/install/linux-postinstall/&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo usermod -aG docker $USER
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;run ubuntu shell
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;docker run -it ubuntu /bin/bash
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;https://docs.docker.com/engine/install/linux-postinstall/&lt;/p&gt;
+</description>
+        <pubDate>Thu, 30 Mar 2023 00:00:00 +0000</pubDate>
+        <link>https://dev.trk.in.rs/2023/03/30/docker-tips/</link>
+        <guid isPermaLink="true">https://dev.trk.in.rs/2023/03/30/docker-tips/</guid>
+        
+        
+      </item>
     
       <item>
         <title>Aws Cli</title>
@@ -101,8 +145,8 @@ aws ec2 describe-instances --query &quot;Reservations[].Instances[].PublicIpAddr
 
 </description>
         <pubDate>Sun, 26 Mar 2023 00:00:00 +0000</pubDate>
-        <link>https://dev.trk.in.rs/2023/03/26/aws-cli.html</link>
-        <guid isPermaLink="true">https://dev.trk.in.rs/2023/03/26/aws-cli.html</guid>
+        <link>https://dev.trk.in.rs/2023/03/26/aws-cli/</link>
+        <guid isPermaLink="true">https://dev.trk.in.rs/2023/03/26/aws-cli/</guid>
         
         
       </item>
@@ -134,6 +178,44 @@ git commit -m&apos;Add test for signup #123`
 git push -u origin i123_add_test_for_signup
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
+&lt;h2 id=&quot;git-hooks&quot;&gt;Git hooks&lt;/h2&gt;
+
+&lt;p&gt;We use git hook for commit message so the issue number is automatically added to
+commit message.&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cat &amp;gt; .git/hooks/prepare-commit-msg &amp;lt; &apos;HERE_DOC&apos;
+#!/bin/bash
+#
+# Source https://dev.trk.in.rs/2023/03/21/git-tips#git-hooks
+#
+# https://gist.github.com/jimschubert/9073276
+# Automatically adds branch name to every commit message.
+# Modified from the stackoverflow answer here: http://stackoverflow.com/a/11524807/151445
+#
+
+# Get branch name, use sed to strip name and keep only numbers
+# i123_my_branch_name -&amp;gt; 123
+issueNumber=$(git branch | grep &apos;*&apos; | grep -o &apos;[0-9]*&apos;)
+# issueNumber=$(git branch --show-current)
+
+# Get the first line, ex: from ammending or mmm from git commit -am&apos;mmm&apos;
+firstLine=$(head -n1 $1)
+
+if ! [[ $firstLine =~ $issueNumber ]] ; then
+  # Prepend issueNumber to COMMIT_MSG
+  echo &quot;i#$issueNumber&quot;&apos; &apos;$(cat &quot;$1&quot;| sed &apos;/^#.*/d&apos;) &amp;gt; &quot;$1&quot;
+  #
+  # Append issueNumber to COMMIT_MSG
+  # echo -n &quot;i#$issueNumber&quot; &amp;gt;&amp;gt; &quot;$1&quot; # this will add at the end
+  # echo $(cat &quot;$1&quot; | sed &apos;/^#.*/d&apos;)&apos; &apos;&quot;i#$issueNumber&quot; &amp;gt; &quot;$1&quot;
+
+  # Insert issueNumber at the end of the commit message file
+  # sed -i &quot;1s@^@\n\n$issueNumber@&quot; $1
+fi
+HERE_DOC
+
+chmod +x .git/hooks/prepare-commit-msg
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
 &lt;h2 id=&quot;gitflow&quot;&gt;Gitflow&lt;/h2&gt;
 
 &lt;p&gt;For big projects we follow GitFlow
@@ -150,12 +232,19 @@ start from &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ma
 
 &lt;p&gt;We also use gh cli&lt;/p&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;gh pr merge -r -d
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# create PR and put commit messages as comment
+gh pr create --fill
+
+# assign reviewers
+gh pr edit
+
+# rebase and delete local and remote branch
+gh pr merge -r -d
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 </description>
         <pubDate>Tue, 21 Mar 2023 00:00:00 +0000</pubDate>
-        <link>https://dev.trk.in.rs/2023/03/21/git-tips.html</link>
-        <guid isPermaLink="true">https://dev.trk.in.rs/2023/03/21/git-tips.html</guid>
+        <link>https://dev.trk.in.rs/2023/03/21/git-tips/</link>
+        <guid isPermaLink="true">https://dev.trk.in.rs/2023/03/21/git-tips/</guid>
         
         
       </item>
@@ -190,8 +279,8 @@ Is Paused&lt;/code&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
         <pubDate>Wed, 15 Mar 2023 00:00:00 +0000</pubDate>
-        <link>https://dev.trk.in.rs/2023/03/15/code-style-guides.html</link>
-        <guid isPermaLink="true">https://dev.trk.in.rs/2023/03/15/code-style-guides.html</guid>
+        <link>https://dev.trk.in.rs/2023/03/15/code-style-guides/</link>
+        <guid isPermaLink="true">https://dev.trk.in.rs/2023/03/15/code-style-guides/</guid>
         
         
       </item>
@@ -202,19 +291,8 @@ Is Paused&lt;/code&gt;&lt;/li&gt;
 &lt;a href=&quot;https://www.cloudflare.com/products/tunnel/&quot;&gt;Clodflare tunnel&lt;/a&gt; is a free
 service that you can use as ngrok alternative.&lt;/p&gt;
 
-&lt;h1 id=&quot;install-cloudflared&quot;&gt;Install cloudflared&lt;/h1&gt;
-
-&lt;p&gt;https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# mac
-brew install cloudflare/cloudflare/cloudflared
-
-# linux
-wget -q https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb &amp;amp;&amp;amp; dpkg -i cloudflared-linux-amd64.deb
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Run&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cloudflared tunnel login
-# when you authorize it will create ~/.cloudflared/cert.pem
+&lt;p&gt;Install&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;brew install cloudflared
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;You can create a temporary tunnel with random url&lt;/p&gt;
@@ -255,15 +333,15 @@ cloudflared tunnel info mytunnel
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 </description>
         <pubDate>Thu, 23 Feb 2023 00:00:00 +0000</pubDate>
-        <link>https://dev.trk.in.rs/2023/02/23/cloudflare-tunnel.html</link>
-        <guid isPermaLink="true">https://dev.trk.in.rs/2023/02/23/cloudflare-tunnel.html</guid>
+        <link>https://dev.trk.in.rs/2023/02/23/cloudflare-tunnel/</link>
+        <guid isPermaLink="true">https://dev.trk.in.rs/2023/02/23/cloudflare-tunnel/</guid>
         
         
       </item>
     
       <item>
         <title>Build Kindergarten Exchange App</title>
-        <description>&lt;p&gt;As a practice task in our &lt;a href=&quot;/2023/01/04/internship.html&quot;&gt;first intership&lt;/a&gt;
+        <description>&lt;p&gt;As a practice task in our &lt;a href=&quot;/2023/01/04/internship/&quot;&gt;first intership&lt;/a&gt;
 we are rebuilding a webapp that will help parents organize themselves and find
 free places in kindergartens that are closer to them. When there are no
 vacancies the only way to move the kids to another kindergarten is to find
@@ -313,8 +391,8 @@ premium like: free sms notification&lt;/li&gt;
 &lt;p&gt;App should be using I18n transations and covered with tests.&lt;/p&gt;
 </description>
         <pubDate>Tue, 21 Feb 2023 00:00:00 +0000</pubDate>
-        <link>https://dev.trk.in.rs/2023/02/21/build-kindergarten-exchange-app.html</link>
-        <guid isPermaLink="true">https://dev.trk.in.rs/2023/02/21/build-kindergarten-exchange-app.html</guid>
+        <link>https://dev.trk.in.rs/2023/02/21/build-kindergarten-exchange-app/</link>
+        <guid isPermaLink="true">https://dev.trk.in.rs/2023/02/21/build-kindergarten-exchange-app/</guid>
         
         
       </item>
@@ -348,8 +426,8 @@ Used In This Series | Intro To Ruby On Rails For Beginners Part 17
 &lt;/ul&gt;
 </description>
         <pubDate>Tue, 24 Jan 2023 00:00:00 +0000</pubDate>
-        <link>https://dev.trk.in.rs/2023/01/24/learning-materials-for-ruby-and-rails.html</link>
-        <guid isPermaLink="true">https://dev.trk.in.rs/2023/01/24/learning-materials-for-ruby-and-rails.html</guid>
+        <link>https://dev.trk.in.rs/2023/01/24/learning-materials-for-ruby-and-rails/</link>
+        <guid isPermaLink="true">https://dev.trk.in.rs/2023/01/24/learning-materials-for-ruby-and-rails/</guid>
         
         
       </item>
@@ -397,6 +475,29 @@ cat ~/.bashrc # you should see above line
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;p&gt;Now you can use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;brew&lt;/code&gt; every time you open terminal&lt;/p&gt;
 
+&lt;p&gt;If you use multiseat than you need to add new group and attach each user to it
+https://apple.stackexchange.com/a/45003/449651
+Error is&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;brew update &amp;amp;&amp;amp; brew upgrade ruby-build
+Error: /home/linuxbrew/.linuxbrew/Homebrew is not writable. You should change the
+ownership and permissions of /home/linuxbrew/.linuxbrew/Homebrew back to your
+user account:
+  sudo chown -R $(whoami) /home/linuxbrew/.linuxbrew/Homebrew
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Add group&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo groupadd brew
+compgen -u # list all users
+sudo usermod -aG brew dule
+sudo usermod -aG brew mile
+
+sudo chgrp -R brew /home/linuxbrew/.linuxbrew/
+sudo chmod -R g+w /home/linuxbrew/.linuxbrew/
+
+# check that group has rw-
+ls -la /home/linuxbrew/.linuxbrew/Homebrew/README.md
+-rw-rw-r-- 1 dule brew 8495 феб  9 08:40 /home/linuxbrew/.linuxbrew/Homebrew/README.md
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
 &lt;h2 id=&quot;install-rbenv&quot;&gt;Install rbenv&lt;/h2&gt;
 
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;brew install rbenv ruby-build libyaml openssl@1.1
@@ -420,52 +521,49 @@ home folder &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;~
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;rbenv shell 3.2.0
 
 # this is the same as export RBENV_VERSION=3.2.0
+
+# check all installed versions
+rbenv versions
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;h3 id=&quot;ruby-320&quot;&gt;Ruby 3.2.0&lt;/h3&gt;
 
 &lt;p&gt;For compiling Ruby 3.2.0 you should use openssl@3
-Check &lt;a href=&quot;https://github.com/rbenv/ruby-build/wiki&quot;&gt;rbenv/ruby-build&lt;/a&gt; wiki for additional info&lt;/p&gt;
+Check &lt;a href=&quot;https://github.com/rbenv/ruby-build/wiki&quot;&gt;rbenv/ruby-build&lt;/a&gt; wiki for
+additional info&lt;/p&gt;
 
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;brew install openssl@3
 
+export RUBY_CONFIGURE_OPTS=&quot;--with-openssl-dir=`brew --prefix openssl@3`&quot;
+
 rbenv install 3.2.0
-rbenv versions # check all installed versions
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;If you need to have openssl@3 first in your PATH, run:&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;echo &apos;export PATH=&quot;/home/linuxbrew/.linuxbrew/opt/openssl@3/bin:$PATH&quot;&apos; &amp;gt;&amp;gt; /home/$USER/.bashrc
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Export these variables, &lt;strong&gt;don’t&lt;/strong&gt; save them in your &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.bashrc&lt;/code&gt; it won’t work for
+every Ruby version so to be on the safe side just export them every time you
+want to install new Ruby version&lt;/p&gt;
 
-&lt;p&gt;Export these variables, &lt;strong&gt;don’t&lt;/strong&gt; save them in your &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.bashrc&lt;/code&gt; it won’t work for every Ruby version so to be on the safe side just export them every time you want to install new Ruby version&lt;/p&gt;
-
-&lt;p&gt;For compilers to find openssl@3&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;export LDFLAGS=&quot;-L/home/linuxbrew/.linuxbrew/opt/openssl@3/lib&quot;
-export CPPFLAGS=&quot;-I/home/linuxbrew/.linuxbrew/opt/openssl@3/include&quot;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;For pkg-config to find openssl@3&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;export PKG_CONFIG_PATH=&quot;/home/linuxbrew/.linuxbrew/opt/openssl@3/lib/pkgconfig&quot;
+&lt;p&gt;When you install gems that need to be compiled locally than you might need to
+export PATH, LDFLAGS, CPPFLAGS or PKG_CONFIG_PATH&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;export PATH=&quot;/home/linuxbrew/.linuxbrew/opt/openssl@3/bin:$PATH&quot;
+export LDFLAGS=&quot;-L`brew --prefix openssl@3`/lib&quot;
+export CPPFLAGS=&quot;-I`brew --prefix openssl@3`/include&quot;
+export PKG_CONFIG_PATH=&quot;`brew --prefix openssl@3`/lib/pkgconfig&quot;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Note: &lt;strong&gt;Do not restart terminal&lt;/strong&gt; if you are exporting variables, it won’t persist in the next session&lt;/p&gt;
 
-&lt;h3 id=&quot;installing-ruby-version-that-uses-openssl11&quot;&gt;Installing Ruby version that uses openssl@1.1&lt;/h3&gt;
+&lt;p&gt;For example Installing Ruby version that uses openssl@1.1&lt;/p&gt;
 
 &lt;p&gt;To install version of ruby that uses openssl@1.1 we need to use RUBY_CONFIGURE_OPTS&lt;/p&gt;
-
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;export RUBY_CONFIGURE_OPTS=&quot;--with-openssl-dir=`brew --prefix openssl@1.1`&quot;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+ruby install 2.6.7
 
-&lt;p&gt;Then run&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;rbenv install ruby-version-you-need
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;For compilers to find openssl@1.1 you may need to export:&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;export LDFLAGS=&quot;-L`brew --prefix openssl@1.1`/lib&quot;
+export LDFLAGS=&quot;-L`brew --prefix openssl@1.1`/lib&quot;
 export CPPFLAGS=&quot;-I`brew --prefix openssl@1.1`/include&quot;
 export PKG_CONFIG_PATH=&quot;`brew --prefix openssl@1.1`/lib/pkgconfig&quot;
+
+bundle
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;For Ruby 3.2.1 on ubuntu you might need to use define readline location&lt;/p&gt;
@@ -549,8 +647,8 @@ pyenv versions
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 </description>
         <pubDate>Wed, 11 Jan 2023 00:00:00 +0000</pubDate>
-        <link>https://dev.trk.in.rs/2023/01/11/install-ruby-using-brew-rbenv.html</link>
-        <guid isPermaLink="true">https://dev.trk.in.rs/2023/01/11/install-ruby-using-brew-rbenv.html</guid>
+        <link>https://dev.trk.in.rs/2023/01/11/install-ruby-using-brew-rbenv/</link>
+        <guid isPermaLink="true">https://dev.trk.in.rs/2023/01/11/install-ruby-using-brew-rbenv/</guid>
         
         
       </item>
@@ -561,8 +659,8 @@ pyenv versions
 
 </description>
         <pubDate>Fri, 06 Jan 2023 00:00:00 +0000</pubDate>
-        <link>https://dev.trk.in.rs/2023/01/06/keyboard-shortcuts-and-switch-windows.html</link>
-        <guid isPermaLink="true">https://dev.trk.in.rs/2023/01/06/keyboard-shortcuts-and-switch-windows.html</guid>
+        <link>https://dev.trk.in.rs/2023/01/06/keyboard-shortcuts-and-switch-windows/</link>
+        <guid isPermaLink="true">https://dev.trk.in.rs/2023/01/06/keyboard-shortcuts-and-switch-windows/</guid>
         
         
       </item>
@@ -617,8 +715,11 @@ radeontop -b 04
 &lt;p&gt;You need to attach MASTER devices (ie graphic cards) otherwise new seat will not
 be created.
 Search for &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;drm&lt;/code&gt; and look at last number (in this case &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;04&lt;/code&gt;)
-Also need to attach &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;render&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;fb&lt;/code&gt; (frame buffer, if exists) and sound
-Also find the ports that you want to assign. If you have usb dock station than you do have to allocate only one port. All devices attached to docking station will be under that port (also the soud and microphone).
+Also need to attach &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;render&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;fb&lt;/code&gt; (frame buffer, if exists) and sound Also
+find the ports that you want to assign. If you have usb dock station than you do
+have to allocate only one port. All devices attached to docking station will be
+under that port (also the soud and microphone). You can use headset with
+microphone and with one 3.5mm cable you have stable sound connection.
 Put that in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;attach_seats.sh&lt;/code&gt; file so we can modify and run easilly&lt;/p&gt;
 
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# attach_seats.sh
@@ -657,7 +758,56 @@ need to know it’s path)&lt;/p&gt;
 and follow &lt;a href=&quot;https://support.displaylink.com/knowledgebase/articles/1944022-how-to-install-displaylink-software-on-ubuntu-20-0&quot;&gt;https://support.displaylink.com/knowledgebase/articles/1944022-how-to-install-displaylink-software-on-ubuntu-20-0&lt;/a&gt;&lt;/p&gt;
 
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo ./displaylink-driver-5.3.0.xx.run
+# this will install libdrm-dev lipciaccess-dev
+
+Installing
+[ Installing EVDI ]
+[[ Installing EVDI DKMS module ]]
+Creating symlink /var/lib/dkms/evdi/1.12.0/source -&amp;gt; /usr/src/evdi-1.12.0
+
+Kernel preparation unnecessary for this kernel. Skipping...
+
+Building module:
+cleaning build area...
+make -j24 KERNELRELEASE=5.19.0-35-generic all INCLUDEDIR=/lib/modules/5.19.0-35-generic/build/include KVERSION=5.19.0-35-generic DKMS_BUILD=1...
+Signing module:
+ - /var/lib/dkms/evdi/1.12.0/5.19.0-35-generic/x86_64/module/evdi.ko
+EFI variables are not supported on this system
+/sys/firmware/efi/efivars not found, aborting.
+cleaning build area...
+
+evdi.ko:
+Running module version sanity check.
+ - Original module
+   - No original module exists within this kernel
+ - Installation
+   - Installing to /lib/modules/5.19.0-35-generic/updates/dkms/
+
+depmod....
+[[ Installing module configuration files ]]
+[[ Installing EVDI library ]]
+make: Entering directory &apos;/tmp/tmp.XS3WN4Qt0Q/evdi/library&apos;
+cc -I../module -std=gnu99 -fPIC -D_FILE_OFFSET_BITS=64    -c -o evdi_lib.o evdi_lib.c
+cc evdi_lib.o -shared -Wl,-soname,libevdi.so.0 -o libevdi.so.1.12.0 -lc -lgcc 
+cp libevdi.so.1.12.0 libevdi.so
+make: Leaving directory &apos;/tmp/tmp.XS3WN4Qt0Q/evdi/library&apos;
+[ Installing x64-ubuntu-1604/DisplayLinkManager ]
+[ Installing libraries ]
+[ Installing firmware packages ]
+[ Installing licence file ]
+[ Adding udev rule for DisplayLink DL-3xxx/4xxx/5xxx/6xxx devices ]
+[ Adding upstart and powermanager sctripts ]
+
+Please read the FAQ
+http://support.displaylink.com/knowledgebase/topics/103927-troubleshooting-ubuntu
+
+Installation complete!
+
+Please reboot your computer if you&apos;re intending to use Xorg.
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Read FAQ
+https://support.displaylink.com/knowledgebase/topics/103927-troubleshooting-ubuntu&lt;/p&gt;
 
 &lt;p&gt;When you move the between seats only difference is that it moves sound:card and
 usb (all attached usb devices will show up under this usb device)&lt;/p&gt;
@@ -681,97 +831,8 @@ And there is no change when we start or stop the driver.&lt;/p&gt;
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 </description>
         <pubDate>Thu, 05 Jan 2023 00:00:00 +0000</pubDate>
-        <link>https://dev.trk.in.rs/2023/01/05/ubuntu-multiseat.html</link>
-        <guid isPermaLink="true">https://dev.trk.in.rs/2023/01/05/ubuntu-multiseat.html</guid>
-        
-        
-      </item>
-    
-      <item>
-        <title>Internship</title>
-        <description>&lt;p&gt;Do you want to know how to create web sites ? Try “Ruby on Rails” tool with me,
-at Liman 3, Novi Sad.&lt;/p&gt;
-
-&lt;p&gt;Intership for beginners in Ruby in March 2023 is free for selected participants.&lt;/p&gt;
-
-&lt;p&gt;Requirements:&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;experience with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;HTML&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;CSS&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Ruby on Rails&lt;/code&gt; (bonus if you are
-using &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;vim&lt;/code&gt;, develop with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;testing&lt;/code&gt; approach)&lt;/li&gt;
-  &lt;li&gt;good communication skills, knowledge sharing, honesty (nice person)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Benefits:&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;1 hour a day of mentoring&lt;/li&gt;
-  &lt;li&gt;work on our open source projects like Movebase.link (listing of sport events)&lt;/li&gt;
-  &lt;li&gt;experince so you can apply for a job (hopefully in our company)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;We select participants based on our assessment of whether they are ready to
-master Ruby on Rails material during the internship.&lt;/p&gt;
-
-&lt;p&gt;We hope that at the end of the internship participants will be ready enough to
-apply for client jobs.&lt;/p&gt;
-
-&lt;p&gt;Send an application to &lt;a href=&quot;mailto:salji@trk.in.rs&quot;&gt;salji@trk.in.rs&lt;/a&gt;
-with answers to;&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;You experience with HTML, Javascript and Ruby language&lt;/li&gt;
-  &lt;li&gt;Links to your work; github profile and sites that you take a part of (if
-exists)&lt;/li&gt;
-  &lt;li&gt;When do you expect from the intership, what are you plans and something about you&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Deadline for application is Februar 20 2023.&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;#srpski&quot;&gt;Srpski&lt;/a&gt;&lt;/p&gt;
-
-&lt;hr id=&quot;srpski&quot; /&gt;
-
-&lt;p&gt;Želiš li da naučiš da praviš sajtove ? Probaj “Ruby on Rails” alat sa mnom, na
-Limanu 3, Novi Sad.&lt;/p&gt;
-
-&lt;p&gt;Ja sam krenuo sa Ruby on Rails framework pre desetak godina i do sada sam uvek
-imao posla vezan za taj alat. Sada hoću da radim sa većim timom (za sada je tu
-samo moj brat i drugar) pa zato tražim pojačanje, tj. obezbedio sam 3 mesta za
-stolom.&lt;/p&gt;
-
-&lt;p&gt;Kurs za početnike u Rubiju počinje 1 marta i traje mesec dana, 6 sati dnevno
-svaki radni dan.&lt;/p&gt;
-
-&lt;p&gt;Uslovi:&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;Iskustvo sa &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;HTML&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;CSS&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Javascript&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Ruby on Rails&lt;/code&gt; (nije neophodno
-sve da znate). Na &lt;a href=&quot;/2023/01/24/learning-materials-for-ruby-and-rails.html&quot;&gt;Learning materials for Ruby on Rails&lt;/a&gt;  mozete naci neke
-materijale&lt;/li&gt;
-  &lt;li&gt;Dobre komunikacione sposobnosti, deljenje znanja, iskrenost&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Šta dobijate:&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;1 sat svakog dana mentoring&lt;/li&gt;
-  &lt;li&gt;Rad na opensource projektima&lt;/li&gt;
-  &lt;li&gt;Iskustvo koje vam može pomoći u apliciranju za naredni posao (nadamo se kod
-nas)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Biramo 3 polaznika koji su spremni da uče i da usavršavaju svoje znanje iz
-programiranja.&lt;/p&gt;
-
-&lt;p&gt;Da bi ste aplicirali, pošaljite email na &lt;a href=&quot;mailto:salji@trk.in.rs&quot;&gt;salji@trk.in.rs&lt;/a&gt;
-sa odgovorom na sledeća pitanja:&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;Koje je vaše dosadašnje iskustvo sa HTML, Javascript i Ruby jezikom&lt;/li&gt;
-  &lt;li&gt;Linkovi ka dosadašnjem radu: github profil, primeri sajtova na kom ste radili ako postoje&lt;/li&gt;
-  &lt;li&gt;Šta očekujete od prakse, koji su vam planovi za zaposlenje i ukratko o sebi&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Rok za prijavu je 20 Februar 2023.&lt;/p&gt;
-</description>
-        <pubDate>Wed, 04 Jan 2023 00:00:00 +0000</pubDate>
-        <link>https://dev.trk.in.rs/2023/01/04/internship.html</link>
-        <guid isPermaLink="true">https://dev.trk.in.rs/2023/01/04/internship.html</guid>
+        <link>https://dev.trk.in.rs/2023/01/05/ubuntu-multiseat/</link>
+        <guid isPermaLink="true">https://dev.trk.in.rs/2023/01/05/ubuntu-multiseat/</guid>
         
         
       </item>

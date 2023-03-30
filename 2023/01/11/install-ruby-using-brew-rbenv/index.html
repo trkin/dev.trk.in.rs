@@ -10,7 +10,7 @@
   <meta name="description" content="First steps on new Ubuntu machine">
 
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="canonical" href="https://dev.trk.in.rs/2023/01/11/install-ruby-using-brew-rbenv.html">
+  <link rel="canonical" href="https://dev.trk.in.rs/2023/01/11/install-ruby-using-brew-rbenv/">
   <link rel="alternate" type="application/rss+xml" title="TRK RAILS" href="https://dev.trk.in.rs/feed.xml">
 </head>
 
@@ -76,7 +76,6 @@
 <li class="toc-entry toc-h2"><a href="#installing-ruby-using-rbenv">Installing Ruby using rbenv</a>
 <ul>
 <li class="toc-entry toc-h3"><a href="#ruby-320">Ruby 3.2.0</a></li>
-<li class="toc-entry toc-h3"><a href="#installing-ruby-version-that-uses-openssl11">Installing Ruby version that uses openssl@1.1</a></li>
 </ul>
 </li>
 <li class="toc-entry toc-h2"><a href="#jekyll">Jekyll</a></li>
@@ -127,6 +126,29 @@ cat ~/.bashrc # you should see above line
 </code></pre></div></div>
 <p>Now you can use <code class="language-plaintext highlighter-rouge">brew</code> every time you open terminal</p>
 
+<p>If you use multiseat than you need to add new group and attach each user to it
+https://apple.stackexchange.com/a/45003/449651
+Error is</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew update &amp;&amp; brew upgrade ruby-build
+Error: /home/linuxbrew/.linuxbrew/Homebrew is not writable. You should change the
+ownership and permissions of /home/linuxbrew/.linuxbrew/Homebrew back to your
+user account:
+  sudo chown -R $(whoami) /home/linuxbrew/.linuxbrew/Homebrew
+</code></pre></div></div>
+<p>Add group</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo groupadd brew
+compgen -u # list all users
+sudo usermod -aG brew dule
+sudo usermod -aG brew mile
+
+sudo chgrp -R brew /home/linuxbrew/.linuxbrew/
+sudo chmod -R g+w /home/linuxbrew/.linuxbrew/
+
+# check that group has rw-
+ls -la /home/linuxbrew/.linuxbrew/Homebrew/README.md
+-rw-rw-r-- 1 dule brew 8495 феб  9 08:40 /home/linuxbrew/.linuxbrew/Homebrew/README.md
+</code></pre></div></div>
+
 <h2 id="install-rbenv">
 <a class="anchor" href="#install-rbenv" aria-hidden="true"><span class="octicon octicon-link"></span></a>Install rbenv</h2>
 
@@ -152,54 +174,50 @@ home folder <code class="language-plaintext highlighter-rouge">~/</code></p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rbenv shell 3.2.0
 
 # this is the same as export RBENV_VERSION=3.2.0
+
+# check all installed versions
+rbenv versions
 </code></pre></div></div>
 
 <h3 id="ruby-320">
 <a class="anchor" href="#ruby-320" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ruby 3.2.0</h3>
 
 <p>For compiling Ruby 3.2.0 you should use openssl@3
-Check <a href="https://github.com/rbenv/ruby-build/wiki">rbenv/ruby-build</a> wiki for additional info</p>
+Check <a href="https://github.com/rbenv/ruby-build/wiki">rbenv/ruby-build</a> wiki for
+additional info</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew install openssl@3
 
+export RUBY_CONFIGURE_OPTS="--with-openssl-dir=`brew --prefix openssl@3`"
+
 rbenv install 3.2.0
-rbenv versions # check all installed versions
 </code></pre></div></div>
 
-<p>If you need to have openssl@3 first in your PATH, run:</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>echo 'export PATH="/home/linuxbrew/.linuxbrew/opt/openssl@3/bin:$PATH"' &gt;&gt; /home/$USER/.bashrc
-</code></pre></div></div>
+<p>Export these variables, <strong>don’t</strong> save them in your <code class="language-plaintext highlighter-rouge">.bashrc</code> it won’t work for
+every Ruby version so to be on the safe side just export them every time you
+want to install new Ruby version</p>
 
-<p>Export these variables, <strong>don’t</strong> save them in your <code class="language-plaintext highlighter-rouge">.bashrc</code> it won’t work for every Ruby version so to be on the safe side just export them every time you want to install new Ruby version</p>
-
-<p>For compilers to find openssl@3</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>export LDFLAGS="-L/home/linuxbrew/.linuxbrew/opt/openssl@3/lib"
-export CPPFLAGS="-I/home/linuxbrew/.linuxbrew/opt/openssl@3/include"
-</code></pre></div></div>
-
-<p>For pkg-config to find openssl@3</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>export PKG_CONFIG_PATH="/home/linuxbrew/.linuxbrew/opt/openssl@3/lib/pkgconfig"
+<p>When you install gems that need to be compiled locally than you might need to
+export PATH, LDFLAGS, CPPFLAGS or PKG_CONFIG_PATH</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>export PATH="/home/linuxbrew/.linuxbrew/opt/openssl@3/bin:$PATH"
+export LDFLAGS="-L`brew --prefix openssl@3`/lib"
+export CPPFLAGS="-I`brew --prefix openssl@3`/include"
+export PKG_CONFIG_PATH="`brew --prefix openssl@3`/lib/pkgconfig"
 </code></pre></div></div>
 
 <p>Note: <strong>Do not restart terminal</strong> if you are exporting variables, it won’t persist in the next session</p>
 
-<h3 id="installing-ruby-version-that-uses-openssl11">
-<a class="anchor" href="#installing-ruby-version-that-uses-openssl11" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installing Ruby version that uses openssl@1.1</h3>
+<p>For example Installing Ruby version that uses openssl@1.1</p>
 
 <p>To install version of ruby that uses openssl@1.1 we need to use RUBY_CONFIGURE_OPTS</p>
-
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>export RUBY_CONFIGURE_OPTS="--with-openssl-dir=`brew --prefix openssl@1.1`"
-</code></pre></div></div>
+ruby install 2.6.7
 
-<p>Then run</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rbenv install ruby-version-you-need
-</code></pre></div></div>
-
-<p>For compilers to find openssl@1.1 you may need to export:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>export LDFLAGS="-L`brew --prefix openssl@1.1`/lib"
+export LDFLAGS="-L`brew --prefix openssl@1.1`/lib"
 export CPPFLAGS="-I`brew --prefix openssl@1.1`/include"
 export PKG_CONFIG_PATH="`brew --prefix openssl@1.1`/lib/pkgconfig"
+
+bundle
 </code></pre></div></div>
 
 <p>For Ruby 3.2.1 on ubuntu you might need to use define readline location</p>

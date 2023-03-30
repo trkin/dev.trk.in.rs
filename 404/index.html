@@ -11,7 +11,7 @@
 ">
 
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="canonical" href="https://dev.trk.in.rs/company-culture.html">
+  <link rel="canonical" href="https://dev.trk.in.rs/404/">
   <link rel="alternate" type="application/rss+xml" title="TRK RAILS" href="https://dev.trk.in.rs/feed.xml">
 </head>
 
@@ -69,9 +69,23 @@
   </header>
 
   <div class="post-content">
-    <p>We focus on health so our working time starts at 8am on the Danube quay to do
-some freshair excersized. Than we start in office from 9am-10am and work for
-6hours.</p>
+    <p>Hi, sorry, can’t find this page</p>
+
+<p>Redirecting to home in <span id="timer">3</span> seconds.</p>
+
+<script>
+var remainSeconds = 3;
+document.getElementById('timer').innerHTML = remainSeconds;
+setInterval(function() {
+  remainSeconds -= 1;
+  document.getElementById('timer').innerHTML = remainSeconds;
+  if (remainSeconds == 0) {
+    clearInterval();
+    location.assign('/');
+  }
+}, 1000);
+</script>
+
 
   </div>
 
