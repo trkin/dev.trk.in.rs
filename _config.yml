@@ -18,6 +18,10 @@ github_username:  duleorlovic
 # Build settings
 markdown: kramdown
 
+# use /2022/02/02/title instead or /2022/02/02/title.html
+permalink: pretty
+
+
 plugins:
   - jekyll-toc
 

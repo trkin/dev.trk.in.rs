@@ -55,8 +55,11 @@ radeontop -b 04
 You need to attach MASTER devices (ie graphic cards) otherwise new seat will not
 be created.
 Search for `drm` and look at last number (in this case `04`)
-Also need to attach `render` and `fb` (frame buffer, if exists) and sound
-Also find the ports that you want to assign. If you have usb dock station than you do have to allocate only one port. All devices attached to docking station will be under that port (also the soud and microphone).
+Also need to attach `render` and `fb` (frame buffer, if exists) and sound Also
+find the ports that you want to assign. If you have usb dock station than you do
+have to allocate only one port. All devices attached to docking station will be
+under that port (also the soud and microphone). You can use headset with
+microphone and with one 3.5mm cable you have stable sound connection.
 Put that in `attach_seats.sh` file so we can modify and run easilly
 
 ```
@@ -98,7 +101,56 @@ and follow <https://support.displaylink.com/knowledgebase/articles/1944022-how-t
 
 ```
 sudo ./displaylink-driver-5.3.0.xx.run
+# this will install libdrm-dev lipciaccess-dev
+
+Installing
+[ Installing EVDI ]
+[[ Installing EVDI DKMS module ]]
+Creating symlink /var/lib/dkms/evdi/1.12.0/source -> /usr/src/evdi-1.12.0
+
+Kernel preparation unnecessary for this kernel. Skipping...
+
+Building module:
+cleaning build area...
+make -j24 KERNELRELEASE=5.19.0-35-generic all INCLUDEDIR=/lib/modules/5.19.0-35-generic/build/include KVERSION=5.19.0-35-generic DKMS_BUILD=1...
+Signing module:
+ - /var/lib/dkms/evdi/1.12.0/5.19.0-35-generic/x86_64/module/evdi.ko
+EFI variables are not supported on this system
+/sys/firmware/efi/efivars not found, aborting.
+cleaning build area...
+
+evdi.ko:
+Running module version sanity check.
+ - Original module
+   - No original module exists within this kernel
+ - Installation
+   - Installing to /lib/modules/5.19.0-35-generic/updates/dkms/
+
+depmod....
+[[ Installing module configuration files ]]
+[[ Installing EVDI library ]]
+make: Entering directory '/tmp/tmp.XS3WN4Qt0Q/evdi/library'
+cc -I../module -std=gnu99 -fPIC -D_FILE_OFFSET_BITS=64    -c -o evdi_lib.o evdi_lib.c
+cc evdi_lib.o -shared -Wl,-soname,libevdi.so.0 -o libevdi.so.1.12.0 -lc -lgcc 
+cp libevdi.so.1.12.0 libevdi.so
+make: Leaving directory '/tmp/tmp.XS3WN4Qt0Q/evdi/library'
+[ Installing x64-ubuntu-1604/DisplayLinkManager ]
+[ Installing libraries ]
+[ Installing firmware packages ]
+[ Installing licence file ]
+[ Adding udev rule for DisplayLink DL-3xxx/4xxx/5xxx/6xxx devices ]
+[ Adding upstart and powermanager sctripts ]
+
+Please read the FAQ
+http://support.displaylink.com/knowledgebase/topics/103927-troubleshooting-ubuntu
+
+Installation complete!
+
+Please reboot your computer if you're intending to use Xorg.
 ```
+
+Read FAQ
+https://support.displaylink.com/knowledgebase/topics/103927-troubleshooting-ubuntu
 
 When you move the between seats only difference is that it moves sound:card and
 usb (all attached usb devices will show up under this usb device)
