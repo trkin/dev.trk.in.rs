@@ -10,14 +10,28 @@ For Ruby we are following
 
 For automated way of controlling code styles we use
 [Standard](https://github.com/testdouble/standard) which uses Rubocop underneath
-and it is installed with `bundle add standard` and configured:
+and it is installed with those commands:
 ```
-# .rubocop.yml
+bundle add standard
+
+cat > .rubocop.yml <<HERE_DOC
 require: standard
 
 inherit_gem:
   standard: config/base.yml
+HERE_DOC
+
+cat > .standard.yml <<HERE_DOC
+ignore:
+  - "**/*":
+    # put comma after each line {a:1,}
+    - Style/TrailingCommaInHashLiteral
+HERE_DOC
 ```
+
+## Erb lint
+
+TODO: https://github.com/Shopify/erb-lint
 
 # Text syntax on buttons and messages
 
