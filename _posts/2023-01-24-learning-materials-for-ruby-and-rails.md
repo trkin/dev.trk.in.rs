@@ -24,3 +24,8 @@ should start from
   Note that some videos can be found in other playlists for example [The VSCode Rails Extensions
   Used In This Series | Intro To Ruby On Rails For Beginners Part 17
   ](https://www.youtube.com/watch?v=4GjXSI6jcLI&list=PL3mtAHT_eRexG8W__yiMgv3tcIdbLlwho&index=50)
+
+
+# Javascript
+
+* <https://github.com/mbeaudru/modern-js-cheatsheet#template-literals>
