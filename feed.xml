@@ -6,8 +6,8 @@
 </description>
     <link>https://dev.trk.in.rs/</link>
     <atom:link href="https://dev.trk.in.rs/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 06 Apr 2023 03:35:44 +0000</pubDate>
-    <lastBuildDate>Thu, 06 Apr 2023 03:35:44 +0000</lastBuildDate>
+    <pubDate>Thu, 06 Apr 2023 04:27:15 +0000</pubDate>
+    <lastBuildDate>Thu, 06 Apr 2023 04:27:15 +0000</lastBuildDate>
     <generator>Jekyll v4.3.2</generator>
     
       <item>
@@ -161,6 +161,19 @@ aws ec2 describe-instances --query &quot;Reservations[].Instances[].PublicIpAddr
   &lt;li&gt;&lt;a href=&quot;https://github.com/thoughtbot/guides/tree/main/git&quot;&gt;https://github.com/thoughtbot/guides/tree/main/git&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
+&lt;p&gt;When you move large number of files, or run linters, that should be in separate
+commit (or even separate pull request) and put the command in commit message&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git mv test/fixtures spec
+git commit -am&quot;git mv test/fixtures spec&quot;
+
+# or
+standardrb --fix spec
+git commit -am&quot;standardrb --fix spec&quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;code-review&quot;&gt;Code review&lt;/h2&gt;
+
 &lt;p&gt;For code review&lt;/p&gt;
 
 &lt;ul&gt;
@@ -202,7 +215,7 @@ firstLine=$(head -n1 $1)
 
 if ! [[ $firstLine =~ $issueNumber ]] ; then
   # Prepend issueNumber to COMMIT_MSG
-  echo &quot;i#$issueNumber&quot;&apos; &apos;$(cat &quot;$1&quot;| sed &apos;/^#.*/d&apos;) &amp;gt; &quot;$1&quot;
+  echo &quot;[#$issueNumber]&quot;&apos; &apos;$(cat &quot;$1&quot;| sed &apos;/^#.*/d&apos;) &amp;gt; &quot;$1&quot;
   #
   # Append issueNumber to COMMIT_MSG
   # echo -n &quot;i#$issueNumber&quot; &amp;gt;&amp;gt; &quot;$1&quot; # this will add at the end
@@ -214,6 +227,13 @@ fi
 HERE_DOC
 
 chmod +x .git/hooks/prepare-commit-msg
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Next time you make a commit on a branch &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;i123_add_test_for_signup&lt;/code&gt; than commit
+message will include &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;[123]&lt;/code&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git commit -am&quot;Add test for signup&quot;
+[#123] Add test for signup
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;h2 id=&quot;gitflow&quot;&gt;Gitflow&lt;/h2&gt;
