@@ -6,8 +6,8 @@
 </description>
     <link>https://dev.trk.in.rs/</link>
     <atom:link href="https://dev.trk.in.rs/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 30 Mar 2023 11:25:52 +0000</pubDate>
-    <lastBuildDate>Thu, 30 Mar 2023 11:25:52 +0000</lastBuildDate>
+    <pubDate>Thu, 06 Apr 2023 03:35:44 +0000</pubDate>
+    <lastBuildDate>Thu, 06 Apr 2023 03:35:44 +0000</lastBuildDate>
     <generator>Jekyll v4.3.2</generator>
     
       <item>
@@ -182,7 +182,7 @@ git push -u origin i123_add_test_for_signup
 
 &lt;p&gt;We use git hook for commit message so the issue number is automatically added to
 commit message.&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cat &amp;gt; .git/hooks/prepare-commit-msg &amp;lt; &apos;HERE_DOC&apos;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cat &amp;gt; .git/hooks/prepare-commit-msg &amp;lt;&amp;lt; &apos;HERE_DOC&apos;
 #!/bin/bash
 #
 # Source https://dev.trk.in.rs/2023/03/21/git-tips#git-hooks
@@ -261,13 +261,27 @@ gh pr merge -r -d
 
 &lt;p&gt;For automated way of controlling code styles we use
 &lt;a href=&quot;https://github.com/testdouble/standard&quot;&gt;Standard&lt;/a&gt; which uses Rubocop underneath
-and it is installed with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bundle add standard&lt;/code&gt; and configured:&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# .rubocop.yml
+and it is installed with those commands:&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;bundle add standard
+
+cat &amp;gt; .rubocop.yml &amp;lt;&amp;lt;HERE_DOC
 require: standard
 
 inherit_gem:
   standard: config/base.yml
+HERE_DOC
+
+cat &amp;gt; .standard.yml &amp;lt;&amp;lt;HERE_DOC
+ignore:
+  - &quot;**/*&quot;:
+    # put comma after each line {a:1,}
+    - Style/TrailingCommaInHashLiteral
+HERE_DOC
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;erb-lint&quot;&gt;Erb lint&lt;/h2&gt;
+
+&lt;p&gt;TODO: https://github.com/Shopify/erb-lint&lt;/p&gt;
 
 &lt;h1 id=&quot;text-syntax-on-buttons-and-messages&quot;&gt;Text syntax on buttons and messages&lt;/h1&gt;
 

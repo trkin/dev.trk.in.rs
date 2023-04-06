@@ -70,6 +70,7 @@
 
   <div class="post-content" itemprop="articleBody">
     <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h2"><a href="#erb-lint">Erb lint</a></li>
 <li class="toc-entry toc-h1"><a href="#text-syntax-on-buttons-and-messages">Text syntax on buttons and messages</a></li>
 </ul><p>For Ruby we are following</p>
 
@@ -81,13 +82,28 @@
 
 <p>For automated way of controlling code styles we use
 <a href="https://github.com/testdouble/standard">Standard</a> which uses Rubocop underneath
-and it is installed with <code class="language-plaintext highlighter-rouge">bundle add standard</code> and configured:</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># .rubocop.yml
+and it is installed with those commands:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bundle add standard
+
+cat &gt; .rubocop.yml &lt;&lt;HERE_DOC
 require: standard
 
 inherit_gem:
   standard: config/base.yml
+HERE_DOC
+
+cat &gt; .standard.yml &lt;&lt;HERE_DOC
+ignore:
+  - "**/*":
+    # put comma after each line {a:1,}
+    - Style/TrailingCommaInHashLiteral
+HERE_DOC
 </code></pre></div></div>
+
+<h2 id="erb-lint">
+<a class="anchor" href="#erb-lint" aria-hidden="true"><span class="octicon octicon-link"></span></a>Erb lint</h2>
+
+<p>TODO: https://github.com/Shopify/erb-lint</p>
 
 <h1 id="text-syntax-on-buttons-and-messages">
 <a class="anchor" href="#text-syntax-on-buttons-and-messages" aria-hidden="true"><span class="octicon octicon-link"></span></a>Text syntax on buttons and messages</h1>
