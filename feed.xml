@@ -6,8 +6,8 @@
 </description>
     <link>https://dev.trk.in.rs/</link>
     <atom:link href="https://dev.trk.in.rs/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 06 Apr 2023 04:27:15 +0000</pubDate>
-    <lastBuildDate>Thu, 06 Apr 2023 04:27:15 +0000</lastBuildDate>
+    <pubDate>Thu, 06 Apr 2023 06:29:27 +0000</pubDate>
+    <lastBuildDate>Thu, 06 Apr 2023 06:29:27 +0000</lastBuildDate>
     <generator>Jekyll v4.3.2</generator>
     
       <item>
@@ -457,6 +457,12 @@ Tutorial | Rails for Beginners Part 1&lt;/a&gt;.
 Note that some videos can be found in other playlists for example &lt;a href=&quot;https://www.youtube.com/watch?v=4GjXSI6jcLI&amp;amp;list=PL3mtAHT_eRexG8W__yiMgv3tcIdbLlwho&amp;amp;index=50&quot;&gt;The VSCode Rails Extensions
 Used In This Series | Intro To Ruby On Rails For Beginners Part 17
 &lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;javascript&quot;&gt;Javascript&lt;/h1&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/mbeaudru/modern-js-cheatsheet#template-literals&quot;&gt;https://github.com/mbeaudru/modern-js-cheatsheet#template-literals&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
         <pubDate>Tue, 24 Jan 2023 00:00:00 +0000</pubDate>
