@@ -6,8 +6,8 @@
 </description>
     <link>https://dev.trk.in.rs/</link>
     <atom:link href="https://dev.trk.in.rs/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 06 Apr 2023 06:29:27 +0000</pubDate>
-    <lastBuildDate>Thu, 06 Apr 2023 06:29:27 +0000</lastBuildDate>
+    <pubDate>Fri, 21 Apr 2023 16:14:28 +0000</pubDate>
+    <lastBuildDate>Fri, 21 Apr 2023 16:14:28 +0000</lastBuildDate>
     <generator>Jekyll v4.3.2</generator>
     
       <item>
@@ -695,8 +695,120 @@ pyenv versions
     
       <item>
         <title>Keyboard Shortcuts And Switch Windows</title>
-        <description>&lt;h1 id=&quot;shortcuts-for-linux&quot;&gt;Shortcuts for linux&lt;/h1&gt;
+        <description>&lt;h1 id=&quot;keyboard-remap&quot;&gt;Keyboard remap&lt;/h1&gt;
 
+&lt;h2 id=&quot;xremap&quot;&gt;xremap&lt;/h2&gt;
+
+&lt;p&gt;https://github.com/k0kubun/xremap&lt;/p&gt;
+
+&lt;p&gt;Download from releases https://github.com/k0kubun/xremap/releases and put in
+your path.
+For specific device use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;xremap --device &apos;Name&apos;&lt;/code&gt;
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;modmap&lt;/code&gt; allow key-to-key remap
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;keymap&lt;/code&gt; for remapping a sequence of key combinations with modifiers&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;SHIFT-&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;CTRL-&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ALT-&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;SUPER-&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Key codes https://github.com/emberian/evdev/blob/1d020f11b283b0648427a2844b6b980f1a268221/src/scancodes.rs#L26-L572
+but you can see them with&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo RUST_LOG=debug ~/config/bin/xremap ~/config/bashrc/xremap.config.yml
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Problem is that I can not remap semicolon to colon ie it still show semicolon&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;keymap:
+  - name: Try
+    remap:
+      KEY_SEMICOLON: SHIFT-KEY_SEMICOLON
+      a: SHIFT-b
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;so I switch to keyd.&lt;/p&gt;
+
+&lt;p&gt;Before GNOME 14 we chould get WMCLASS with&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;gdbus call --session \
+  --dest org.gnome.Shell \
+  --object-path /org/gnome/Shell \
+  --method org.gnome.Shell.Eval &quot;global.display.focus_window.get_wm_class()&quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;but now we can not use eval.
+Another way to get WMCLASS is using Gnome extension
+https://extensions.gnome.org/extension/5060/xremap/ and run&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sleep 3 &amp;amp;&amp;amp; busctl --user call org.gnome.Shell /com/k0kubun/Xremap com.k0kubun.Xremap WMClass
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;keyd&quot;&gt;Keyd&lt;/h2&gt;
+
+&lt;p&gt;man page https://github.com/rvaiya/keyd/blob/master/docs/keyd.scdoc&lt;/p&gt;
+
+&lt;p&gt;Install with https://github.com/rvaiya/keyd#from-source&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git clone https://github.com/rvaiya/keyd
+cd keyd
+make &amp;amp;&amp;amp; sudo make install
+sudo systemctl enable keyd &amp;amp;&amp;amp; sudo systemctl start keyd
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Usefull commands&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# reload configuration
+sudo keyd reload
+
+# config errors can be found on
+sudo journalctl -eu keyd
+
+# Use `&amp;lt;backspace&amp;gt;+&amp;lt;escape&amp;gt;+&amp;lt;enter&amp;gt;` to stop keyd if you can not use keyboard
+
+# See key codes
+sudo keyd monitor
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Main config file must start with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;[ids]&lt;/code&gt;&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# /etc/keyd/default.conf
+[ids]
+*
+
+[layer-name:modifier]
+key alias = key/macro/action
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;modifier is one of:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;C&lt;/code&gt; control&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;M&lt;/code&gt; meta/super&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;A&lt;/code&gt; alt&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;S&lt;/code&gt; shift&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;G&lt;/code&gt; AltGr&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Example capslock is activating nav layer&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;capslock = layer(nav)
+
+[nav]
+h = left
+l = right
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;You can remap whole layer with modifier
+[capslock:C]
+TODO:&lt;/p&gt;
+
+&lt;p&gt;App specific remaps
+https://github.com/rvaiya/keyd#application-specific-remapping-experimental&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo usermod -aG keyd dule
+
+# ~/.config/keyd/app.conf
+[chromium]
+
+alt.[ = C-S-tab
+alt.] = macro(C-tab)
+
+keyd-application-mapper
+Gnome detected
+keyd extension not found, installing...
+Success! Please restart Gnome and run this script one more time.
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;after reboot&lt;/p&gt;
 </description>
         <pubDate>Fri, 06 Jan 2023 00:00:00 +0000</pubDate>
         <link>https://dev.trk.in.rs/2023/01/06/keyboard-shortcuts-and-switch-windows/</link>
