@@ -6,9 +6,63 @@
 </description>
     <link>https://dev.trk.in.rs/</link>
     <atom:link href="https://dev.trk.in.rs/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 21 Apr 2023 16:14:28 +0000</pubDate>
-    <lastBuildDate>Fri, 21 Apr 2023 16:14:28 +0000</lastBuildDate>
+    <pubDate>Sat, 22 Apr 2023 20:49:33 +0000</pubDate>
+    <lastBuildDate>Sat, 22 Apr 2023 20:49:33 +0000</lastBuildDate>
     <generator>Jekyll v4.3.2</generator>
+    
+      <item>
+        <title>Rails Testing</title>
+        <description>&lt;h1 id=&quot;rails-testing&quot;&gt;Rails testing&lt;/h1&gt;
+
+&lt;p&gt;We usually use minitest since they are default Rails tool.
+You can start learnig from guide &lt;a href=&quot;https://guides.rubyonrails.org/testing.html&quot;&gt;https://guides.rubyonrails.org/testing.html&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;We use slow system test only for a few tests for success path flow. Instead of
+system test, we use faster controller tests.
+We use faster controller &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ActionDispatch::IntegrationTest&lt;/code&gt; test&lt;/p&gt;
+
+&lt;p&gt;You can find basic minitest assertions
+&lt;a href=&quot;https://guides.rubyonrails.org/testing.html#available-assertions&quot;&gt;https://guides.rubyonrails.org/testing.html#available-assertions&lt;/a&gt;
+but for each &lt;a href=&quot;https://guides.rubyonrails.org/testing.html#a-brief-note-about-test-cases&quot;&gt;class&lt;/a&gt;
+you can use other helpers and assertions like
+&lt;a href=&quot;https://api.rubyonrails.org/v7.0.4.2/classes/ActionDispatch/Integration/RequestHelpers.html&quot;&gt;follow_redirect!&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;fixtures&quot;&gt;Fixtures&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://guides.rubyonrails.org/testing.html#the-low-down-on-fixtures&quot;&gt;https://guides.rubyonrails.org/testing.html#the-low-down-on-fixtures&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;In each fixture yml file we define &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;DEFAULT&lt;/code&gt; that will contain defaults needed
+to create valid item (for example presence validation on name and null false in
+datable).
+We create one fixture with the same name as model, for example
+&lt;a href=&quot;https://github.com/trkin/rails_minitest/blob/main/test/fixtures/users.yml&quot;&gt;https://github.com/trkin/rails_minitest/blob/main/test/fixtures/users.yml&lt;/a&gt;&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# test/fixtures/users.yml
+# https://github.com/trkin/rails_minitest/blob/main/test/fixtures/users.yml
+DEFAULTS: &amp;amp;DEFAULTS
+  email: $LABEL@example.com
+  encrypted_password: &amp;lt;%= User.new.send(:password_digest, &apos;password&apos;) %&amp;gt;
+  confirmed_at: &amp;lt;%= Time.zone.now %&amp;gt;
+
+user:
+  &amp;lt;&amp;lt;: *DEFAULTS
+
+unconfirmed:
+  &amp;lt;&amp;lt;: *DEFAULTS
+  confirmed_at:
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The reason is that we do not need to think about the name when we a record. For
+example when we need a user than &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;user = users(:user)&lt;/code&gt;, when we need a comment
+than we have it as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;comment = comment(:comment)&lt;/code&gt;
+Those default records should represent common usage, eg &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;comment(:comment)&lt;/code&gt;
+belons to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;posts(:post)&lt;/code&gt; which belongs to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;users(:user)&lt;/code&gt;.&lt;/p&gt;
+</description>
+        <pubDate>Fri, 07 Apr 2023 00:00:00 +0000</pubDate>
+        <link>https://dev.trk.in.rs/2023/04/07/rails-testing/</link>
+        <guid isPermaLink="true">https://dev.trk.in.rs/2023/04/07/rails-testing/</guid>
+        
+        
+      </item>
     
       <item>
         <title>Docker Tips</title>
@@ -271,46 +325,7 @@ gh pr merge -r -d
     
       <item>
         <title>Code Style Guides</title>
-        <description>&lt;p&gt;For Ruby we are following&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;https://github.com/thoughtbot/guides/tree/main/ruby&quot;&gt;https://github.com/thoughtbot/guides/tree/main/ruby&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://github.com/Shopify/ruby-style-guide&quot;&gt;https://github.com/Shopify/ruby-style-guide&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://github.com/airbnb/ruby&quot;&gt;https://github.com/airbnb/ruby&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;For automated way of controlling code styles we use
-&lt;a href=&quot;https://github.com/testdouble/standard&quot;&gt;Standard&lt;/a&gt; which uses Rubocop underneath
-and it is installed with those commands:&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;bundle add standard
-
-cat &amp;gt; .rubocop.yml &amp;lt;&amp;lt;HERE_DOC
-require: standard
-
-inherit_gem:
-  standard: config/base.yml
-HERE_DOC
-
-cat &amp;gt; .standard.yml &amp;lt;&amp;lt;HERE_DOC
-ignore:
-  - &quot;**/*&quot;:
-    # put comma after each line {a:1,}
-    - Style/TrailingCommaInHashLiteral
-HERE_DOC
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;erb-lint&quot;&gt;Erb lint&lt;/h2&gt;
-
-&lt;p&gt;TODO: https://github.com/Shopify/erb-lint&lt;/p&gt;
-
-&lt;h1 id=&quot;text-syntax-on-buttons-and-messages&quot;&gt;Text syntax on buttons and messages&lt;/h1&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;labels on buttons, titles,…  should be upper case with no period: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;This Job
-Is Paused&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;sentences on error messages, flash messages…  should have period at the end:
-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Job has been copied successfully.&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
+        <description>
 </description>
         <pubDate>Wed, 15 Mar 2023 00:00:00 +0000</pubDate>
         <link>https://dev.trk.in.rs/2023/03/15/code-style-guides/</link>
@@ -813,178 +828,6 @@ Success! Please restart Gnome and run this script one more time.
         <pubDate>Fri, 06 Jan 2023 00:00:00 +0000</pubDate>
         <link>https://dev.trk.in.rs/2023/01/06/keyboard-shortcuts-and-switch-windows/</link>
         <guid isPermaLink="true">https://dev.trk.in.rs/2023/01/06/keyboard-shortcuts-and-switch-windows/</guid>
-        
-        
-      </item>
-    
-      <item>
-        <title>Ubuntu Multiseat</title>
-        <description>&lt;p&gt;You can easilly start with multiseat. Here is a nice blog
-&lt;a href=&quot;https://www.apalrd.net/posts/2022/multiseat_intro/&quot;&gt;https://www.apalrd.net/posts/2022/multiseat_intro/&lt;/a&gt;
-You can use this script to get all statuses
-sudo loginctl seat-status seat3 &amp;gt; ~/config/loginctl/seat3.seat-status.txt&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# ~/config/loginctl_seats/seat_statuses.sh
-set -x # Show command being executed              
-
-sudo loginctl seat-status seat0 &amp;gt; ~/config/loginstl_seats/seat0.seat-status.txt
-sudo loginctl seat-status seat1 &amp;gt; ~/config/loginstl_seats/seat1.seat-status.txt
-sudo loginctl seat-status seat2 &amp;gt; ~/config/loginstl_seats/seat2.seat-status.txt
-sudo loginctl seat-status seat3 &amp;gt; ~/config/loginstl_seats/seat3.seat-status.txt                                                                                       
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;Before setting the seats you can read some info about command&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;man loginctl
-loginctl list-seats
-# when you want to remove all seats and attach to default
-loginctl flush-devices
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Let’s store configuration in tmp folder which is tracked with git, for example&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;mkdir ~/config/loginctl_seats
-cd ~/config/loginctl_seats
-git init .
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;steps&quot;&gt;Steps&lt;/h2&gt;
-
-&lt;p&gt;Lets generate info&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;./seat_statuses.sh
-git add .
-git diff --staged
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;here is example seat status&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;lspci | grep VGA
-03:00.0 VGA compatible controller: Advanced Micro Devices, Inc. [AMD/ATI] Cape Verde PRO [Radeon HD 7750/8740 / R7 250E]
-04:00.0 VGA compatible controller: Advanced Micro Devices, Inc. [AMD/ATI] Cape Verde PRO [Radeon HD 7750/8740 / R7 250E]
-
-radeontop -b 03
-# Graphic pipe 10,00%
-# this should remain in seat0 which will be default
-radeontop -b 04
-# Graphic pipe 0,00%
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;You need to attach MASTER devices (ie graphic cards) otherwise new seat will not
-be created.
-Search for &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;drm&lt;/code&gt; and look at last number (in this case &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;04&lt;/code&gt;)
-Also need to attach &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;render&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;fb&lt;/code&gt; (frame buffer, if exists) and sound Also
-find the ports that you want to assign. If you have usb dock station than you do
-have to allocate only one port. All devices attached to docking station will be
-under that port (also the soud and microphone). You can use headset with
-microphone and with one 3.5mm cable you have stable sound connection.
-Put that in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;attach_seats.sh&lt;/code&gt; file so we can modify and run easilly&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# attach_seats.sh
-sudo loginctl attach seat1 /sys/devices/pci0000:00/0000:00:01.0/0000:01:00.0/0000:02:10.0/0000:04:00.0/drm/card1
-sudo loginctl attach seat1 /sys/devices/pci0000:00/0000:00:01.0/0000:01:00.0/0000:02:10.0/0000:04:00.0/drm/renderD129
-sudo loginctl attach seat1 /sys/devices/pci0000:00/0000:00:01.0/0000:01:00.0/0000:02:10.0/0000:04:00.0/graphics/fb1
-
-sudo loginctl attach seat1 /sys/devices/pci0000:00/0000:00:01.0/0000:01:00.0/0000:02:10.0/0000:04:00.1/sound/card2
-
-# those usb porst are two first rows on the back
-sudo loginctl attach seat1 /sys/devices/pci0000:00/0000:00:1d.0/usb2
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;When you run attach you should not see any 04 devices on seat0&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;./attach_seats.sh
-
-# restart
-./seat_statuses.sh &amp;amp;&amp;amp; git diff
-git add .
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;issues&quot;&gt;Issues&lt;/h2&gt;
-
-&lt;p&gt;When someone logs out than all users will log out and only seat0 will get
-login screen. Sometimes it helps that seat0 log in and log out. The best is to use Lock instead of Log out.&lt;/p&gt;
-
-&lt;p&gt;When you remove graphic card, than that seat will be discarded and all it’s
-devices will be assigned to default seat seat0.&lt;/p&gt;
-
-&lt;p&gt;To remove one specific device from seat, you need to attach to another seat (you
-need to know it’s path)&lt;/p&gt;
-
-&lt;h1 id=&quot;usb-dock&quot;&gt;USB Dock&lt;/h1&gt;
-
-&lt;p&gt;Download Display Link software from &lt;a href=&quot;https://www.synaptics.com/products/displaylink-graphics/downloads/ubuntu&quot;&gt;https://www.synaptics.com/products/displaylink-graphics/downloads/ubuntu&lt;/a&gt;
-and follow &lt;a href=&quot;https://support.displaylink.com/knowledgebase/articles/1944022-how-to-install-displaylink-software-on-ubuntu-20-0&quot;&gt;https://support.displaylink.com/knowledgebase/articles/1944022-how-to-install-displaylink-software-on-ubuntu-20-0&lt;/a&gt;&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo ./displaylink-driver-5.3.0.xx.run
-# this will install libdrm-dev lipciaccess-dev
-
-Installing
-[ Installing EVDI ]
-[[ Installing EVDI DKMS module ]]
-Creating symlink /var/lib/dkms/evdi/1.12.0/source -&amp;gt; /usr/src/evdi-1.12.0
-
-Kernel preparation unnecessary for this kernel. Skipping...
-
-Building module:
-cleaning build area...
-make -j24 KERNELRELEASE=5.19.0-35-generic all INCLUDEDIR=/lib/modules/5.19.0-35-generic/build/include KVERSION=5.19.0-35-generic DKMS_BUILD=1...
-Signing module:
- - /var/lib/dkms/evdi/1.12.0/5.19.0-35-generic/x86_64/module/evdi.ko
-EFI variables are not supported on this system
-/sys/firmware/efi/efivars not found, aborting.
-cleaning build area...
-
-evdi.ko:
-Running module version sanity check.
- - Original module
-   - No original module exists within this kernel
- - Installation
-   - Installing to /lib/modules/5.19.0-35-generic/updates/dkms/
-
-depmod....
-[[ Installing module configuration files ]]
-[[ Installing EVDI library ]]
-make: Entering directory &apos;/tmp/tmp.XS3WN4Qt0Q/evdi/library&apos;
-cc -I../module -std=gnu99 -fPIC -D_FILE_OFFSET_BITS=64    -c -o evdi_lib.o evdi_lib.c
-cc evdi_lib.o -shared -Wl,-soname,libevdi.so.0 -o libevdi.so.1.12.0 -lc -lgcc 
-cp libevdi.so.1.12.0 libevdi.so
-make: Leaving directory &apos;/tmp/tmp.XS3WN4Qt0Q/evdi/library&apos;
-[ Installing x64-ubuntu-1604/DisplayLinkManager ]
-[ Installing libraries ]
-[ Installing firmware packages ]
-[ Installing licence file ]
-[ Adding udev rule for DisplayLink DL-3xxx/4xxx/5xxx/6xxx devices ]
-[ Adding upstart and powermanager sctripts ]
-
-Please read the FAQ
-http://support.displaylink.com/knowledgebase/topics/103927-troubleshooting-ubuntu
-
-Installation complete!
-
-Please reboot your computer if you&apos;re intending to use Xorg.
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Read FAQ
-https://support.displaylink.com/knowledgebase/topics/103927-troubleshooting-ubuntu&lt;/p&gt;
-
-&lt;p&gt;When you move the between seats only difference is that it moves sound:card and
-usb (all attached usb devices will show up under this usb device)&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;		  │   │ ├─/sys/devices/pci0000:00/0000:00:1a.0/usb1/1-1/1-1.2/1-1.2.2
-		  │   │ │ usb:1-1.2.2
-		  │   │ │ ├─/sys/devices/pci0000:00/0000:00:1a.0/usb1/1-1/1-1.2/1-1.2.2/1-1.2.2.1/1-1.2.2.1:1.2/sound/card6
-		  │   │ │ │ sound:card6 &quot;Dock&quot;
-		  │   │ │ └─/sys/devices/pci0000:00/0000:00:1a.0/usb1/1-1/1-1.2/1-1.2.2/1-1.2.2.4
-		  │   │ │   usb:1-1.2.2.4
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;other devices stays the same.
-And there is no change when we start or stop the driver.&lt;/p&gt;
-
-&lt;p&gt;Driver page is &lt;a href=&quot;https://github.com/DisplayLink/evdi&quot;&gt;https://github.com/DisplayLink/evdi&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;You can stop start the driver with&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo service displaylink-driver stop
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;You can attach specific evdi drm to new seats &lt;a href=&quot;https://askubuntu.com/a/1304701/40031&quot;&gt;https://askubuntu.com/a/1304701/40031&lt;/a&gt;&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-</description>
-        <pubDate>Thu, 05 Jan 2023 00:00:00 +0000</pubDate>
-        <link>https://dev.trk.in.rs/2023/01/05/ubuntu-multiseat/</link>
-        <guid isPermaLink="true">https://dev.trk.in.rs/2023/01/05/ubuntu-multiseat/</guid>
         
         
       </item>

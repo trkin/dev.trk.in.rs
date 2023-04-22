@@ -6,11 +6,11 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Code Style Guides</title>
-  <meta name="description" content="">
+  <title>Rails Testing</title>
+  <meta name="description" content="Rails testing">
 
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="canonical" href="https://dev.trk.in.rs/2023/03/15/code-style-guides/">
+  <link rel="canonical" href="https://dev.trk.in.rs/2023/04/07/rails-testing/">
   <link rel="alternate" type="application/rss+xml" title="TRK RAILS" href="https://dev.trk.in.rs/feed.xml">
 </head>
 
@@ -64,13 +64,63 @@
         <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title" itemprop="name headline">Code Style Guides</h1>
-    <p class="post-meta"><time datetime="2023-03-15T00:00:00+00:00" itemprop="datePublished">Mar 15, 2023</time></p>
+    <h1 class="post-title" itemprop="name headline">Rails Testing</h1>
+    <p class="post-meta"><time datetime="2023-04-07T00:00:00+00:00" itemprop="datePublished">Apr 7, 2023</time></p>
   </header>
 
   <div class="post-content" itemprop="articleBody">
     <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h1"><a href="#rails-testing">Rails testing</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#fixtures">Fixtures</a></li>
 </ul>
+</li>
+</ul><h1 id="rails-testing">
+<a class="anchor" href="#rails-testing" aria-hidden="true"><span class="octicon octicon-link"></span></a>Rails testing</h1>
+
+<p>We usually use minitest since they are default Rails tool.
+You can start learnig from guide <a href="https://guides.rubyonrails.org/testing.html">https://guides.rubyonrails.org/testing.html</a></p>
+
+<p>We use slow system test only for a few tests for success path flow. Instead of
+system test, we use faster controller tests.
+We use faster controller <code class="language-plaintext highlighter-rouge">ActionDispatch::IntegrationTest</code> test</p>
+
+<p>You can find basic minitest assertions
+<a href="https://guides.rubyonrails.org/testing.html#available-assertions">https://guides.rubyonrails.org/testing.html#available-assertions</a>
+but for each <a href="https://guides.rubyonrails.org/testing.html#a-brief-note-about-test-cases">class</a>
+you can use other helpers and assertions like
+<a href="https://api.rubyonrails.org/v7.0.4.2/classes/ActionDispatch/Integration/RequestHelpers.html">follow_redirect!</a></p>
+
+<h2 id="fixtures">
+<a class="anchor" href="#fixtures" aria-hidden="true"><span class="octicon octicon-link"></span></a>Fixtures</h2>
+
+<p><a href="https://guides.rubyonrails.org/testing.html#the-low-down-on-fixtures">https://guides.rubyonrails.org/testing.html#the-low-down-on-fixtures</a></p>
+
+<p>In each fixture yml file we define <code class="language-plaintext highlighter-rouge">DEFAULT</code> that will contain defaults needed
+to create valid item (for example presence validation on name and null false in
+datable).
+We create one fixture with the same name as model, for example
+<a href="https://github.com/trkin/rails_minitest/blob/main/test/fixtures/users.yml">https://github.com/trkin/rails_minitest/blob/main/test/fixtures/users.yml</a></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># test/fixtures/users.yml
+# https://github.com/trkin/rails_minitest/blob/main/test/fixtures/users.yml
+DEFAULTS: &amp;DEFAULTS
+  email: $LABEL@example.com
+  encrypted_password: &lt;%= User.new.send(:password_digest, 'password') %&gt;
+  confirmed_at: &lt;%= Time.zone.now %&gt;
+
+user:
+  &lt;&lt;: *DEFAULTS
+
+unconfirmed:
+  &lt;&lt;: *DEFAULTS
+  confirmed_at:
+</code></pre></div></div>
+
+<p>The reason is that we do not need to think about the name when we a record. For
+example when we need a user than <code class="language-plaintext highlighter-rouge">user = users(:user)</code>, when we need a comment
+than we have it as <code class="language-plaintext highlighter-rouge">comment = comment(:comment)</code>
+Those default records should represent common usage, eg <code class="language-plaintext highlighter-rouge">comment(:comment)</code>
+belons to <code class="language-plaintext highlighter-rouge">posts(:post)</code> which belongs to <code class="language-plaintext highlighter-rouge">users(:user)</code>.</p>
 
   </div>
 
