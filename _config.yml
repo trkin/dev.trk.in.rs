@@ -10,10 +10,9 @@ title: TRK RAILS
 email: salji@trk.in.rs
 phone: +381 63 8997157
 description: > # this means to ignore newlines until "baseurl:"
-  TRK IN NOVI SAD
+  TRK RUBY NOVI SAD
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://dev.trk.in.rs" # the base hostname & protocol for your site
-github_username:  duleorlovic
 
 # Build settings
 markdown: kramdown
