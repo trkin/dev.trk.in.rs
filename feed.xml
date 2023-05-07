@@ -2,12 +2,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>TRK RAILS</title>
-    <description>TRK IN NOVI SAD
+    <description>TRK RUBY NOVI SAD
 </description>
     <link>https://dev.trk.in.rs/</link>
     <atom:link href="https://dev.trk.in.rs/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sat, 22 Apr 2023 20:49:33 +0000</pubDate>
-    <lastBuildDate>Sat, 22 Apr 2023 20:49:33 +0000</lastBuildDate>
+    <pubDate>Sun, 07 May 2023 19:56:44 +0000</pubDate>
+    <lastBuildDate>Sun, 07 May 2023 19:56:44 +0000</lastBuildDate>
     <generator>Jekyll v4.3.2</generator>
     
       <item>
