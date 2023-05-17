@@ -2,6 +2,12 @@
 layout: post
 ---
 
+# Git
+
+To learn git you can use [w3schools git](https://www.w3schools.com/git/) tutorial.
+
+Anyway, you can try chatGPT on [https://chat.openai.com/](https://chat.openai.com/)
+
 # Ruby
 
 To start learning Ruby, you can try with:
