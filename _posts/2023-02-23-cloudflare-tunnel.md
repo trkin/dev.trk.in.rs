@@ -6,9 +6,17 @@ Ngrok is a service which gives you random url whenever you start a new tunnel.
 [Clodflare tunnel](https://www.cloudflare.com/products/tunnel/) is a free
 service that you can use as ngrok alternative.
 
-Install
+Install https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/
 ```
+# macOS
 brew install cloudflared
+# ubuntu
+wget -q https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb && dpkg -i cloudflared-linux-amd64.deb
+```
+and login
+```
+cloudflared tunnel login
+# this will create and download ~/.cloudflared/cert.pem
 ```
 
 You can create a temporary tunnel with random url
@@ -33,7 +41,8 @@ cloudflared tunnel create mytunnel
 cat > ~/.cloudflared/config.yaml << 'HERE_DOC'
 url: http://localhost:3000
 tunnel: mytunnel
-credentials-file: ~/.cloudflared/asd....asd.json
+# home shortcut ~/.cloudflared/ will not work
+credentials-file: /home/dule/.cloudflared/asd....asd.json
 HERE_DOC
 
 # create DNS CNAME record to route to tunnel
@@ -50,3 +59,10 @@ If you install as a service than you need to stop that service
 ```
 systemctl status cloudflared
 ```
+
+#  Cloudflare DNS
+
+If you need ssh port 22 access than you need to disable Proxied and use DNS only
+proxy status.
+Those
+

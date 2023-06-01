@@ -172,6 +172,9 @@ You can stop start the driver with
 sudo service displaylink-driver stop
 ```
 
+or in `Activity Monitor` CPU tab search for `DisplayLinkUserAgent` and double
+click > Quit > Force quit
+
 You can attach specific evdi drm to new seats <https://askubuntu.com/a/1304701/40031>
 ```
 ```
