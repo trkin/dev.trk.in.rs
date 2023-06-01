@@ -6,8 +6,8 @@
 </description>
     <link>https://dev.trk.in.rs/</link>
     <atom:link href="https://dev.trk.in.rs/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 07 May 2023 19:56:44 +0000</pubDate>
-    <lastBuildDate>Sun, 07 May 2023 19:56:44 +0000</lastBuildDate>
+    <pubDate>Thu, 01 Jun 2023 06:06:10 +0000</pubDate>
+    <lastBuildDate>Thu, 01 Jun 2023 06:06:10 +0000</lastBuildDate>
     <generator>Jekyll v4.3.2</generator>
     
       <item>
@@ -242,7 +242,7 @@ For example&lt;/p&gt;
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git checkout -b i123_add_test_for_signup
 # make changes
 git commit -m&apos;Add test for signup #123`
-git push -u origin i123_add_test_for_signup
+git push -u origin HEAD
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;h2 id=&quot;git-hooks&quot;&gt;Git hooks&lt;/h2&gt;
@@ -267,13 +267,14 @@ issueNumber=$(git branch | grep &apos;*&apos; | grep -o &apos;[0-9]*&apos;)
 # Get the first line, ex: from ammending or mmm from git commit -am&apos;mmm&apos;
 firstLine=$(head -n1 $1)
 
-if ! [[ $firstLine =~ $issueNumber ]] ; then
+# echo firstLine=$firstLine issueNumber=$issueNumber
+if [[ -n $issueNumber &amp;amp;&amp;amp; ! $firstLine =~ $issueNumber ]] ; then
   # Prepend issueNumber to COMMIT_MSG
-  echo &quot;[#$issueNumber]&quot;&apos; &apos;$(cat &quot;$1&quot;| sed &apos;/^#.*/d&apos;) &amp;gt; &quot;$1&quot;
+  # echo &quot;i#$issueNumber&quot;&apos; &apos;$(cat &quot;$1&quot;| sed &apos;/^#.*/d&apos;) &amp;gt; &quot;$1&quot;
   #
   # Append issueNumber to COMMIT_MSG
-  # echo -n &quot;i#$issueNumber&quot; &amp;gt;&amp;gt; &quot;$1&quot; # this will add at the end
-  # echo $(cat &quot;$1&quot; | sed &apos;/^#.*/d&apos;)&apos; &apos;&quot;i#$issueNumber&quot; &amp;gt; &quot;$1&quot;
+  # echo -n &quot;#$issueNumber&quot; &amp;gt;&amp;gt; &quot;$1&quot; # this will add at the end
+  echo $(cat &quot;$1&quot; | sed &apos;/^#.*/d&apos;)&apos; &apos;&quot;#$issueNumber&quot; &amp;gt; &quot;$1&quot;
 
   # Insert issueNumber at the end of the commit message file
   # sed -i &quot;1s@^@\n\n$issueNumber@&quot; $1
@@ -340,8 +341,15 @@ gh pr merge -r -d
 &lt;a href=&quot;https://www.cloudflare.com/products/tunnel/&quot;&gt;Clodflare tunnel&lt;/a&gt; is a free
 service that you can use as ngrok alternative.&lt;/p&gt;
 
-&lt;p&gt;Install&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;brew install cloudflared
+&lt;p&gt;Install https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# macOS
+brew install cloudflared
+# ubuntu
+wget -q https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb &amp;amp;&amp;amp; dpkg -i cloudflared-linux-amd64.deb
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;and login&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cloudflared tunnel login
+# this will create and download ~/.cloudflared/cert.pem
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;You can create a temporary tunnel with random url&lt;/p&gt;
@@ -364,7 +372,8 @@ cloudflared tunnel create mytunnel
 cat &amp;gt; ~/.cloudflared/config.yaml &amp;lt;&amp;lt; &apos;HERE_DOC&apos;
 url: http://localhost:3000
 tunnel: mytunnel
-credentials-file: ~/.cloudflared/asd....asd.json
+# home shortcut ~/.cloudflared/ will not work
+credentials-file: /home/dule/.cloudflared/asd....asd.json
 HERE_DOC
 
 # create DNS CNAME record to route to tunnel
@@ -380,6 +389,13 @@ cloudflared tunnel info mytunnel
 &lt;p&gt;If you install as a service than you need to stop that service&lt;/p&gt;
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;systemctl status cloudflared
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h1 id=&quot;cloudflare-dns&quot;&gt;Cloudflare DNS&lt;/h1&gt;
+
+&lt;p&gt;If you need ssh port 22 access than you need to disable Proxied and use DNS only
+proxy status.
+Those&lt;/p&gt;
+
 </description>
         <pubDate>Thu, 23 Feb 2023 00:00:00 +0000</pubDate>
         <link>https://dev.trk.in.rs/2023/02/23/cloudflare-tunnel/</link>

@@ -70,12 +70,20 @@
 
   <div class="post-content" itemprop="articleBody">
     <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h1"><a href="#cloudflare-dns">Cloudflare DNS</a></li>
 </ul><p>Ngrok is a service which gives you random url whenever you start a new tunnel.
 <a href="https://www.cloudflare.com/products/tunnel/">Clodflare tunnel</a> is a free
 service that you can use as ngrok alternative.</p>
 
-<p>Install</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew install cloudflared
+<p>Install https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># macOS
+brew install cloudflared
+# ubuntu
+wget -q https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb &amp;&amp; dpkg -i cloudflared-linux-amd64.deb
+</code></pre></div></div>
+<p>and login</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cloudflared tunnel login
+# this will create and download ~/.cloudflared/cert.pem
 </code></pre></div></div>
 
 <p>You can create a temporary tunnel with random url</p>
@@ -98,7 +106,8 @@ cloudflared tunnel create mytunnel
 cat &gt; ~/.cloudflared/config.yaml &lt;&lt; 'HERE_DOC'
 url: http://localhost:3000
 tunnel: mytunnel
-credentials-file: ~/.cloudflared/asd....asd.json
+# home shortcut ~/.cloudflared/ will not work
+credentials-file: /home/dule/.cloudflared/asd....asd.json
 HERE_DOC
 
 # create DNS CNAME record to route to tunnel
@@ -114,6 +123,14 @@ cloudflared tunnel info mytunnel
 <p>If you install as a service than you need to stop that service</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>systemctl status cloudflared
 </code></pre></div></div>
+
+<h1 id="cloudflare-dns">
+<a class="anchor" href="#cloudflare-dns" aria-hidden="true"><span class="octicon octicon-link"></span></a>Cloudflare DNS</h1>
+
+<p>If you need ssh port 22 access than you need to disable Proxied and use DNS only
+proxy status.
+Those</p>
+
 
   </div>
 

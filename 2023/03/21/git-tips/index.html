@@ -112,7 +112,7 @@ For example</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git checkout -b i123_add_test_for_signup
 # make changes
 git commit -m'Add test for signup #123`
-git push -u origin i123_add_test_for_signup
+git push -u origin HEAD
 </code></pre></div></div>
 
 <h2 id="git-hooks">
@@ -138,13 +138,14 @@ issueNumber=$(git branch | grep '*' | grep -o '[0-9]*')
 # Get the first line, ex: from ammending or mmm from git commit -am'mmm'
 firstLine=$(head -n1 $1)
 
-if ! [[ $firstLine =~ $issueNumber ]] ; then
+# echo firstLine=$firstLine issueNumber=$issueNumber
+if [[ -n $issueNumber &amp;&amp; ! $firstLine =~ $issueNumber ]] ; then
   # Prepend issueNumber to COMMIT_MSG
-  echo "[#$issueNumber]"' '$(cat "$1"| sed '/^#.*/d') &gt; "$1"
+  # echo "i#$issueNumber"' '$(cat "$1"| sed '/^#.*/d') &gt; "$1"
   #
   # Append issueNumber to COMMIT_MSG
-  # echo -n "i#$issueNumber" &gt;&gt; "$1" # this will add at the end
-  # echo $(cat "$1" | sed '/^#.*/d')' '"i#$issueNumber" &gt; "$1"
+  # echo -n "#$issueNumber" &gt;&gt; "$1" # this will add at the end
+  echo $(cat "$1" | sed '/^#.*/d')' '"#$issueNumber" &gt; "$1"
 
   # Insert issueNumber at the end of the commit message file
   # sed -i "1s@^@\n\n$issueNumber@" $1
