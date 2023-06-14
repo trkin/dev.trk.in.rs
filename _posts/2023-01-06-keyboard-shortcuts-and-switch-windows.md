@@ -56,6 +56,9 @@ git clone https://github.com/rvaiya/keyd
 cd keyd
 make && sudo make install
 sudo systemctl enable keyd && sudo systemctl start keyd
+
+# stop
+sudo systemctl stop keyd && sudo systemctl disable keyd
 ```
 
 Usefull commands
@@ -69,7 +72,9 @@ sudo journalctl -eu keyd
 
 # Use `<backspace>+<escape>+<enter>` to stop keyd if you can not use keyboard
 
-# See key codes
+# List all keycode
+keyd list-keys
+# See key codes while typing
 sudo keyd monitor
 ```
 
