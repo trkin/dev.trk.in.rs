@@ -75,6 +75,7 @@
 <li class="toc-entry toc-h2"><a href="#git-hooks">Git hooks</a></li>
 <li class="toc-entry toc-h2"><a href="#gitflow">Gitflow</a></li>
 <li class="toc-entry toc-h2"><a href="#github-cli">Github cli</a></li>
+<li class="toc-entry toc-h2"><a href="#remove-all-branch-on-which-im-not-the-author">Remove all branch on which I’m not the author</a></li>
 </ul><h2 id="git-style">
 <a class="anchor" href="#git-style" aria-hidden="true"><span class="octicon octicon-link"></span></a>Git style</h2>
 
@@ -188,6 +189,28 @@ gh pr edit
 
 # rebase and delete local and remote branch
 gh pr merge -r -d
+</code></pre></div></div>
+
+<h2 id="remove-all-branch-on-which-im-not-the-author">
+<a class="anchor" href="#remove-all-branch-on-which-im-not-the-author" aria-hidden="true"><span class="octicon octicon-link"></span></a>Remove all branch on which I’m not the author</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#!/bin/bash
+
+current_user=$(git config user.email)
+
+# Remove all local branches on which I'm not the author of the tip
+
+for branch in $(git branch --format='%(refname:short)'); do
+    if [[ "$branch" =~ ^(main|develop|master)$ ]]; then
+        continue
+    fi
+    author=$(git log -1 --format='%ae' $branch)
+    if [ "$author" != "$current_user" ]; then
+      echo removing -$branch- $author
+      git branch -D $branch
+      echo
+    fi
+done
 </code></pre></div></div>
 
   </div>

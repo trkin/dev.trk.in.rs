@@ -132,6 +132,9 @@ https://extensions.gnome.org/extension/5060/xremap/ and run</p>
 cd keyd
 make &amp;&amp; sudo make install
 sudo systemctl enable keyd &amp;&amp; sudo systemctl start keyd
+
+# stop
+sudo systemctl stop keyd &amp;&amp; sudo systemctl disable keyd
 </code></pre></div></div>
 
 <p>Usefull commands</p>
@@ -144,7 +147,9 @@ sudo journalctl -eu keyd
 
 # Use `&lt;backspace&gt;+&lt;escape&gt;+&lt;enter&gt;` to stop keyd if you can not use keyboard
 
-# See key codes
+# List all keycode
+keyd list-keys
+# See key codes while typing
 sudo keyd monitor
 </code></pre></div></div>
 
