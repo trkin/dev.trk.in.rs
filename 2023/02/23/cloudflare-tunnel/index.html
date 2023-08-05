@@ -110,7 +110,8 @@ tunnel: mytunnel
 credentials-file: /home/dule/.cloudflared/asd....asd.json
 HERE_DOC
 
-# create DNS CNAME record to route to tunnel
+# create DNS CNAME record to route to tunnel eg
+# mytunnel asd...asd.cfargotunnel.com
 cloudflared tunnel route dns mytunnel mytunnel.trk.in.rs
 
 # start the tunnel
@@ -119,6 +120,13 @@ cloudflared tunnel run mytunnel
 # check tunnel status
 cloudflared tunnel info mytunnel
 </code></pre></div></div>
+
+<p>For multiple domains you just need to add same CNAME records to other
+subdomains.</p>
+
+<p>To block by IP address, go to Security &gt; WAF and create rule with “IP Source
+Address” “is not in” {my ip address} And “Hostname” “equals”
+“mytunnel.trk.in.rs” than “Block”.</p>
 
 <p>If you install as a service than you need to stop that service</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>systemctl status cloudflared
