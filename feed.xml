@@ -6,8 +6,8 @@
 </description>
     <link>https://dev.trk.in.rs/</link>
     <atom:link href="https://dev.trk.in.rs/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sat, 05 Aug 2023 06:15:19 +0000</pubDate>
-    <lastBuildDate>Sat, 05 Aug 2023 06:15:19 +0000</lastBuildDate>
+    <pubDate>Fri, 25 Aug 2023 10:46:57 +0000</pubDate>
+    <lastBuildDate>Fri, 25 Aug 2023 10:46:57 +0000</lastBuildDate>
     <generator>Jekyll v4.3.2</generator>
     
       <item>
@@ -694,6 +694,10 @@ export CPPFLAGS=&quot;-I`brew --prefix openssl@1.1`/include&quot;
 export PKG_CONFIG_PATH=&quot;`brew --prefix openssl@1.1`/lib/pkgconfig&quot;
 
 bundle
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;For ruby 2.6.6 on mac you might need to configure libffi&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;RUBY_CFLAGS=-DUSE_FFI_CLOSURE_ALLOC rbenv install 2.6.6
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;For Ruby 3.2.1 on ubuntu you might need to use define readline location&lt;/p&gt;
