@@ -150,6 +150,11 @@ export PKG_CONFIG_PATH="`brew --prefix openssl@1.1`/lib/pkgconfig"
 bundle
 ```
 
+For ruby 2.6.6 on mac you might need to configure libffi
+```
+RUBY_CFLAGS=-DUSE_FFI_CLOSURE_ALLOC rbenv install 2.6.6
+```
+
 For Ruby 3.2.1 on ubuntu you might need to use define readline location
 ```
 export RUBY_CONFIGURE_OPTS="--with-openssl-dir=`brew --prefix openssl` --with-readline-dir=`brew --prefix readline`"
