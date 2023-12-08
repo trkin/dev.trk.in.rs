@@ -55,7 +55,7 @@ brew update && brew upgrade ruby-build
 Error: /home/linuxbrew/.linuxbrew/Homebrew is not writable. You should change the
 ownership and permissions of /home/linuxbrew/.linuxbrew/Homebrew back to your
 user account:
-  sudo chown -R $(whoami) /home/linuxbrew/.linuxbrew/Homebrew
+sudo chown -R $(whoami) /home/linuxbrew/.linuxbrew
 ```
 Add group
 ```
@@ -70,6 +70,20 @@ sudo chmod -R g+w /home/linuxbrew/.linuxbrew/
 # check that group has rw-
 ls -la /home/linuxbrew/.linuxbrew/Homebrew/README.md
 -rw-rw-r-- 1 dule brew 8495 феб  9 08:40 /home/linuxbrew/.linuxbrew/Homebrew/README.md
+```
+
+Even useris in brew group there could be permission problems so you need to
+rerun chown again, Error is
+```
+brew upgrade ruby-build
+/home/linuxbrew/.linuxbrew/Homebrew/Library/Homebrew/utils/lock.sh: line 29: /home/linuxbrew/.linuxbrew/var/homebrew/locks/update: Permission denied
+-e:1:in `initialize': Bad file descriptor (Errno::EBADF)
+	from -e:1:in `new'
+	from -e:1:in `<main>'
+Error: Another active Homebrew update process is already in progress.
+Please wait for it to finish or terminate it to continue.
+
+Error: Permission denied @ rb_sysopen - /home/linuxbrew/.linuxbrew/var/homebrew/locks/ruby-build.formula.lock
 ```
 
 ## Install rbenv
