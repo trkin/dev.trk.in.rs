@@ -223,7 +223,19 @@ export PKG_CONFIG_PATH="`brew --prefix openssl@1.1`/lib/pkgconfig"
 bundle
 </code></pre></div></div>
 
-<p>For ruby 2.6.6 on mac you might need to configure libffi</p>
+<p>For ruby 2.6.7 on mac for error</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vm.c:2295:9: error: call to undeclared function 'rb_native_mutex_destroy'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+        rb_native_mutex_destroy(&amp;vm-&gt;waitpid_lock);
+        ^
+</code></pre></div></div>
+<p>you might need</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>CFLAGS="-Wno-error=implicit-function-declaration" rbenv install 2.6.7
+</code></pre></div></div>
+
+<p>For ruby 2.6.6 on mac you might see error</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>error closure.c:264:14: error: call to undeclared function 'ffi_prep_closure'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+</code></pre></div></div>
+<p>so you need to configure libffi</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>RUBY_CFLAGS=-DUSE_FFI_CLOSURE_ALLOC rbenv install 2.6.6
 </code></pre></div></div>
 

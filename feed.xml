@@ -6,8 +6,8 @@
 </description>
     <link>https://dev.trk.in.rs/</link>
     <atom:link href="https://dev.trk.in.rs/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 25 Aug 2023 10:46:57 +0000</pubDate>
-    <lastBuildDate>Fri, 25 Aug 2023 10:46:57 +0000</lastBuildDate>
+    <pubDate>Sat, 17 Feb 2024 11:04:03 +0000</pubDate>
+    <lastBuildDate>Sat, 17 Feb 2024 11:04:03 +0000</lastBuildDate>
     <generator>Jekyll v4.3.2</generator>
     
       <item>
@@ -696,7 +696,19 @@ export PKG_CONFIG_PATH=&quot;`brew --prefix openssl@1.1`/lib/pkgconfig&quot;
 bundle
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;For ruby 2.6.6 on mac you might need to configure libffi&lt;/p&gt;
+&lt;p&gt;For ruby 2.6.7 on mac for error&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;vm.c:2295:9: error: call to undeclared function &apos;rb_native_mutex_destroy&apos;; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+        rb_native_mutex_destroy(&amp;amp;vm-&amp;gt;waitpid_lock);
+        ^
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;you might need&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;CFLAGS=&quot;-Wno-error=implicit-function-declaration&quot; rbenv install 2.6.7
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;For ruby 2.6.6 on mac you might see error&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;error closure.c:264:14: error: call to undeclared function &apos;ffi_prep_closure&apos;; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;so you need to configure libffi&lt;/p&gt;
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;RUBY_CFLAGS=-DUSE_FFI_CLOSURE_ALLOC rbenv install 2.6.6
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
