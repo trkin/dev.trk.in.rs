@@ -73,6 +73,7 @@
 <li class="toc-entry toc-h2"><a href="#steps">Steps</a></li>
 <li class="toc-entry toc-h2"><a href="#issues">Issues</a></li>
 <li class="toc-entry toc-h1"><a href="#usb-dock">USB Dock</a></li>
+<li class="toc-entry toc-h1"><a href="#error">Error</a></li>
 </ul><p>You can easilly start with multiseat. Here is a nice blog
 <a href="https://www.apalrd.net/posts/2022/multiseat_intro/">https://www.apalrd.net/posts/2022/multiseat_intro/</a>
 You can use this script to get all statuses
@@ -125,7 +126,7 @@ Search for <code class="language-plaintext highlighter-rouge">drm</code> and loo
 Also need to attach <code class="language-plaintext highlighter-rouge">render</code> and <code class="language-plaintext highlighter-rouge">fb</code> (frame buffer, if exists) and sound Also
 find the ports that you want to assign. If you have usb dock station than you do
 have to allocate only one port. All devices attached to docking station will be
-under that port (also the soud and microphone). You can use headset with
+under that port (also the sound and microphone). You can use headset with
 microphone and with one 3.5mm cable you have stable sound connection.
 Put that in <code class="language-plaintext highlighter-rouge">attach_seats.sh</code> file so we can modify and run easilly</p>
 
@@ -241,6 +242,11 @@ click &gt; Quit &gt; Force quit</p>
 
 <p>You can attach specific evdi drm to new seats <a href="https://askubuntu.com/a/1304701/40031">https://askubuntu.com/a/1304701/40031</a></p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code></code></pre></div></div>
+<h1 id="error">
+<a class="anchor" href="#error" aria-hidden="true"><span class="octicon octicon-link"></span></a>Error</h1>
+
+<p>On logout you could get scrambled screen on other seats. Solution is to click on
+suspend, since when it wake up, it will provide normal login screen on all seats</p>
 
   </div>
 
