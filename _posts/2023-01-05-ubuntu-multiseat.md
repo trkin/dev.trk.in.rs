@@ -58,7 +58,7 @@ Search for `drm` and look at last number (in this case `04`)
 Also need to attach `render` and `fb` (frame buffer, if exists) and sound Also
 find the ports that you want to assign. If you have usb dock station than you do
 have to allocate only one port. All devices attached to docking station will be
-under that port (also the soud and microphone). You can use headset with
+under that port (also the sound and microphone). You can use headset with
 microphone and with one 3.5mm cable you have stable sound connection.
 Put that in `attach_seats.sh` file so we can modify and run easilly
 
@@ -178,3 +178,7 @@ click > Quit > Force quit
 You can attach specific evdi drm to new seats <https://askubuntu.com/a/1304701/40031>
 ```
 ```
+# Error
+
+On logout you could get scrambled screen on other seats. Solution is to click on
+suspend, since when it wake up, it will provide normal login screen on all seats
