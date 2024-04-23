@@ -26,8 +26,11 @@ cloudflared tunnel --url http://localhost:3000
 and it will be available under .trycloudflare.com like
 <https://request-composer-pools-requirements.trycloudflare.com>
 
-For long living tunnels which uses the same url you should use
+For long living tunnels which uses the same url you should use local
 <https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/>
+or remotelly managed tunnels
+
+## Locally managed tunnels
 
 ```
 # list all tunnels created previously using cloudflared cli on web
@@ -66,6 +69,18 @@ Address" "is not in" {my ip address} And "Hostname" "equals"
 If you install as a service than you need to stop that service
 ```
 systemctl status cloudflared
+```
+## Remotelly managed tunnels
+
+After install
+```
+sudo cloudflared service install eyJh....
+
+Installing cloudflared client as a system launch daemon. cloudflared client
+will run at boot
+2024-04-12T05:14:09Z INF Outputs are logged to
+/Library/Logs/com.cloudflare.cloudflared.err.log
+/Library/Logs/com.cloudflare.cloudflared.out.log
 ```
 
 #  Cloudflare DNS

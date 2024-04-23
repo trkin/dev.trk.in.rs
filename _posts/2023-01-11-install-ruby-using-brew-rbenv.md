@@ -74,6 +74,15 @@ ls -la /home/linuxbrew/.linuxbrew/Homebrew/README.md
 # also https://zenn.dev/megeton/articles/f9f17d184fead6
 git config --global --add safe.directory /usr/local/Homebrew
 ```
+On macos
+```
+sudo dseditgroup -o create homebrew
+sudo dseditgroup -o edit -a dule -t user homebrew
+sudo dseditgroup -o edit -a mile -t user homebrew
+
+sudo chown -R :homebrew /opt/homebrew
+sudo chmod -R g+w /opt/homebrew
+```
 
 ## Install rbenv
 
@@ -170,6 +179,15 @@ so you need to configure libffi
 RUBY_CFLAGS=-DUSE_FFI_CLOSURE_ALLOC rbenv install 2.6.6
 ```
 
+For ruby 2.7.6 on ubuntu and error
+```
+crypto/comp/c_zlib.c:35:11: fatal error: zlib.h: No such file or directory
+```
+solution is to install zlib
+```
+sudo apt-get install zlib1g-dev
+```
+
 For Ruby 3.2.1 on ubuntu you might need to use define readline location
 ```
 export RUBY_CONFIGURE_OPTS="--with-openssl-dir=`brew --prefix openssl` --with-readline-dir=`brew --prefix readline`"
@@ -180,6 +198,33 @@ Get Info > uncheck Open using Rosetta) so the output is arm
 ```
 uname -m
 arm64
+```
+
+For Ruby 3.0.1 on M1 I got this error
+```
+ error: use of undeclared identifier 'RSA_SSLV23_PADDING'
+```
+solution is to use old ssl so either uninstall new ssl 
+https://github.com/postmodern/ruby-install/issues/409#issuecomment-1560601024
+```
+brew uninstall --ignore-dependencies openssl
+brew install openssl@1.1
+```
+or export variables
+```
+export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@1.1)"
+export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@1.1)"
+export PATH="/opt/homebrew/opt/openssl@1.1/bin:$PATH"
+
+export LDFLAGS="-L/opt/homebrew/opt/openssl@1.1/lib"
+export CPPFLAGS="-I/opt/homebrew/opt/openssl@1.1/include"
+
+export PKG_CONFIG_PATH="/opt/homebrew/opt/openssl@1.1/lib/pkgconfig"
+
+rbenv install
+```
+or you can try with env
+```
 ```
 
 ## Jekyll
