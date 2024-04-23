@@ -151,6 +151,14 @@ ls -la /home/linuxbrew/.linuxbrew/Homebrew/README.md
 # also https://zenn.dev/megeton/articles/f9f17d184fead6
 git config --global --add safe.directory /usr/local/Homebrew
 </code></pre></div></div>
+<p>On macos</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo dseditgroup -o create homebrew
+sudo dseditgroup -o edit -a dule -t user homebrew
+sudo dseditgroup -o edit -a mile -t user homebrew
+
+sudo chown -R :homebrew /opt/homebrew
+sudo chmod -R g+w /opt/homebrew
+</code></pre></div></div>
 
 <h2 id="install-rbenv">
 <a class="anchor" href="#install-rbenv" aria-hidden="true"><span class="octicon octicon-link"></span></a>Install rbenv</h2>
@@ -239,6 +247,13 @@ bundle
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>RUBY_CFLAGS=-DUSE_FFI_CLOSURE_ALLOC rbenv install 2.6.6
 </code></pre></div></div>
 
+<p>For ruby 2.7.6 on ubuntu and error</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>crypto/comp/c_zlib.c:35:11: fatal error: zlib.h: No such file or directory
+</code></pre></div></div>
+<p>solution is to install zlib</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt-get install zlib1g-dev
+</code></pre></div></div>
+
 <p>For Ruby 3.2.1 on ubuntu you might need to use define readline location</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>export RUBY_CONFIGURE_OPTS="--with-openssl-dir=`brew --prefix openssl` --with-readline-dir=`brew --prefix readline`"
 </code></pre></div></div>
@@ -248,6 +263,29 @@ Get Info &gt; uncheck Open using Rosetta) so the output is arm</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>uname -m
 arm64
 </code></pre></div></div>
+
+<p>For Ruby 3.0.1 on M1 I got this error</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> error: use of undeclared identifier 'RSA_SSLV23_PADDING'
+</code></pre></div></div>
+<p>solution is to use old ssl so either uninstall new ssl 
+https://github.com/postmodern/ruby-install/issues/409#issuecomment-1560601024</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew uninstall --ignore-dependencies openssl
+brew install openssl@1.1
+</code></pre></div></div>
+<p>or export variables</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@1.1)"
+export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@1.1)"
+export PATH="/opt/homebrew/opt/openssl@1.1/bin:$PATH"
+
+export LDFLAGS="-L/opt/homebrew/opt/openssl@1.1/lib"
+export CPPFLAGS="-I/opt/homebrew/opt/openssl@1.1/include"
+
+export PKG_CONFIG_PATH="/opt/homebrew/opt/openssl@1.1/lib/pkgconfig"
+
+rbenv install
+</code></pre></div></div>
+<p>or you can try with env</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code></code></pre></div></div>
 
 <h2 id="jekyll">
 <a class="anchor" href="#jekyll" aria-hidden="true"><span class="octicon octicon-link"></span></a>Jekyll</h2>

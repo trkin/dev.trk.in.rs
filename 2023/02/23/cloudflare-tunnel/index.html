@@ -70,6 +70,8 @@
 
   <div class="post-content" itemprop="articleBody">
     <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h2"><a href="#locally-managed-tunnels">Locally managed tunnels</a></li>
+<li class="toc-entry toc-h2"><a href="#remotelly-managed-tunnels">Remotelly managed tunnels</a></li>
 <li class="toc-entry toc-h1"><a href="#cloudflare-dns">Cloudflare DNS</a></li>
 </ul><p>Ngrok is a service which gives you random url whenever you start a new tunnel.
 <a href="https://www.cloudflare.com/products/tunnel/">Clodflare tunnel</a> is a free
@@ -92,8 +94,12 @@ wget -q https://github.com/cloudflare/cloudflared/releases/latest/download/cloud
 <p>and it will be available under .trycloudflare.com like
 <a href="https://request-composer-pools-requirements.trycloudflare.com">https://request-composer-pools-requirements.trycloudflare.com</a></p>
 
-<p>For long living tunnels which uses the same url you should use
-<a href="https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/">https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/</a></p>
+<p>For long living tunnels which uses the same url you should use local
+<a href="https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/">https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/</a>
+or remotelly managed tunnels</p>
+
+<h2 id="locally-managed-tunnels">
+<a class="anchor" href="#locally-managed-tunnels" aria-hidden="true"><span class="octicon octicon-link"></span></a>Locally managed tunnels</h2>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># list all tunnels created previously using cloudflared cli on web
 cloudflared tunnel list
@@ -130,6 +136,18 @@ Address” “is not in” {my ip address} And “Hostname” “equals”
 
 <p>If you install as a service than you need to stop that service</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>systemctl status cloudflared
+</code></pre></div></div>
+<h2 id="remotelly-managed-tunnels">
+<a class="anchor" href="#remotelly-managed-tunnels" aria-hidden="true"><span class="octicon octicon-link"></span></a>Remotelly managed tunnels</h2>
+
+<p>After install</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo cloudflared service install eyJh....
+
+Installing cloudflared client as a system launch daemon. cloudflared client
+will run at boot
+2024-04-12T05:14:09Z INF Outputs are logged to
+/Library/Logs/com.cloudflare.cloudflared.err.log
+/Library/Logs/com.cloudflare.cloudflared.out.log
 </code></pre></div></div>
 
 <h1 id="cloudflare-dns">

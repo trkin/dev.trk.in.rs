@@ -6,9 +6,53 @@
 </description>
     <link>https://dev.trk.in.rs/</link>
     <atom:link href="https://dev.trk.in.rs/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 23 Feb 2024 14:10:32 +0000</pubDate>
-    <lastBuildDate>Fri, 23 Feb 2024 14:10:32 +0000</lastBuildDate>
-    <generator>Jekyll v4.3.2</generator>
+    <pubDate>Tue, 23 Apr 2024 14:06:49 +0000</pubDate>
+    <lastBuildDate>Tue, 23 Apr 2024 14:06:49 +0000</lastBuildDate>
+    <generator>Jekyll v4.3.3</generator>
+    
+      <item>
+        <title>Internship 2</title>
+        <description>&lt;p&gt;Pozdrav ekipa,&lt;/p&gt;
+
+&lt;p&gt;kompanije Trk Ruby Novi Sad ima otvoreno mesto za jednog praktikanta. Praksa
+nije placena posto se ne radi na resavanju konkretnih zadataka od strane naseg
+klijenta tako da ni mi ne profitiramo od buducih praktikanata, ali postoji
+mogucnost zaposlenja  nakon odradjene prakse.&lt;/p&gt;
+
+&lt;p&gt;Naziv pozicije: Praktikant za razvoj softvera (HTML, CSS, Javascript, Ruby on Rails)&lt;/p&gt;
+
+&lt;p&gt;Kompanija: Trk Ruby Novi Sad&lt;/p&gt;
+
+&lt;p&gt;Lokacija: Novi Sad, Srbija&lt;/p&gt;
+
+&lt;p&gt;Trajanje obuke: 2 meseca, 4 sata dnevno, u prostorijama kompanije&lt;/p&gt;
+
+&lt;p&gt;O kompaniji: Kompanija Trk Ruby Novi Sad je mala porodicna softverska kompanija koja se fokusira na razvoj web aplikacija pomoću najnovijih tehnologija, a prvenstveno pomocu Ruby on Rails frameworka.&lt;/p&gt;
+
+&lt;p&gt;Kvalifikacije:
+Osnovna znanja iz programiranja, uključujući objektno orijentisano programiranje. 
+Buduci praktikant ne mora da bude sa tehnickog faklulteta, ali mora da poseduje sposobnost logickog razmisljanja i povezivanja, kao i rada u timu
+Iskustvo sa HTML, CSS i Javascript je poželjno&lt;/p&gt;
+
+&lt;p&gt;Dodatne informacije:
+Ova praksa nije plaćena, ali praktikant će imati priliku da radi na izradi aplikacije uz mentorsku podršku našeg tima. Postoji mogućnost zaposlenja u kompaniji ukoliko praktikant pokaže odgovarajući timski duh i rezultate tokom prakse.&lt;/p&gt;
+
+&lt;p&gt;Prijave poslati na  &lt;a href=&quot;mailto:salji@trk.in.rs&quot;&gt;salji@trk.in.rs&lt;/a&gt;
+sa odgovorom na sledeća pitanja:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Koje je vaše dosadašnje iskustvo sa HTML, Javascript i Ruby jezikom&lt;/li&gt;
+  &lt;li&gt;Linkovi ka dosadašnjem radu: github profil, primeri sajtova na kom ste radili ako postoje&lt;/li&gt;
+  &lt;li&gt;Šta očekujete od prakse, koji su vam planovi za zaposlenje i ukratko o sebi&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Rok za prijavu je 6 Maj 2024.&lt;/p&gt;
+</description>
+        <pubDate>Tue, 23 Apr 2024 00:00:00 +0000</pubDate>
+        <link>https://dev.trk.in.rs/2024/04/23/internship-2/</link>
+        <guid isPermaLink="true">https://dev.trk.in.rs/2024/04/23/internship-2/</guid>
+        
+        
+      </item>
     
       <item>
         <title>Gitlab</title>
@@ -406,8 +450,11 @@ wget -q https://github.com/cloudflare/cloudflared/releases/latest/download/cloud
 &lt;p&gt;and it will be available under .trycloudflare.com like
 &lt;a href=&quot;https://request-composer-pools-requirements.trycloudflare.com&quot;&gt;https://request-composer-pools-requirements.trycloudflare.com&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;For long living tunnels which uses the same url you should use
-&lt;a href=&quot;https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/&quot;&gt;https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;For long living tunnels which uses the same url you should use local
+&lt;a href=&quot;https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/&quot;&gt;https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/&lt;/a&gt;
+or remotelly managed tunnels&lt;/p&gt;
+
+&lt;h2 id=&quot;locally-managed-tunnels&quot;&gt;Locally managed tunnels&lt;/h2&gt;
 
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# list all tunnels created previously using cloudflared cli on web
 cloudflared tunnel list
@@ -444,6 +491,17 @@ Address” “is not in” {my ip address} And “Hostname” “equals”
 
 &lt;p&gt;If you install as a service than you need to stop that service&lt;/p&gt;
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;systemctl status cloudflared
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h2 id=&quot;remotelly-managed-tunnels&quot;&gt;Remotelly managed tunnels&lt;/h2&gt;
+
+&lt;p&gt;After install&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo cloudflared service install eyJh....
+
+Installing cloudflared client as a system launch daemon. cloudflared client
+will run at boot
+2024-04-12T05:14:09Z INF Outputs are logged to
+/Library/Logs/com.cloudflare.cloudflared.err.log
+/Library/Logs/com.cloudflare.cloudflared.out.log
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;h1 id=&quot;cloudflare-dns&quot;&gt;Cloudflare DNS&lt;/h1&gt;
@@ -555,246 +613,6 @@ Used In This Series | Intro To Ruby On Rails For Beginners Part 17
         <pubDate>Tue, 24 Jan 2023 00:00:00 +0000</pubDate>
         <link>https://dev.trk.in.rs/2023/01/24/learning-materials-for-ruby-and-rails/</link>
         <guid isPermaLink="true">https://dev.trk.in.rs/2023/01/24/learning-materials-for-ruby-and-rails/</guid>
-        
-        
-      </item>
-    
-      <item>
-        <title>Install Ruby Using Brew Rbenv</title>
-        <description>&lt;h2 id=&quot;first-steps-on-new-ubuntu-machine&quot;&gt;First steps on new Ubuntu machine&lt;/h2&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# git is used to code collaboration
-sudo apt install -y git curl
-# necessary if you want to commit to any project
-git config --global user.email &quot;you@example.com&quot;
-git config --global user.name &quot;Your Name&quot;
-# nice editor
-sudo apt install vim
-# if you want to change default editor from nano to something else
-sudo update-alternatives --config editor
-# enable ssh to localhost
-sudo apt install openssh-server
-# generate ~/ssh/id_rsa and ~/ssh/id_rsa.pub to add to
-ssh-keygen
-
-# network tool to find all open ports and ip addresses, eg  nmap -F 192.168.1.-
-sudo apt install nmap
-
-# for building ruby
-sudo apt install -y build-essential libz-dev
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Install google chrome from &lt;a href=&quot;https://www.google.com/chrome/&quot;&gt;https://www.google.com/chrome/&lt;/a&gt;
-Right click on .deb file in Downloads, select Properties and in ‘Open With’ tab select ‘Software Install’ and click ‘Set as default’. Exit and double click on the .deb file to install Chrome.&lt;/p&gt;
-
-&lt;h2 id=&quot;brew&quot;&gt;Brew&lt;/h2&gt;
-
-&lt;p&gt;Use brew instead of manually install packages so all users can use the same libs
-&lt;a href=&quot;https://brew.sh/&quot;&gt;https://brew.sh/&lt;/a&gt;&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;/bin/bash -c &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)&quot;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Add to your &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.bashrc&lt;/code&gt; and reopen terminal. Typing &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;reset&lt;/code&gt; won’t work&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;echo &apos;eval &quot;$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)&quot;&apos; &amp;gt;&amp;gt; /home/$USER/.bashrc
-cat ~/.bashrc # you should see above line
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;Now you can use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;brew&lt;/code&gt; every time you open terminal&lt;/p&gt;
-
-&lt;p&gt;If you use multiseat than you need to add new group and attach each user to it
-https://apple.stackexchange.com/a/45003/449651
-Error is&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;brew update &amp;amp;&amp;amp; brew upgrade ruby-build
-Error: /home/linuxbrew/.linuxbrew/Homebrew is not writable. You should change the
-ownership and permissions of /home/linuxbrew/.linuxbrew/Homebrew back to your
-user account:
-  sudo chown -R $(whoami) /home/linuxbrew/.linuxbrew/Homebrew
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;Add group&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo groupadd brew
-compgen -u # list all users
-sudo usermod -aG brew dule
-sudo usermod -aG brew mile
-
-sudo chgrp -R brew /home/linuxbrew/.linuxbrew/
-sudo chmod -R g+w /home/linuxbrew/.linuxbrew/
-
-# check that group has rw-
-ls -la /home/linuxbrew/.linuxbrew/Homebrew/README.md
--rw-rw-r-- 1 dule brew 8495 феб  9 08:40 /home/linuxbrew/.linuxbrew/Homebrew/README.md
-
-# also https://zenn.dev/megeton/articles/f9f17d184fead6
-git config --global --add safe.directory /usr/local/Homebrew
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;install-rbenv&quot;&gt;Install rbenv&lt;/h2&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;brew install rbenv ruby-build libyaml openssl@1.1
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Add this to your &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;~/.bashrc&lt;/code&gt; so you can access rbenv commands&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;echo export PATH=&quot;$HOME/.rbenv/bin:$PATH&quot; &amp;gt;&amp;gt; ~/.bashrc
-echo eval &quot;$(rbenv init -)&quot; &amp;gt;&amp;gt; ~/.bashrc
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;installing-ruby-using-rbenv&quot;&gt;Installing Ruby using rbenv&lt;/h2&gt;
-
-&lt;p&gt;To change ruby version you can use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.ruby-version&lt;/code&gt; file in current or any parent
-folder. For example you can set default version with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.ruby-version&lt;/code&gt; in your
-home folder &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;~/&lt;/code&gt;&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;echo 3.2.0 &amp;gt; ~/.ruby-version
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;You can also change ruby version with this command or env variable&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;rbenv shell 3.2.0
-
-# this is the same as export RBENV_VERSION=3.2.0
-
-# check all installed versions
-rbenv versions
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;ruby-320&quot;&gt;Ruby 3.2.0&lt;/h3&gt;
-
-&lt;p&gt;For compiling Ruby 3.2.0 you should use openssl@3
-Check &lt;a href=&quot;https://github.com/rbenv/ruby-build/wiki&quot;&gt;rbenv/ruby-build&lt;/a&gt; wiki for
-additional info&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;brew install openssl@3
-
-export RUBY_CONFIGURE_OPTS=&quot;--with-openssl-dir=`brew --prefix openssl@3`&quot;
-
-rbenv install 3.2.0
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Export these variables, &lt;strong&gt;don’t&lt;/strong&gt; save them in your &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.bashrc&lt;/code&gt; it won’t work for
-every Ruby version so to be on the safe side just export them every time you
-want to install new Ruby version&lt;/p&gt;
-
-&lt;p&gt;When you install gems that need to be compiled locally than you might need to
-export PATH, LDFLAGS, CPPFLAGS or PKG_CONFIG_PATH&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;export PATH=&quot;/home/linuxbrew/.linuxbrew/opt/openssl@3/bin:$PATH&quot;
-export LDFLAGS=&quot;-L`brew --prefix openssl@3`/lib&quot;
-export CPPFLAGS=&quot;-I`brew --prefix openssl@3`/include&quot;
-export PKG_CONFIG_PATH=&quot;`brew --prefix openssl@3`/lib/pkgconfig&quot;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Note: &lt;strong&gt;Do not restart terminal&lt;/strong&gt; if you are exporting variables, it won’t persist in the next session&lt;/p&gt;
-
-&lt;p&gt;For example Installing Ruby version that uses openssl@1.1&lt;/p&gt;
-
-&lt;p&gt;To install version of ruby that uses openssl@1.1 we need to use RUBY_CONFIGURE_OPTS&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;export RUBY_CONFIGURE_OPTS=&quot;--with-openssl-dir=`brew --prefix openssl@1.1`&quot;
-ruby install 2.6.7
-
-export LDFLAGS=&quot;-L`brew --prefix openssl@1.1`/lib&quot;
-export CPPFLAGS=&quot;-I`brew --prefix openssl@1.1`/include&quot;
-export PKG_CONFIG_PATH=&quot;`brew --prefix openssl@1.1`/lib/pkgconfig&quot;
-
-bundle
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;For ruby 2.6.7 on mac for error&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;vm.c:2295:9: error: call to undeclared function &apos;rb_native_mutex_destroy&apos;; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
-        rb_native_mutex_destroy(&amp;amp;vm-&amp;gt;waitpid_lock);
-        ^
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;you might need&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;CFLAGS=&quot;-Wno-error=implicit-function-declaration&quot; rbenv install 2.6.7
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;For ruby 2.6.6 on mac you might see error&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;error closure.c:264:14: error: call to undeclared function &apos;ffi_prep_closure&apos;; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;so you need to configure libffi&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;RUBY_CFLAGS=-DUSE_FFI_CLOSURE_ALLOC rbenv install 2.6.6
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;For Ruby 3.2.1 on ubuntu you might need to use define readline location&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;export RUBY_CONFIGURE_OPTS=&quot;--with-openssl-dir=`brew --prefix openssl` --with-readline-dir=`brew --prefix readline`&quot;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;On macOS you, ruby 3.2.1 can be installed &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;rbenv install 3.2.1&lt;/code&gt; but make sure
-you are not using Rosseta (Finder &amp;gt; Menu Go &amp;gt; Utilities &amp;gt; Terminal &amp;gt; right click
-Get Info &amp;gt; uncheck Open using Rosetta) so the output is arm&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;uname -m
-arm64
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;jekyll&quot;&gt;Jekyll&lt;/h2&gt;
-
-&lt;p&gt;When you install new gems, sometimes you need to rehash to create new shims
-&lt;a href=&quot;https://github.com/rbenv/rbenv#rbenv-rehash&quot;&gt;https://github.com/rbenv/rbenv#rbenv-rehash&lt;/a&gt;&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;gem install jekyll
-Command &apos;jekyll&apos; not found, but can be installed with:
-
-rbenv rehash
-jekyll # now it works
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;rails&quot;&gt;Rails&lt;/h2&gt;
-
-&lt;p&gt;If you notice an error when you are using &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;rails s&lt;/code&gt; command&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;LoadError: libssl.so.1.1: cannot open shared object file: No such file or directory - /home/dule/.rbenv/versions/3.2.0/lib/ruby/gems/3.2.0/gems/puma-5.6.5/lib/puma/puma_http11.so
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;you should remove puma gem and install with correct LD and CPP flags pointing to
-openssl 3.&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;gem uninstall puma
-
-export LDFLAGS=&quot;-L$(brew --prefix openssl@3)/lib&quot;
-export CPPFLAGS=&quot;-I$(brew --prefix openssl@3)/include&quot;
-
-bundle
-
-# or you can install specific version using arguments to `gem install`
-gem install puma -v 5.6.5 -- --with-cppflags=-I`brew --prefix openssl@3`/include --with-ldflags=-L`brew --prefix openssl@3`/lib
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Alternative solution is to disable SSL when installing puma&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;gem uninstall puma
-DISABLE_SSL=1 bundle
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;nvm-node-yarn&quot;&gt;NVM node yarn&lt;/h2&gt;
-
-&lt;p&gt;Install nvm &lt;a href=&quot;https://github.com/nvm-sh/nvm&quot;&gt;https://github.com/nvm-sh/nvm&lt;/a&gt;&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;than restart shell (ie open new shell) install node&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;nvm install 14
-npm install -g yarn
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Old node-sass has some issues with node 16 (it can not find python even python2
-is installed)
-&lt;a href=&quot;https://stackoverflow.com/questions/67241196/error-no-template-named-remove-cv-t-in-namespace-std-did-you-mean-remove&quot;&gt;stackoverflow&lt;/a&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;wall&quot;&gt;Wall&lt;/h2&gt;
-
-&lt;p&gt;Enable tty group so user can send messages
-&lt;a href=&quot;https://unix.stackexchange.com/a/313558/150895&quot;&gt;https://unix.stackexchange.com/a/313558/150895&lt;/a&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;python&quot;&gt;Python&lt;/h2&gt;
-
-&lt;p&gt;You can install python using pyenv https://github.com/pyenv/pyenv similar to
-rbenv&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;brew install pyenv
-pyenv install 2.7.18
-# pyenv global 2.7.18
-pyenv shell 2.7.18
-pyenv versions
-
-# Add to .bashrc
-# PATH=$(pyenv root)/shims:$PATH
-# eval &quot;$(pyenv init -)&quot;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-</description>
-        <pubDate>Wed, 11 Jan 2023 00:00:00 +0000</pubDate>
-        <link>https://dev.trk.in.rs/2023/01/11/install-ruby-using-brew-rbenv/</link>
-        <guid isPermaLink="true">https://dev.trk.in.rs/2023/01/11/install-ruby-using-brew-rbenv/</guid>
         
         
       </item>
