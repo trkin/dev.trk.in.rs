@@ -63,6 +63,7 @@ sudo groupadd brew
 compgen -u # list all users
 sudo usermod -aG brew dule
 sudo usermod -aG brew mile
+sudo usermod -aG brew newuser
 
 sudo chgrp -R brew /home/linuxbrew/.linuxbrew/
 sudo chmod -R g+w /home/linuxbrew/.linuxbrew/
@@ -82,6 +83,11 @@ sudo dseditgroup -o edit -a mile -t user homebrew
 
 sudo chown -R :homebrew /opt/homebrew
 sudo chmod -R g+w /opt/homebrew
+```
+
+Also for postgresql you need to add new user ability to create databases
+```
+sudo -u postgres psql -d postgres -c "CREATE USER newuser WITH SUPERUSER;"
 ```
 
 ## Install rbenv
