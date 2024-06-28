@@ -6,8 +6,8 @@
 </description>
     <link>https://dev.trk.in.rs/</link>
     <atom:link href="https://dev.trk.in.rs/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 31 May 2024 06:24:15 +0000</pubDate>
-    <lastBuildDate>Fri, 31 May 2024 06:24:15 +0000</lastBuildDate>
+    <pubDate>Fri, 28 Jun 2024 16:03:13 +0000</pubDate>
+    <lastBuildDate>Fri, 28 Jun 2024 16:03:13 +0000</lastBuildDate>
     <generator>Jekyll v4.3.3</generator>
     
       <item>
@@ -492,6 +492,22 @@ Address” “is not in” {my ip address} And “Hostname” “equals”
 &lt;p&gt;If you install as a service than you need to stop that service&lt;/p&gt;
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;systemctl status cloudflared
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;If you need another account you can use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;origincert&lt;/code&gt; param
+https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-run-parameters/#origincert&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cloudflared --origincert doc/cloudflared/cert.pem tunnel list
+cloudflared --origincert doc/cloudflared/cert.pem tunnel create
+# this will create json in the same folder as pem doc/cloudflared/asd.json
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;config&lt;/code&gt; param to configure port
+https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-run-parameters/#config&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cloudflared --origincert doc/cloudflared/cert.pem --config doc/cloudflared/config.yml tunnel run mytunnel
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;To debug use&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cloudflared --loglevel debug tunnel run
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
 &lt;h2 id=&quot;remotelly-managed-tunnels&quot;&gt;Remotelly managed tunnels&lt;/h2&gt;
 
 &lt;p&gt;After install&lt;/p&gt;
@@ -507,9 +523,7 @@ will run at boot
 &lt;h1 id=&quot;cloudflare-dns&quot;&gt;Cloudflare DNS&lt;/h1&gt;
 
 &lt;p&gt;If you need ssh port 22 access than you need to disable Proxied and use DNS only
-proxy status.
-Those&lt;/p&gt;
-
+proxy status.&lt;/p&gt;
 </description>
         <pubDate>Thu, 23 Feb 2023 00:00:00 +0000</pubDate>
         <link>https://dev.trk.in.rs/2023/02/23/cloudflare-tunnel/</link>

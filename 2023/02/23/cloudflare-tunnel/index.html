@@ -137,6 +137,22 @@ Address” “is not in” {my ip address} And “Hostname” “equals”
 <p>If you install as a service than you need to stop that service</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>systemctl status cloudflared
 </code></pre></div></div>
+
+<p>If you need another account you can use <code class="language-plaintext highlighter-rouge">origincert</code> param
+https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-run-parameters/#origincert</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cloudflared --origincert doc/cloudflared/cert.pem tunnel list
+cloudflared --origincert doc/cloudflared/cert.pem tunnel create
+# this will create json in the same folder as pem doc/cloudflared/asd.json
+</code></pre></div></div>
+<p>and <code class="language-plaintext highlighter-rouge">config</code> param to configure port
+https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-run-parameters/#config</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cloudflared --origincert doc/cloudflared/cert.pem --config doc/cloudflared/config.yml tunnel run mytunnel
+</code></pre></div></div>
+
+<p>To debug use</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cloudflared --loglevel debug tunnel run
+</code></pre></div></div>
+
 <h2 id="remotelly-managed-tunnels">
 <a class="anchor" href="#remotelly-managed-tunnels" aria-hidden="true"><span class="octicon octicon-link"></span></a>Remotelly managed tunnels</h2>
 
@@ -154,9 +170,7 @@ will run at boot
 <a class="anchor" href="#cloudflare-dns" aria-hidden="true"><span class="octicon octicon-link"></span></a>Cloudflare DNS</h1>
 
 <p>If you need ssh port 22 access than you need to disable Proxied and use DNS only
-proxy status.
-Those</p>
-
+proxy status.</p>
 
   </div>
 

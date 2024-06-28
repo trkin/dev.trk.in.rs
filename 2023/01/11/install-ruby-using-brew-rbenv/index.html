@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>Install Ruby Using Brew Rbenv</title>
-  <meta name="description" content="First steps on new Ubuntu machine">
+  <meta name="description" content="Sudo commands">
 
   <link rel="stylesheet" href="/css/main.css">
   <link rel="canonical" href="https://dev.trk.in.rs/2023/01/11/install-ruby-using-brew-rbenv/">
@@ -70,31 +70,44 @@
 
   <div class="post-content" itemprop="articleBody">
     <ul id="toc" class="section-nav">
-<li class="toc-entry toc-h2"><a href="#first-steps-on-new-ubuntu-machine">First steps on new Ubuntu machine</a></li>
-<li class="toc-entry toc-h2"><a href="#brew">Brew</a></li>
+<li class="toc-entry toc-h1"><a href="#sudo-commands">Sudo commands</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#install-brew">Install Brew</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#regular-user-comands">Regular user comands</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#initialize-brew-in-your-path">Initialize brew in your PATH</a></li>
 <li class="toc-entry toc-h2"><a href="#install-rbenv">Install rbenv</a></li>
 <li class="toc-entry toc-h2"><a href="#installing-ruby-using-rbenv">Installing Ruby using rbenv</a>
 <ul>
 <li class="toc-entry toc-h3"><a href="#ruby-320">Ruby 3.2.0</a></li>
 </ul>
 </li>
-<li class="toc-entry toc-h2"><a href="#jekyll">Jekyll</a></li>
-<li class="toc-entry toc-h2"><a href="#rails">Rails</a></li>
+<li class="toc-entry toc-h2"><a href="#errors">Errors</a></li>
 <li class="toc-entry toc-h2"><a href="#nvm-node-yarn">NVM node yarn</a></li>
 <li class="toc-entry toc-h2"><a href="#wall">Wall</a></li>
 <li class="toc-entry toc-h2"><a href="#python">Python</a></li>
-</ul><h2 id="first-steps-on-new-ubuntu-machine">
-<a class="anchor" href="#first-steps-on-new-ubuntu-machine" aria-hidden="true"><span class="octicon octicon-link"></span></a>First steps on new Ubuntu machine</h2>
+</ul>
+</li>
+</ul><h1 id="sudo-commands">
+<a class="anchor" href="#sudo-commands" aria-hidden="true"><span class="octicon octicon-link"></span></a>Sudo commands</h1>
+
+<p>First steps on new Ubuntu machine.
+This commands are for amins with sudo priviledges</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># git is used to code collaboration
 sudo apt install -y git curl
+
 # necessary if you want to commit to any project
 git config --global user.email "you@example.com"
 git config --global user.name "Your Name"
+
 # nice editor
 sudo apt install vim
 # if you want to change default editor from nano to something else
 sudo update-alternatives --config editor
+
 # enable ssh to localhost
 sudo apt install openssh-server
 # generate ~/ssh/id_rsa and ~/ssh/id_rsa.pub to add to
@@ -107,24 +120,19 @@ sudo apt install nmap
 sudo apt install -y build-essential libz-dev
 </code></pre></div></div>
 
-<p>Install google chrome from <a href="https://www.google.com/chrome/">https://www.google.com/chrome/</a>
-Right click on .deb file in Downloads, select Properties and in ‘Open With’ tab select ‘Software Install’ and click ‘Set as default’. Exit and double click on the .deb file to install Chrome.</p>
+<h2 id="install-brew">
+<a class="anchor" href="#install-brew" aria-hidden="true"><span class="octicon octicon-link"></span></a>Install Brew</h2>
 
-<h2 id="brew">
-<a class="anchor" href="#brew" aria-hidden="true"><span class="octicon octicon-link"></span></a>Brew</h2>
-
-<p>Use brew instead of manually install packages so all users can use the same libs
+<p>Use brew so all users can use the same libs from <code class="language-plaintext highlighter-rouge">/home/linuxbrew/</code>
 <a href="https://brew.sh/">https://brew.sh/</a></p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 </code></pre></div></div>
-
-<p>Add to your <code class="language-plaintext highlighter-rouge">.bashrc</code> and reopen terminal. Typing <code class="language-plaintext highlighter-rouge">reset</code> won’t work</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' &gt;&gt; /home/$USER/.bashrc
-cat ~/.bashrc # you should see above line
+<p>Add brew to shell</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cat &gt;&gt; ~/.bashrc &lt;&lt; 'HERE_DOC'
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+HERE_DOC
 </code></pre></div></div>
-<p>Now you can use <code class="language-plaintext highlighter-rouge">brew</code> every time you open terminal</p>
 
 <p>If you use multiseat than you need to add new group and attach each user to it
 https://apple.stackexchange.com/a/45003/449651
@@ -135,7 +143,11 @@ ownership and permissions of /home/linuxbrew/.linuxbrew/Homebrew back to your
 user account:
   sudo chown -R $(whoami) /home/linuxbrew/.linuxbrew/Homebrew
 </code></pre></div></div>
-<p>Add group</p>
+<p>Set <code class="language-plaintext highlighter-rouge">umask</code> if not already allow group flags (value <code class="language-plaintext highlighter-rouge">0002</code>)</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># ~/.bashrc
+umask 0002
+</code></pre></div></div>
+<p>Add group and set sticky bit</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo groupadd brew
 compgen -u # list all users
 sudo usermod -aG brew dule
@@ -144,13 +156,16 @@ sudo usermod -aG brew newuser
 
 sudo chgrp -R brew /home/linuxbrew/.linuxbrew/
 sudo chmod -R g+w /home/linuxbrew/.linuxbrew/
+# Set the sticky bit to ensure new files and directories inherit the group
+# ownership:
+find /home/linuxbrew/.linuxbrew -type d -exec sudo chmod g+s {} +
 
 # check that group has rw-
 ls -la /home/linuxbrew/.linuxbrew/Homebrew/README.md
 -rw-rw-r-- 1 dule brew 8495 феб  9 08:40 /home/linuxbrew/.linuxbrew/Homebrew/README.md
 
 # also https://zenn.dev/megeton/articles/f9f17d184fead6
-git config --global --add safe.directory /usr/local/Homebrew
+git config --global --add safe.directory $(brew --prefix)
 </code></pre></div></div>
 <p>On macos</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo dseditgroup -o create homebrew
@@ -161,14 +176,34 @@ sudo chown -R :homebrew /opt/homebrew
 sudo chmod -R g+w /opt/homebrew
 </code></pre></div></div>
 
+<p>Log out and login so the group has an effect and try to run <code class="language-plaintext highlighter-rouge">brew upgrade</code> as
+different users.</p>
+
 <p>Also for postgresql you need to add new user ability to create databases</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo -u postgres psql -d postgres -c "CREATE USER newuser WITH SUPERUSER;"
 </code></pre></div></div>
 
+<h1 id="regular-user-comands">
+<a class="anchor" href="#regular-user-comands" aria-hidden="true"><span class="octicon octicon-link"></span></a>Regular user comands</h1>
+
+<h2 id="initialize-brew-in-your-path">
+<a class="anchor" href="#initialize-brew-in-your-path" aria-hidden="true"><span class="octicon octicon-link"></span></a>Initialize brew in your PATH</h2>
+
+<p>Add to your <code class="language-plaintext highlighter-rouge">.bashrc</code> and reopen terminal. Typing <code class="language-plaintext highlighter-rouge">reset</code> won’t work</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cat &gt;&gt; ~/.bashrc &lt;&lt; 'HERE_DOC'
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+HERE_DOC
+
+cat ~/.bashrc
+# you should see above line: eval ....
+</code></pre></div></div>
+<p>Now you can use <code class="language-plaintext highlighter-rouge">brew</code> every time you open terminal</p>
+
 <h2 id="install-rbenv">
 <a class="anchor" href="#install-rbenv" aria-hidden="true"><span class="octicon octicon-link"></span></a>Install rbenv</h2>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew install rbenv ruby-build libyaml openssl@1.1
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew install rbenv
 </code></pre></div></div>
 
 <p>Add this to your <code class="language-plaintext highlighter-rouge">~/.bashrc</code> so you can access rbenv commands</p>
@@ -190,6 +225,8 @@ home folder <code class="language-plaintext highlighter-rouge">~/</code></p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rbenv shell 3.2.0
 
 # this is the same as export RBENV_VERSION=3.2.0
+# to undo you can use
+rbenv shell --unset
 
 # check all installed versions
 rbenv versions
@@ -235,6 +272,9 @@ export PKG_CONFIG_PATH="`brew --prefix openssl@1.1`/lib/pkgconfig"
 
 bundle
 </code></pre></div></div>
+
+<h2 id="errors">
+<a class="anchor" href="#errors" aria-hidden="true"><span class="octicon octicon-link"></span></a>Errors</h2>
 
 <p>For ruby 2.6.7 on mac for error</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vm.c:2295:9: error: call to undeclared function 'rb_native_mutex_destroy'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
@@ -289,11 +329,6 @@ export PKG_CONFIG_PATH="/opt/homebrew/opt/openssl@1.1/lib/pkgconfig"
 
 rbenv install
 </code></pre></div></div>
-<p>or you can try with env</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code></code></pre></div></div>
-
-<h2 id="jekyll">
-<a class="anchor" href="#jekyll" aria-hidden="true"><span class="octicon octicon-link"></span></a>Jekyll</h2>
 
 <p>When you install new gems, sometimes you need to rehash to create new shims
 <a href="https://github.com/rbenv/rbenv#rbenv-rehash">https://github.com/rbenv/rbenv#rbenv-rehash</a></p>
@@ -304,9 +339,6 @@ Command 'jekyll' not found, but can be installed with:
 rbenv rehash
 jekyll # now it works
 </code></pre></div></div>
-
-<h2 id="rails">
-<a class="anchor" href="#rails" aria-hidden="true"><span class="octicon octicon-link"></span></a>Rails</h2>
 
 <p>If you notice an error when you are using <code class="language-plaintext highlighter-rouge">rails s</code> command</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>LoadError: libssl.so.1.1: cannot open shared object file: No such file or directory - /home/dule/.rbenv/versions/3.2.0/lib/ruby/gems/3.2.0/gems/puma-5.6.5/lib/puma/puma_http11.so
