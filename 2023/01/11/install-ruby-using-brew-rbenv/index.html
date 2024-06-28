@@ -78,7 +78,7 @@
 </li>
 <li class="toc-entry toc-h1"><a href="#regular-user-comands">Regular user comands</a>
 <ul>
-<li class="toc-entry toc-h2"><a href="#initialize-brew-in-your-path">Initialize brew in your PATH</a></li>
+<li class="toc-entry toc-h2"><a href="#initialize-ssh-to-brew-user">Initialize ssh to brew user</a></li>
 <li class="toc-entry toc-h2"><a href="#install-rbenv">Install rbenv</a></li>
 <li class="toc-entry toc-h2"><a href="#installing-ruby-using-rbenv">Installing Ruby using rbenv</a>
 <ul>
@@ -184,6 +184,10 @@ stat -c "%a %A" $(brew --prefix)
 
 # also https://zenn.dev/megeton/articles/f9f17d184fead6
 git config --global --add safe.directory $(brew --prefix)
+# otherwise you can not update
+==&gt; Updating Homebrew...
+Warning: No remote 'origin' in /home/linuxbrew/.linuxbrew/Homebrew/Library/Taps/homebrew/homebrew-bundle, skipping update!
+Error: Your Homebrew is too outdated for `brew bundle`. Please run `brew update`!
 </code></pre></div></div>
 <p>On macos</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo dseditgroup -o create homebrew
@@ -205,15 +209,6 @@ cp: preserving times for '/home/linuxbrew/.linuxbrew/Cellar/expat/.': Operation 
 <p>so I tried to override cp with –no-preserve=timestamps but than it does not
 detect that it has to upgrade</p>
 
-<p>so for all users, they need to <code class="language-plaintext highlighter-rouge">ssh brew@localhost</code> and perform brew</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>function bbrew() {
- ssh brew@localhost 'bash  --login -c "export PATH=/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:$PATH &amp;&amp; brew '"$@"'"'
- }
-</code></pre></div></div>
-<p>usage is like</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bbrew doctor
-</code></pre></div></div>
-
 <h2 id="other-sudo">
 <a class="anchor" href="#other-sudo" aria-hidden="true"><span class="octicon octicon-link"></span></a>Other sudo</h2>
 
@@ -224,8 +219,25 @@ detect that it has to upgrade</p>
 <h1 id="regular-user-comands">
 <a class="anchor" href="#regular-user-comands" aria-hidden="true"><span class="octicon octicon-link"></span></a>Regular user comands</h1>
 
-<h2 id="initialize-brew-in-your-path">
-<a class="anchor" href="#initialize-brew-in-your-path" aria-hidden="true"><span class="octicon octicon-link"></span></a>Initialize brew in your PATH</h2>
+<h2 id="initialize-ssh-to-brew-user">
+<a class="anchor" href="#initialize-ssh-to-brew-user" aria-hidden="true"><span class="octicon octicon-link"></span></a>Initialize ssh to brew user</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh-copy-id brew@localhost
+</code></pre></div></div>
+
+<p>so for all users, they need to <code class="language-plaintext highlighter-rouge">ssh brew@localhost</code> and perform brew</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>function bbrew() {
+ ssh brew@localhost 'bash  --login -c "export PATH=/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:$PATH &amp;&amp; brew '"$@"'"'
+ }
+</code></pre></div></div>
+<p>usage is like</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bbrew doctor
+</code></pre></div></div>
+
+<p>If you need to read from Brewfile, than youo need to copy to brew</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>scp Brewfile brew@localhost
+bbrew bundle --no-upgrade --no-lock
+</code></pre></div></div>
 
 <p>Add to your <code class="language-plaintext highlighter-rouge">.bashrc</code> and reopen terminal. Typing <code class="language-plaintext highlighter-rouge">reset</code> won’t work</p>
 
