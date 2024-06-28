@@ -37,8 +37,18 @@ sudo apt install -y build-essential libz-dev
 
 Use brew so all users can use the same libs from `/home/linuxbrew/`
 <https://brew.sh/>
-
+Note that we will install only for one user and other will ssh to it
 ```
+sudo useradd -m -g brew -s /bin/bash brew
+sudo passwd brew
+sudo mkdir /home/linuxbrew/.linuxbrew/
+sudo chown -R brew:brew /home/linuxbrew/.linuxbrew/
+# do not set sudo chmod g+s /home/linuxbrew/.linuxbrew/ since we want only read
+# access for other users, TODO: change umask for brew
+```
+Install as brew only for brew user since not we do not need sudo
+```
+ssh brew@localhost
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 Add brew to shell
@@ -47,6 +57,10 @@ cat >> ~/.bashrc << 'HERE_DOC'
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 HERE_DOC
 ```
+
+That is.
+
+Here are the reasons why we can not share the brew
 
 If you use multiseat than you need to add new group and attach each user to it
 https://apple.stackexchange.com/a/45003/449651
@@ -74,12 +88,16 @@ sudo usermod -aG brew newuser
 sudo chgrp -R brew /home/linuxbrew/.linuxbrew/
 sudo chmod -R g+w /home/linuxbrew/.linuxbrew/
 # Set the sticky bit to ensure new files and directories inherit the group
-# ownership:
+# ownership: https://en.wikipedia.org/wiki/Setuid#When_set_on_a_directory
 find /home/linuxbrew/.linuxbrew -type d -exec sudo chmod g+s {} +
 
 # check that group has rw-
 ls -la /home/linuxbrew/.linuxbrew/Homebrew/README.md
 -rw-rw-r-- 1 dule brew 8495 феб  9 08:40 /home/linuxbrew/.linuxbrew/Homebrew/README.md
+
+# check setgid, it should start with 2
+stat -c "%a %A" $(brew --prefix)
+2775 drwxrwsr-x
 
 # also https://zenn.dev/megeton/articles/f9f17d184fead6
 git config --global --add safe.directory $(brew --prefix)
@@ -97,6 +115,27 @@ sudo chmod -R g+w /opt/homebrew
 Log out and login so the group has an effect and try to run `brew upgrade` as
 different users.
 
+```
+brew update && brew upgrade ruby-build
+
+Error: Failure while executing; `/usr/bin/env cp -pR /tmp/homebrew-unpack20240628-559339-n6br4d/expat/. /home/linuxbrew/.linuxbrew/Cellar/expat` exited with 1. Here's the output:
+cp: preserving times for '/home/linuxbrew/.linuxbrew/Cellar/expat/.': Operation not permitted
+```
+so I tried to override cp with --no-preserve=timestamps but than it does not
+detect that it has to upgrade
+
+so for all users, they need to `ssh brew@localhost` and perform brew
+```
+function bbrew() {
+ ssh brew@localhost 'bash  --login -c "export PATH=/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:$PATH && brew '"$@"'"'
+ }
+```
+usage is like
+```
+bbrew doctor
+```
+
+## Other sudo
 
 Also for postgresql you need to add new user ability to create databases
 ```
@@ -300,22 +339,18 @@ gem uninstall puma
 DISABLE_SSL=1 bundle
 ```
 
-## NVM node yarn
+## node yarn
 
-Install nvm <https://github.com/nvm-sh/nvm>
+--Install nvm <https://github.com/nvm-sh/nvm>--
 
+we will use https://github.com/nodenv/nodenv
 ```
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
-```
-than restart shell (ie open new shell) install node
-```
-nvm install 14
-npm install -g yarn
-```
+brew install nodenv
 
-Old node-sass has some issues with node 16 (it can not find python even python2
-is installed)
-[stackoverflow](https://stackoverflow.com/questions/67241196/error-no-template-named-remove-cv-t-in-namespace-std-did-you-mean-remove)
+cat >> ~/.bashrc << 'HERE_DOC'
+eval "$(nodenv init - bash)"
+HERE_DOC
+```
 
 ## Wall
 
