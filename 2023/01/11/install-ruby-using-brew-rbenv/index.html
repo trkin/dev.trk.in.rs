@@ -73,6 +73,7 @@
 <li class="toc-entry toc-h1"><a href="#sudo-commands">Sudo commands</a>
 <ul>
 <li class="toc-entry toc-h2"><a href="#install-brew">Install Brew</a></li>
+<li class="toc-entry toc-h2"><a href="#other-sudo">Other sudo</a></li>
 </ul>
 </li>
 <li class="toc-entry toc-h1"><a href="#regular-user-comands">Regular user comands</a>
@@ -85,7 +86,7 @@
 </ul>
 </li>
 <li class="toc-entry toc-h2"><a href="#errors">Errors</a></li>
-<li class="toc-entry toc-h2"><a href="#nvm-node-yarn">NVM node yarn</a></li>
+<li class="toc-entry toc-h2"><a href="#node-yarn">node yarn</a></li>
 <li class="toc-entry toc-h2"><a href="#wall">Wall</a></li>
 <li class="toc-entry toc-h2"><a href="#python">Python</a></li>
 </ul>
@@ -124,15 +125,28 @@ sudo apt install -y build-essential libz-dev
 <a class="anchor" href="#install-brew" aria-hidden="true"><span class="octicon octicon-link"></span></a>Install Brew</h2>
 
 <p>Use brew so all users can use the same libs from <code class="language-plaintext highlighter-rouge">/home/linuxbrew/</code>
-<a href="https://brew.sh/">https://brew.sh/</a></p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+<a href="https://brew.sh/">https://brew.sh/</a>
+Note that we will install only for one user and other will ssh to it</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo useradd -m -g brew -s /bin/bash brew
+sudo passwd brew
+sudo mkdir /home/linuxbrew/.linuxbrew/
+sudo chown -R brew:brew /home/linuxbrew/.linuxbrew/
+# do not set sudo chmod g+s /home/linuxbrew/.linuxbrew/ since we want only read
+# access for other users, TODO: change umask for brew
+</code></pre></div></div>
+<p>Install as brew only for brew user since not we do not need sudo</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh brew@localhost
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 </code></pre></div></div>
 <p>Add brew to shell</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cat &gt;&gt; ~/.bashrc &lt;&lt; 'HERE_DOC'
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 HERE_DOC
 </code></pre></div></div>
+
+<p>That is.</p>
+
+<p>Here are the reasons why we can not share the brew</p>
 
 <p>If you use multiseat than you need to add new group and attach each user to it
 https://apple.stackexchange.com/a/45003/449651
@@ -157,12 +171,16 @@ sudo usermod -aG brew newuser
 sudo chgrp -R brew /home/linuxbrew/.linuxbrew/
 sudo chmod -R g+w /home/linuxbrew/.linuxbrew/
 # Set the sticky bit to ensure new files and directories inherit the group
-# ownership:
+# ownership: https://en.wikipedia.org/wiki/Setuid#When_set_on_a_directory
 find /home/linuxbrew/.linuxbrew -type d -exec sudo chmod g+s {} +
 
 # check that group has rw-
 ls -la /home/linuxbrew/.linuxbrew/Homebrew/README.md
 -rw-rw-r-- 1 dule brew 8495 феб  9 08:40 /home/linuxbrew/.linuxbrew/Homebrew/README.md
+
+# check setgid, it should start with 2
+stat -c "%a %A" $(brew --prefix)
+2775 drwxrwsr-x
 
 # also https://zenn.dev/megeton/articles/f9f17d184fead6
 git config --global --add safe.directory $(brew --prefix)
@@ -178,6 +196,26 @@ sudo chmod -R g+w /opt/homebrew
 
 <p>Log out and login so the group has an effect and try to run <code class="language-plaintext highlighter-rouge">brew upgrade</code> as
 different users.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew update &amp;&amp; brew upgrade ruby-build
+
+Error: Failure while executing; `/usr/bin/env cp -pR /tmp/homebrew-unpack20240628-559339-n6br4d/expat/. /home/linuxbrew/.linuxbrew/Cellar/expat` exited with 1. Here's the output:
+cp: preserving times for '/home/linuxbrew/.linuxbrew/Cellar/expat/.': Operation not permitted
+</code></pre></div></div>
+<p>so I tried to override cp with –no-preserve=timestamps but than it does not
+detect that it has to upgrade</p>
+
+<p>so for all users, they need to <code class="language-plaintext highlighter-rouge">ssh brew@localhost</code> and perform brew</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>function bbrew() {
+ ssh brew@localhost 'bash  --login -c "export PATH=/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:$PATH &amp;&amp; brew '"$@"'"'
+ }
+</code></pre></div></div>
+<p>usage is like</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bbrew doctor
+</code></pre></div></div>
+
+<h2 id="other-sudo">
+<a class="anchor" href="#other-sudo" aria-hidden="true"><span class="octicon octicon-link"></span></a>Other sudo</h2>
 
 <p>Also for postgresql you need to add new user ability to create databases</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo -u postgres psql -d postgres -c "CREATE USER newuser WITH SUPERUSER;"
@@ -361,21 +399,18 @@ gem install puma -v 5.6.5 -- --with-cppflags=-I`brew --prefix openssl@3`/include
 DISABLE_SSL=1 bundle
 </code></pre></div></div>
 
-<h2 id="nvm-node-yarn">
-<a class="anchor" href="#nvm-node-yarn" aria-hidden="true"><span class="octicon octicon-link"></span></a>NVM node yarn</h2>
+<h2 id="node-yarn">
+<a class="anchor" href="#node-yarn" aria-hidden="true"><span class="octicon octicon-link"></span></a>node yarn</h2>
 
-<p>Install nvm <a href="https://github.com/nvm-sh/nvm">https://github.com/nvm-sh/nvm</a></p>
+<p>–Install nvm <a href="https://github.com/nvm-sh/nvm">https://github.com/nvm-sh/nvm</a>–</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
+<p>we will use https://github.com/nodenv/nodenv</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew install nodenv
+
+cat &gt;&gt; ~/.bashrc &lt;&lt; 'HERE_DOC'
+eval "$(nodenv init - bash)"
+HERE_DOC
 </code></pre></div></div>
-<p>than restart shell (ie open new shell) install node</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>nvm install 14
-npm install -g yarn
-</code></pre></div></div>
-
-<p>Old node-sass has some issues with node 16 (it can not find python even python2
-is installed)
-<a href="https://stackoverflow.com/questions/67241196/error-no-template-named-remove-cv-t-in-namespace-std-did-you-mean-remove">stackoverflow</a></p>
 
 <h2 id="wall">
 <a class="anchor" href="#wall" aria-hidden="true"><span class="octicon octicon-link"></span></a>Wall</h2>
