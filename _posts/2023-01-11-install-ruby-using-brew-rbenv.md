@@ -101,6 +101,10 @@ stat -c "%a %A" $(brew --prefix)
 
 # also https://zenn.dev/megeton/articles/f9f17d184fead6
 git config --global --add safe.directory $(brew --prefix)
+# otherwise you can not update
+==> Updating Homebrew...
+Warning: No remote 'origin' in /home/linuxbrew/.linuxbrew/Homebrew/Library/Taps/homebrew/homebrew-bundle, skipping update!
+Error: Your Homebrew is too outdated for `brew bundle`. Please run `brew update`!
 ```
 On macos
 ```
@@ -124,6 +128,21 @@ cp: preserving times for '/home/linuxbrew/.linuxbrew/Cellar/expat/.': Operation 
 so I tried to override cp with --no-preserve=timestamps but than it does not
 detect that it has to upgrade
 
+## Other sudo
+
+Also for postgresql you need to add new user ability to create databases
+```
+sudo -u postgres psql -d postgres -c "CREATE USER newuser WITH SUPERUSER;"
+```
+
+# Regular user comands
+
+## Initialize ssh to brew user
+
+```
+ssh-copy-id brew@localhost
+```
+
 so for all users, they need to `ssh brew@localhost` and perform brew
 ```
 function bbrew() {
@@ -135,16 +154,11 @@ usage is like
 bbrew doctor
 ```
 
-## Other sudo
-
-Also for postgresql you need to add new user ability to create databases
+If you need to read from Brewfile, than youo need to copy to brew
 ```
-sudo -u postgres psql -d postgres -c "CREATE USER newuser WITH SUPERUSER;"
+scp Brewfile brew@localhost
+bbrew bundle --no-upgrade --no-lock
 ```
-
-# Regular user comands
-
-## Initialize brew in your PATH
 
 Add to your `.bashrc` and reopen terminal. Typing `reset` won't work
 
