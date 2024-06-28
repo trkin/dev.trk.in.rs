@@ -3,18 +3,24 @@ layout: post
 ---
 
 
-## First steps on new Ubuntu machine
+# Sudo commands
+
+First steps on new Ubuntu machine.
+This commands are for amins with sudo priviledges
 
 ```
 # git is used to code collaboration
 sudo apt install -y git curl
+
 # necessary if you want to commit to any project
 git config --global user.email "you@example.com"
 git config --global user.name "Your Name"
+
 # nice editor
 sudo apt install vim
 # if you want to change default editor from nano to something else
 sudo update-alternatives --config editor
+
 # enable ssh to localhost
 sudo apt install openssh-server
 # generate ~/ssh/id_rsa and ~/ssh/id_rsa.pub to add to
@@ -27,25 +33,20 @@ sudo apt install nmap
 sudo apt install -y build-essential libz-dev
 ```
 
-Install google chrome from <https://www.google.com/chrome/>
-Right click on .deb file in Downloads, select Properties and in 'Open With' tab select 'Software Install' and click 'Set as default'. Exit and double click on the .deb file to install Chrome.
+## Install Brew
 
-## Brew
-
-Use brew instead of manually install packages so all users can use the same libs
+Use brew so all users can use the same libs from `/home/linuxbrew/`
 <https://brew.sh/>
 
 ```
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
-
-Add to your `.bashrc` and reopen terminal. Typing `reset` won't work
-
+Add brew to shell
 ```
-echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/$USER/.bashrc
-cat ~/.bashrc # you should see above line
+cat >> ~/.bashrc << 'HERE_DOC'
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+HERE_DOC
 ```
-Now you can use `brew` every time you open terminal
 
 If you use multiseat than you need to add new group and attach each user to it
 https://apple.stackexchange.com/a/45003/449651
@@ -57,7 +58,12 @@ ownership and permissions of /home/linuxbrew/.linuxbrew/Homebrew back to your
 user account:
   sudo chown -R $(whoami) /home/linuxbrew/.linuxbrew/Homebrew
 ```
-Add group
+Set `umask` if not already allow group flags (value `0002`)
+```
+# ~/.bashrc
+umask 0002
+```
+Add group and set sticky bit
 ```
 sudo groupadd brew
 compgen -u # list all users
@@ -67,13 +73,16 @@ sudo usermod -aG brew newuser
 
 sudo chgrp -R brew /home/linuxbrew/.linuxbrew/
 sudo chmod -R g+w /home/linuxbrew/.linuxbrew/
+# Set the sticky bit to ensure new files and directories inherit the group
+# ownership:
+find /home/linuxbrew/.linuxbrew -type d -exec sudo chmod g+s {} +
 
 # check that group has rw-
 ls -la /home/linuxbrew/.linuxbrew/Homebrew/README.md
 -rw-rw-r-- 1 dule brew 8495 феб  9 08:40 /home/linuxbrew/.linuxbrew/Homebrew/README.md
 
 # also https://zenn.dev/megeton/articles/f9f17d184fead6
-git config --global --add safe.directory /usr/local/Homebrew
+git config --global --add safe.directory $(brew --prefix)
 ```
 On macos
 ```
@@ -85,15 +94,36 @@ sudo chown -R :homebrew /opt/homebrew
 sudo chmod -R g+w /opt/homebrew
 ```
 
+Log out and login so the group has an effect and try to run `brew upgrade` as
+different users.
+
+
 Also for postgresql you need to add new user ability to create databases
 ```
 sudo -u postgres psql -d postgres -c "CREATE USER newuser WITH SUPERUSER;"
 ```
 
+# Regular user comands
+
+## Initialize brew in your PATH
+
+Add to your `.bashrc` and reopen terminal. Typing `reset` won't work
+
+```
+cat >> ~/.bashrc << 'HERE_DOC'
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+HERE_DOC
+
+cat ~/.bashrc
+# you should see above line: eval ....
+```
+Now you can use `brew` every time you open terminal
+
+
 ## Install rbenv
 
 ```
-brew install rbenv ruby-build libyaml openssl@1.1
+brew install rbenv
 ```
 
 Add this to your `~/.bashrc` so you can access rbenv commands
@@ -117,6 +147,8 @@ You can also change ruby version with this command or env variable
 rbenv shell 3.2.0
 
 # this is the same as export RBENV_VERSION=3.2.0
+# to undo you can use
+rbenv shell --unset
 
 # check all installed versions
 rbenv versions
@@ -164,6 +196,8 @@ export PKG_CONFIG_PATH="`brew --prefix openssl@1.1`/lib/pkgconfig"
 
 bundle
 ```
+
+## Errors
 
 For ruby 2.6.7 on mac for error
 ```
@@ -229,11 +263,6 @@ export PKG_CONFIG_PATH="/opt/homebrew/opt/openssl@1.1/lib/pkgconfig"
 
 rbenv install
 ```
-or you can try with env
-```
-```
-
-## Jekyll
 
 When you install new gems, sometimes you need to rehash to create new shims
 [https://github.com/rbenv/rbenv#rbenv-rehash](https://github.com/rbenv/rbenv#rbenv-rehash)
@@ -246,7 +275,6 @@ rbenv rehash
 jekyll # now it works
 ```
 
-## Rails
 
 If you notice an error when you are using `rails s` command
 ```

@@ -70,6 +70,25 @@ If you install as a service than you need to stop that service
 ```
 systemctl status cloudflared
 ```
+
+If you need another account you can use `origincert` param
+https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-run-parameters/#origincert
+```
+cloudflared --origincert doc/cloudflared/cert.pem tunnel list
+cloudflared --origincert doc/cloudflared/cert.pem tunnel create
+# this will create json in the same folder as pem doc/cloudflared/asd.json
+```
+and `config` param to configure port
+https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-run-parameters/#config
+```
+cloudflared --origincert doc/cloudflared/cert.pem --config doc/cloudflared/config.yml tunnel run mytunnel
+```
+
+To debug use
+```
+cloudflared --loglevel debug tunnel run
+```
+
 ## Remotelly managed tunnels
 
 After install
@@ -87,5 +106,3 @@ will run at boot
 
 If you need ssh port 22 access than you need to disable Proxied and use DNS only
 proxy status.
-Those
-
