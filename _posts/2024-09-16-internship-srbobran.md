@@ -10,7 +10,9 @@ Tokom kursa ćete napraviti sajt za sebe ili nekog koga poznajete (npr nekog pro
 
 
 Prijave za kurs slati do kraja Septembra 2024 na <a href="mailto:{{ site.email }}">{{ site.email }}</a>
- sa opisom dosadašnjeg iskustva i planova u IT karijeri.
+ sa opisom dosadašnjeg iskustva i planova u IT karijeri. Više informacije možete
+ naći na <a
+ href="https://dev.trk.in.rs/2024/09/16/internship-srbobran/">sajtu</a>.
 
 Kurs je besplatan i dobra prilika da vidite da li vas zanima programiranje i
 ako bude mesta, nastavite učenje u
