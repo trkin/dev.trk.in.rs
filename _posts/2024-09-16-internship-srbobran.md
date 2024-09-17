@@ -9,13 +9,19 @@ Kurs će se održavati jednom nedeljno, ponedeljkom od 16h-18h tokom Oktobra, No
 Tokom kursa ćete napraviti sajt za sebe ili nekog koga poznajete (npr nekog proizvođača).
 Koristićemo sledeće alate (w3schools je odličan za učenje):
 
-* [html](https://www.w3schools.com/html/default.asp)
-* [css](https://www.w3schools.com/css/default.asp) 
-* [javascript](https://www.w3schools.com/js/default.asp)
-* [git](https://www.w3schools.com/git/default.asp)
+* [html](https://www.w3schools.com/html/default.asp) (pročitati kako se koriste osnovni tagovi)
+* [css](https://www.w3schools.com/css/default.asp) (može u detalje koga zanima
+  frontend i neće puno da programira)
+* [javascript](https://www.w3schools.com/js/default.asp) (može detaljno koga
+  zanima programiranje)
+* [git](https://www.w3schools.com/git/default.asp) (potrebno je da prođu kroz
+  prste osnovne komande)(git je bitan u bilo kom poslu u programiranju)
 
 Pored toga treba vam neki editor npr [vscode](https://code.visualstudio.com/docs)
 i na kraju postavljamo sajtove na github i gitlab pages (besplatno).
+
+Za sva pitanja možete konsultovati ChatGPT (i mi to koristimo), ali ne samo copy
+paste, već sa razumevanjem. Toplo preporučujemo ChatGPT za učenje umesto googlanja.
 
 Prijave za kurs slati do kraja Septembra 2024 na <a href="mailto:{{ site.email }}">{{ site.email }}</a>
  sa opisom dosadašnjeg iskustva i planova u IT karijeri.
