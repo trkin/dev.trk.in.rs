@@ -127,7 +127,10 @@ sudo apt install -y build-essential libz-dev
 <p>Use brew so all users can use the same libs from <code class="language-plaintext highlighter-rouge">/home/linuxbrew/</code>
 <a href="https://brew.sh/">https://brew.sh/</a>
 Note that we will install only for one user and other will ssh to it</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo useradd -m -g brew -s /bin/bash brew
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># on macos go to System Settings &gt; Users &amp; Groups &gt; Add user bbrew with admin rights
+# use strong password and Allow bbrew to administer this computer
+# on ubuntu follow those commands
+sudo useradd -m -g brew -s /bin/bash brew
 sudo passwd brew
 sudo mkdir /home/linuxbrew/.linuxbrew/
 sudo chown -R brew:brew /home/linuxbrew/.linuxbrew/
@@ -222,17 +225,30 @@ detect that it has to upgrade</p>
 <h2 id="initialize-ssh-to-brew-user">
 <a class="anchor" href="#initialize-ssh-to-brew-user" aria-hidden="true"><span class="octicon octicon-link"></span></a>Initialize ssh to brew user</h2>
 
+<p>All users should be able to <code class="language-plaintext highlighter-rouge">ssh brew@localhost</code> so you need to copy keys</p>
+
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh-copy-id brew@localhost
 </code></pre></div></div>
 
-<p>so for all users, they need to <code class="language-plaintext highlighter-rouge">ssh brew@localhost</code> and perform brew</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>function bbrew() {
- ssh brew@localhost 'bash  --login -c "export PATH=/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:$PATH &amp;&amp; brew '"$@"'"'
- }
+<p>and add this function to .bashrc or .zprofile</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># .bashrc or .zprofile
+function bbrew() {
+  if [ -d /home/linuxbrew/.linuxbrew/bin ]; then
+    ssh brew@localhost 'bash  --login -c "export PATH=/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:$PATH &amp;&amp; brew '"$@"'"'
+  elif [ -d /opt/homebrew/bin ]; then
+    ssh brew@localhost 'bash  --login -c "export PATH=/opt/homebrew/bin:$PATH &amp;&amp; brew '"$@"'"'
+  else
+    echo 'Can not find /home/linuxbrew/ or /opt/homebrew. Please install brew as brew user'
+  fi
+}
 </code></pre></div></div>
 <p>usage is like</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bbrew doctor
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bbrew
+Example usage:
+  brew search TEXT|/REGEX/
 </code></pre></div></div>
+
+<p>Additional tips:</p>
 
 <p>If you need to read from Brewfile, than youo need to copy to brew</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>scp Brewfile brew@localhost
