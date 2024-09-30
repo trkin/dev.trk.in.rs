@@ -39,6 +39,9 @@ Use brew so all users can use the same libs from `/home/linuxbrew/`
 <https://brew.sh/>
 Note that we will install only for one user and other will ssh to it
 ```
+# on macos go to System Settings > Users & Groups > Add user bbrew with admin rights
+# use strong password and Allow bbrew to administer this computer
+# on ubuntu follow those commands
 sudo useradd -m -g brew -s /bin/bash brew
 sudo passwd brew
 sudo mkdir /home/linuxbrew/.linuxbrew/
@@ -139,20 +142,33 @@ sudo -u postgres psql -d postgres -c "CREATE USER newuser WITH SUPERUSER;"
 
 ## Initialize ssh to brew user
 
+All users should be able to `ssh brew@localhost` so you need to copy keys
+
 ```
 ssh-copy-id brew@localhost
 ```
 
-so for all users, they need to `ssh brew@localhost` and perform brew
+and add this function to .bashrc or .zprofile
 ```
+# .bashrc or .zprofile
 function bbrew() {
- ssh brew@localhost 'bash  --login -c "export PATH=/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:$PATH && brew '"$@"'"'
- }
+  if [ -d /home/linuxbrew/.linuxbrew/bin ]; then
+    ssh brew@localhost 'bash  --login -c "export PATH=/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:$PATH && brew '"$@"'"'
+  elif [ -d /opt/homebrew/bin ]; then
+    ssh brew@localhost 'bash  --login -c "export PATH=/opt/homebrew/bin:$PATH && brew '"$@"'"'
+  else
+    echo 'Can not find /home/linuxbrew/ or /opt/homebrew. Please install brew as brew user'
+  fi
+}
 ```
 usage is like
 ```
-bbrew doctor
+bbrew
+Example usage:
+  brew search TEXT|/REGEX/
 ```
+
+Additional tips:
 
 If you need to read from Brewfile, than youo need to copy to brew
 ```
