@@ -42,26 +42,52 @@ Note that we will install only for one user and other will ssh to it
 # on macos go to System Settings > Users & Groups > Add user bbrew with admin rights
 # use strong password and Allow bbrew to administer this computer
 # on ubuntu follow those commands
+sudo groupadd brew
 sudo useradd -m -g brew -s /bin/bash brew
 sudo passwd brew
-sudo mkdir /home/linuxbrew/.linuxbrew/
+sudo mkdir -p /home/linuxbrew/.linuxbrew/
 sudo chown -R brew:brew /home/linuxbrew/.linuxbrew/
-# do not set sudo chmod g+s /home/linuxbrew/.linuxbrew/ since we want only read
-# access for other users, TODO: change umask for brew
 ```
 Install as brew only for brew user since not we do not need sudo
 ```
 ssh brew@localhost
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-```
-Add brew to shell
-```
+
+# Add brew to shell
 cat >> ~/.bashrc << 'HERE_DOC'
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 HERE_DOC
 ```
 
 That is.
+
+For other users you need to load brew but also change brew command
+All users should be able to `ssh brew@localhost` so you need to copy keys
+
+```
+ssh-copy-id brew@localhost
+```
+
+and add this function to .bashrc or .zprofile
+```
+# .bashrc or .zprofile
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+function brew() {
+  if [ -d /home/linuxbrew/.linuxbrew/bin ]; then
+    ssh brew@localhost 'bash  --login -c "export PATH=/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:$PATH && brew '"$@"'"'
+  elif [ -d /opt/homebrew/bin ]; then
+    ssh brew@localhost 'bash  --login -c "export PATH=/opt/homebrew/bin:$PATH && brew '"$@"'"'
+  else
+    echo 'Can not find /home/linuxbrew/ or /opt/homebrew. Please install brew as brew user'
+  fi
+}
+```
+usage is like
+```
+bbrew
+Example usage:
+  brew search TEXT|/REGEX/
+```
 
 Here are the reasons why we can not share the brew
 
