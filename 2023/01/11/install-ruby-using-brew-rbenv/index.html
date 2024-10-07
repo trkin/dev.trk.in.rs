@@ -130,24 +130,48 @@ Note that we will install only for one user and other will ssh to it</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># on macos go to System Settings &gt; Users &amp; Groups &gt; Add user bbrew with admin rights
 # use strong password and Allow bbrew to administer this computer
 # on ubuntu follow those commands
+sudo groupadd brew
 sudo useradd -m -g brew -s /bin/bash brew
 sudo passwd brew
-sudo mkdir /home/linuxbrew/.linuxbrew/
+sudo mkdir -p /home/linuxbrew/.linuxbrew/
 sudo chown -R brew:brew /home/linuxbrew/.linuxbrew/
-# do not set sudo chmod g+s /home/linuxbrew/.linuxbrew/ since we want only read
-# access for other users, TODO: change umask for brew
 </code></pre></div></div>
 <p>Install as brew only for brew user since not we do not need sudo</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh brew@localhost
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-</code></pre></div></div>
-<p>Add brew to shell</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cat &gt;&gt; ~/.bashrc &lt;&lt; 'HERE_DOC'
+
+# Add brew to shell
+cat &gt;&gt; ~/.bashrc &lt;&lt; 'HERE_DOC'
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 HERE_DOC
 </code></pre></div></div>
 
 <p>That is.</p>
+
+<p>For other users you need to load brew but also change brew command
+All users should be able to <code class="language-plaintext highlighter-rouge">ssh brew@localhost</code> so you need to copy keys</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh-copy-id brew@localhost
+</code></pre></div></div>
+
+<p>and add this function to .bashrc or .zprofile</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># .bashrc or .zprofile
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+function brew() {
+  if [ -d /home/linuxbrew/.linuxbrew/bin ]; then
+    ssh brew@localhost 'bash  --login -c "export PATH=/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:$PATH &amp;&amp; brew '"$@"'"'
+  elif [ -d /opt/homebrew/bin ]; then
+    ssh brew@localhost 'bash  --login -c "export PATH=/opt/homebrew/bin:$PATH &amp;&amp; brew '"$@"'"'
+  else
+    echo 'Can not find /home/linuxbrew/ or /opt/homebrew. Please install brew as brew user'
+  fi
+}
+</code></pre></div></div>
+<p>usage is like</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bbrew
+Example usage:
+  brew search TEXT|/REGEX/
+</code></pre></div></div>
 
 <p>Here are the reasons why we can not share the brew</p>
 
