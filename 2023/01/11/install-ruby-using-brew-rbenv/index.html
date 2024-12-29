@@ -156,7 +156,12 @@ All users should be able to <code class="language-plaintext highlighter-rouge">s
 
 <p>and add this function to .bashrc or .zprofile</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># .bashrc or .zprofile
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+if [ -d /home/linuxbrew/.linuxbrew/bin ]; then
+  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+elif [ -d /opt/homebrew/bin ]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+
 function brew() {
   if [ -d /home/linuxbrew/.linuxbrew/bin ]; then
     ssh brew@localhost 'bash  --login -c "export PATH=/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:$PATH &amp;&amp; brew '"$@"'"'
@@ -389,6 +394,43 @@ bundle
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt-get install zlib1g-dev
 </code></pre></div></div>
 
+<p>For ruby 2.7.8 and mini_racer error</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>linking shared-object mini_racer_extension.so
+g++: error: /home/ubuntu/xceednet/shared/bundle/ruby/2.7.0/gems/libv8-node-16.10.0.0-x86_64-linux-musl/vendor/v8/x86_64-linux/libv8/obj/libv8_monolith.a: No such file or
+directory
+make: *** [Makefile:263: mini_racer_extension.so] Error 1
+</code></pre></div></div>
+
+<p>solution is to link hardcoded paths
+https://github.com/rubyjs/mini_racer/issues/243#issuecomment-2439906407</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd /home/ubuntu/xceednet/shared/bundle/ruby/2.7.0/gems/libv8-node-16.10.0.0-x86_64-linux-musl/vendor/v8/
+ln -s x86_64-linux-musl x86_64-linux
+</code></pre></div></div>
+
+<p>Installing libv8-node-16 is sometimes not supported with error in bit-field.h</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>../deps/v8/src/base/bit-field.h:43:29: error: integer value 7 is outside the valid range of values [0, 3] for the enumeration type 'Kind'
+[-Wenum-constexpr-conversion]
+1 error generated.
+make: ***
+[/Users/dule/.asdf/installs/ruby/2.6.6/lib/ruby/gems/2.6.0/gems/libv8-node-16.10.0.0/src/node-v16.10.0/out/Release/obj.target/v8_init/deps/v8/src/init/setup-isolate-full.o]
+Error 1
+1 error generated.
+m
+</code></pre></div></div>
+<p>so the solution is to install the gem using system node</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gem install libv8 -v '16.10.0.0' -- --with-system-v8
+bundle install
+</code></pre></div></div>
+<p>but issue could be that on mac darwin we can not compile node</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>uname -r
+24.1.0
+</code></pre></div></div>
+<p>Similar logs on
+https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=272013
+I tried to upgrade to latest miniracer which is supported by ruby 2.6.6 but that
+is 0.6.5 which depends on libv8-node 16.20.0.0
+https://github.com/rubyjs/mini_racer/blob/stable-0.6/lib/mini_racer/version.rb</p>
+
 <p>For Ruby 3.2.1 on ubuntu you might need to use define readline location</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>export RUBY_CONFIGURE_OPTS="--with-openssl-dir=`brew --prefix openssl` --with-readline-dir=`brew --prefix readline`"
 </code></pre></div></div>
@@ -418,6 +460,18 @@ export CPPFLAGS="-I/opt/homebrew/opt/openssl@1.1/include"
 export PKG_CONFIG_PATH="/opt/homebrew/opt/openssl@1.1/lib/pkgconfig"
 
 rbenv install
+</code></pre></div></div>
+
+<p>Error installing ruby 3.0.x on new mac m1</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bigdecimal.c:1560:5: error: 'maybe_unused' attribute cannot be applied to types
+ 1560 |     ENTER(3);
+</code></pre></div></div>
+<p>can be solved with patch https://bugs.ruby-lang.org/issues/20760#note-4
+https://github.com/rbenv/ruby-build?tab=readme-ov-file#applying-patches
+https://github.com/asdf-vm/asdf-ruby?tab=readme-ov-file#use</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl -sSL https://github.com/ruby/ruby/commit/1dfe75b0beb7171b8154ff0856d5149be0207724.patch -o ruby-3.0.x.patch
+RUBY_APPLY_PATCHES=$'./ruby-3.0.x.patch' asdf install ruby 3.0.6
 </code></pre></div></div>
 
 <p>When you install new gems, sometimes you need to rehash to create new shims

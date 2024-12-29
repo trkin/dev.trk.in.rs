@@ -6,8 +6,8 @@
 </description>
     <link>https://dev.trk.in.rs/</link>
     <atom:link href="https://dev.trk.in.rs/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 07 Oct 2024 13:41:14 +0000</pubDate>
-    <lastBuildDate>Mon, 07 Oct 2024 13:41:14 +0000</lastBuildDate>
+    <pubDate>Sun, 29 Dec 2024 09:06:02 +0000</pubDate>
+    <lastBuildDate>Sun, 29 Dec 2024 09:06:02 +0000</lastBuildDate>
     <generator>Jekyll v4.3.3</generator>
     
       <item>
@@ -488,6 +488,10 @@ wget -q https://github.com/cloudflare/cloudflared/releases/latest/download/cloud
 &lt;p&gt;and login&lt;/p&gt;
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cloudflared tunnel login
 # this will create and download ~/.cloudflared/cert.pem
+# you can read pem file in future so you know on which account you have access
+openssl x509 -in cert.pem -noout -ext subjectAltName
+X509v3 Subject Alternative Name: 
+    DNS:*.my-domain.com, DNS:my-domain.com
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;You can create a temporary tunnel with random url&lt;/p&gt;
@@ -505,7 +509,7 @@ or remotelly managed tunnels&lt;/p&gt;
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# list all tunnels created previously using cloudflared cli on web
 cloudflared tunnel list
 
-# create tunnel and config.json file
+# create tunnel on cloudflare site and local config.json file
 cloudflared tunnel create mytunnel
 # Tunnel credentials written to /home/dule/.cloudflared/asd....asd.json
 
@@ -517,12 +521,13 @@ tunnel: mytunnel
 credentials-file: /home/dule/.cloudflared/asd....asd.json
 HERE_DOC
 
-# create DNS CNAME record to route to tunnel eg
-# mytunnel asd...asd.cfargotunnel.com
+# create DNS CNAME record for mytunnel with value asd...asd.cfargotunnel.com
 cloudflared tunnel route dns mytunnel mytunnel.trk.in.rs
 
-# start the tunnel
+# start the tunnel, default is to read cert from .cloudflared/cert.pem and .cloudflared/config.yml
 cloudflared tunnel run mytunnel
+# but you can define using params for credentials json and config yml
+cloudflared --credentials-file doc/cloudflared/f77e7809-5f2b-497e-9086-f13c1ad8b222.json --config doc/cloudflared/config.yml tunnel run mytunnel
 
 # check tunnel status
 cloudflared tunnel info mytunnel
@@ -568,8 +573,32 @@ will run at boot
 
 &lt;h1 id=&quot;cloudflare-dns&quot;&gt;Cloudflare DNS&lt;/h1&gt;
 
-&lt;p&gt;If you need ssh port 22 access than you need to disable Proxied and use DNS only
-proxy status.&lt;/p&gt;
+&lt;p&gt;If you need direct ssh port 22 access than you need to disable Proxied and use
+DNS only proxy status.&lt;/p&gt;
+
+&lt;p&gt;Other solution is to tunnel ssh as http service&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# config.yml
+ingress:
+  - hostname: ssh-my-app.trk.in.rs
+    service: ssh://localhost:22
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;and use cloudflared access&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Host ssh-my-app.trk.in.rs
+  ProxyCommand $(brew --prefix)/bin/cloudflared access ssh --hostname %h
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Similarly for mysql connection you can use tcp service&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# config.yml
+ingress:
+  - hostname: mysql-my-app.trk.in.rs
+    service: tcp://localhost:3306
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;and from remote you can connect using&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cloudflared access tcp --hostname mysql-my-app.trk.in.rs --url localhost:3306
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 </description>
         <pubDate>Thu, 23 Feb 2023 00:00:00 +0000</pubDate>
         <link>https://dev.trk.in.rs/2023/02/23/cloudflare-tunnel/</link>
