@@ -17,6 +17,10 @@ and login
 ```
 cloudflared tunnel login
 # this will create and download ~/.cloudflared/cert.pem
+# you can read pem file in future so you know on which account you have access
+openssl x509 -in cert.pem -noout -ext subjectAltName
+X509v3 Subject Alternative Name: 
+    DNS:*.my-domain.com, DNS:my-domain.com
 ```
 
 You can create a temporary tunnel with random url
@@ -36,7 +40,7 @@ or remotelly managed tunnels
 # list all tunnels created previously using cloudflared cli on web
 cloudflared tunnel list
 
-# create tunnel and config.json file
+# create tunnel on cloudflare site and local config.json file
 cloudflared tunnel create mytunnel
 # Tunnel credentials written to /home/dule/.cloudflared/asd....asd.json
 
@@ -48,12 +52,13 @@ tunnel: mytunnel
 credentials-file: /home/dule/.cloudflared/asd....asd.json
 HERE_DOC
 
-# create DNS CNAME record to route to tunnel eg
-# mytunnel asd...asd.cfargotunnel.com
+# create DNS CNAME record for mytunnel with value asd...asd.cfargotunnel.com
 cloudflared tunnel route dns mytunnel mytunnel.trk.in.rs
 
-# start the tunnel
+# start the tunnel, default is to read cert from .cloudflared/cert.pem and .cloudflared/config.yml
 cloudflared tunnel run mytunnel
+# but you can define using params for credentials json and config yml
+cloudflared --credentials-file doc/cloudflared/f77e7809-5f2b-497e-9086-f13c1ad8b222.json --config doc/cloudflared/config.yml tunnel run mytunnel
 
 # check tunnel status
 cloudflared tunnel info mytunnel
@@ -104,5 +109,33 @@ will run at boot
 
 #  Cloudflare DNS
 
-If you need ssh port 22 access than you need to disable Proxied and use DNS only
-proxy status.
+If you need direct ssh port 22 access than you need to disable Proxied and use
+DNS only proxy status.
+
+Other solution is to tunnel ssh as http service
+
+```
+# config.yml
+ingress:
+  - hostname: ssh-my-app.trk.in.rs
+    service: ssh://localhost:22
+```
+and use cloudflared access
+
+```
+Host ssh-my-app.trk.in.rs
+  ProxyCommand $(brew --prefix)/bin/cloudflared access ssh --hostname %h
+```
+
+Similarly for mysql connection you can use tcp service
+```
+# config.yml
+ingress:
+  - hostname: mysql-my-app.trk.in.rs
+    service: tcp://localhost:3306
+```
+and from remote you can connect using
+```
+cloudflared access tcp --hostname mysql-my-app.trk.in.rs --url localhost:3306
+
+```
