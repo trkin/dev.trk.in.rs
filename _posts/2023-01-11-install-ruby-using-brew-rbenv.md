@@ -229,7 +229,7 @@ brew install rbenv
 Add this to your `~/.bashrc` so you can access rbenv commands
 
 ```
-echo export PATH="$HOME/.rbenv/bin:$PATH" >> ~/.bashrc
+echo export PATH='$HOME/.rbenv/bin:$PATH' >> ~/.bashrc
 echo eval "$(rbenv init -)" >> ~/.bashrc
 ```
 
@@ -428,7 +428,7 @@ When you install new gems, sometimes you need to rehash to create new shims
 gem install jekyll
 Command 'jekyll' not found, but can be installed with:
 
-rbenv rehash
+rbenv aehash
 jekyll # now it works
 ```
 
