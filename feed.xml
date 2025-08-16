@@ -6,8 +6,8 @@
 </description>
     <link>https://dev.trk.in.rs/</link>
     <atom:link href="https://dev.trk.in.rs/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 29 Dec 2024 09:06:02 +0000</pubDate>
-    <lastBuildDate>Sun, 29 Dec 2024 09:06:02 +0000</lastBuildDate>
+    <pubDate>Sat, 16 Aug 2025 09:42:07 +0000</pubDate>
+    <lastBuildDate>Sat, 16 Aug 2025 09:42:07 +0000</lastBuildDate>
     <generator>Jekyll v4.3.3</generator>
     
       <item>
@@ -332,8 +332,9 @@ aws ec2 describe-instances --query &quot;Reservations[].Instances[].PublicIpAddr
   &lt;li&gt;&lt;a href=&quot;https://github.com/thoughtbot/guides/tree/main/git&quot;&gt;https://github.com/thoughtbot/guides/tree/main/git&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;When you move large number of files, or run linters, that should be in separate
-commit (or even separate pull request) and put the command in commit message&lt;/p&gt;
+&lt;p&gt;When you change  a lot of files, move folder, or run linters, that should be in
+separate commit (or even separate pull request) and put the command in commit
+message&lt;/p&gt;
 
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git mv test/fixtures spec
 git commit -am&quot;git mv test/fixtures spec&quot;
@@ -360,52 +361,6 @@ For example&lt;/p&gt;
 # make changes
 git commit -m&apos;Add test for signup #123`
 git push -u origin HEAD
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;git-hooks&quot;&gt;Git hooks&lt;/h2&gt;
-
-&lt;p&gt;We use git hook for commit message so the issue number is automatically added to
-commit message.&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cat &amp;gt; .git/hooks/prepare-commit-msg &amp;lt;&amp;lt; &apos;HERE_DOC&apos;
-#!/bin/bash
-#
-# Source https://dev.trk.in.rs/2023/03/21/git-tips#git-hooks
-#
-# https://gist.github.com/jimschubert/9073276
-# Automatically adds branch name to every commit message.
-# Modified from the stackoverflow answer here: http://stackoverflow.com/a/11524807/151445
-#
-
-# Get branch name, use sed to strip name and keep only numbers
-# i123_my_branch_name -&amp;gt; 123
-issueNumber=$(git branch | grep &apos;*&apos; | grep -o &apos;[0-9]*&apos;)
-# issueNumber=$(git branch --show-current)
-
-# Get the first line, ex: from ammending or mmm from git commit -am&apos;mmm&apos;
-firstLine=$(head -n1 $1)
-
-# echo firstLine=$firstLine issueNumber=$issueNumber
-if [[ -n $issueNumber &amp;amp;&amp;amp; ! $firstLine =~ $issueNumber ]] ; then
-  # Prepend issueNumber to COMMIT_MSG
-  # echo &quot;i#$issueNumber&quot;&apos; &apos;$(cat &quot;$1&quot;| sed &apos;/^#.*/d&apos;) &amp;gt; &quot;$1&quot;
-  #
-  # Append issueNumber to COMMIT_MSG
-  # echo -n &quot;#$issueNumber&quot; &amp;gt;&amp;gt; &quot;$1&quot; # this will add at the end
-  echo $(cat &quot;$1&quot; | sed &apos;/^#.*/d&apos;)&apos; &apos;&quot;#$issueNumber&quot; &amp;gt; &quot;$1&quot;
-
-  # Insert issueNumber at the end of the commit message file
-  # sed -i &quot;1s@^@\n\n$issueNumber@&quot; $1
-fi
-HERE_DOC
-
-chmod +x .git/hooks/prepare-commit-msg
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Next time you make a commit on a branch &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;i123_add_test_for_signup&lt;/code&gt; than commit
-message will include &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;[123]&lt;/code&gt;&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git commit -am&quot;Add test for signup&quot;
-[#123] Add test for signup
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;h2 id=&quot;gitflow&quot;&gt;Gitflow&lt;/h2&gt;
@@ -475,130 +430,7 @@ done
     
       <item>
         <title>Cloudflare Tunnel</title>
-        <description>&lt;p&gt;Ngrok is a service which gives you random url whenever you start a new tunnel.
-&lt;a href=&quot;https://www.cloudflare.com/products/tunnel/&quot;&gt;Clodflare tunnel&lt;/a&gt; is a free
-service that you can use as ngrok alternative.&lt;/p&gt;
-
-&lt;p&gt;Install https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# macOS
-brew install cloudflared
-# ubuntu
-wget -q https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb &amp;amp;&amp;amp; dpkg -i cloudflared-linux-amd64.deb
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;and login&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cloudflared tunnel login
-# this will create and download ~/.cloudflared/cert.pem
-# you can read pem file in future so you know on which account you have access
-openssl x509 -in cert.pem -noout -ext subjectAltName
-X509v3 Subject Alternative Name: 
-    DNS:*.my-domain.com, DNS:my-domain.com
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;You can create a temporary tunnel with random url&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cloudflared tunnel --url http://localhost:3000
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;and it will be available under .trycloudflare.com like
-&lt;a href=&quot;https://request-composer-pools-requirements.trycloudflare.com&quot;&gt;https://request-composer-pools-requirements.trycloudflare.com&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;For long living tunnels which uses the same url you should use local
-&lt;a href=&quot;https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/&quot;&gt;https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/&lt;/a&gt;
-or remotelly managed tunnels&lt;/p&gt;
-
-&lt;h2 id=&quot;locally-managed-tunnels&quot;&gt;Locally managed tunnels&lt;/h2&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# list all tunnels created previously using cloudflared cli on web
-cloudflared tunnel list
-
-# create tunnel on cloudflare site and local config.json file
-cloudflared tunnel create mytunnel
-# Tunnel credentials written to /home/dule/.cloudflared/asd....asd.json
-
-# create config file that uses this credentials and tunnel name
-cat &amp;gt; ~/.cloudflared/config.yaml &amp;lt;&amp;lt; &apos;HERE_DOC&apos;
-url: http://localhost:3000
-tunnel: mytunnel
-# home shortcut ~/.cloudflared/ will not work
-credentials-file: /home/dule/.cloudflared/asd....asd.json
-HERE_DOC
-
-# create DNS CNAME record for mytunnel with value asd...asd.cfargotunnel.com
-cloudflared tunnel route dns mytunnel mytunnel.trk.in.rs
-
-# start the tunnel, default is to read cert from .cloudflared/cert.pem and .cloudflared/config.yml
-cloudflared tunnel run mytunnel
-# but you can define using params for credentials json and config yml
-cloudflared --credentials-file doc/cloudflared/f77e7809-5f2b-497e-9086-f13c1ad8b222.json --config doc/cloudflared/config.yml tunnel run mytunnel
-
-# check tunnel status
-cloudflared tunnel info mytunnel
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;For multiple domains you just need to add same CNAME records to other
-subdomains.&lt;/p&gt;
-
-&lt;p&gt;To block by IP address, go to Security &amp;gt; WAF and create rule with “IP Source
-Address” “is not in” {my ip address} And “Hostname” “equals”
-“mytunnel.trk.in.rs” than “Block”.&lt;/p&gt;
-
-&lt;p&gt;If you install as a service than you need to stop that service&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;systemctl status cloudflared
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;If you need another account you can use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;origincert&lt;/code&gt; param
-https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-run-parameters/#origincert&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cloudflared --origincert doc/cloudflared/cert.pem tunnel list
-cloudflared --origincert doc/cloudflared/cert.pem tunnel create
-# this will create json in the same folder as pem doc/cloudflared/asd.json
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;config&lt;/code&gt; param to configure port
-https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-run-parameters/#config&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cloudflared --origincert doc/cloudflared/cert.pem --config doc/cloudflared/config.yml tunnel run mytunnel
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;To debug use&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cloudflared --loglevel debug tunnel run
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;remotelly-managed-tunnels&quot;&gt;Remotelly managed tunnels&lt;/h2&gt;
-
-&lt;p&gt;After install&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo cloudflared service install eyJh....
-
-Installing cloudflared client as a system launch daemon. cloudflared client
-will run at boot
-2024-04-12T05:14:09Z INF Outputs are logged to
-/Library/Logs/com.cloudflare.cloudflared.err.log
-/Library/Logs/com.cloudflare.cloudflared.out.log
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h1 id=&quot;cloudflare-dns&quot;&gt;Cloudflare DNS&lt;/h1&gt;
-
-&lt;p&gt;If you need direct ssh port 22 access than you need to disable Proxied and use
-DNS only proxy status.&lt;/p&gt;
-
-&lt;p&gt;Other solution is to tunnel ssh as http service&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# config.yml
-ingress:
-  - hostname: ssh-my-app.trk.in.rs
-    service: ssh://localhost:22
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;and use cloudflared access&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Host ssh-my-app.trk.in.rs
-  ProxyCommand $(brew --prefix)/bin/cloudflared access ssh --hostname %h
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Similarly for mysql connection you can use tcp service&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# config.yml
-ingress:
-  - hostname: mysql-my-app.trk.in.rs
-    service: tcp://localhost:3306
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;and from remote you can connect using&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cloudflared access tcp --hostname mysql-my-app.trk.in.rs --url localhost:3306
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+        <description>&lt;p&gt;moved to git@git.trk.tools:app/cloudflare-tips.git&lt;/p&gt;
 </description>
         <pubDate>Thu, 23 Feb 2023 00:00:00 +0000</pubDate>
         <link>https://dev.trk.in.rs/2023/02/23/cloudflare-tunnel/</link>

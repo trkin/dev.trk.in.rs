@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>Cloudflare Tunnel</title>
-  <meta name="description" content="Ngrok is a service which gives you random url whenever you start a new tunnel.Clodflare tunnel is a freeservice that you can use as ngrok alternative.">
+  <meta name="description" content="moved to git@git.trk.tools:app/cloudflare-tips.git">
 
   <link rel="stylesheet" href="/css/main.css">
   <link rel="canonical" href="https://dev.trk.in.rs/2023/02/23/cloudflare-tunnel/">
@@ -70,136 +70,7 @@
 
   <div class="post-content" itemprop="articleBody">
     <ul id="toc" class="section-nav">
-<li class="toc-entry toc-h2"><a href="#locally-managed-tunnels">Locally managed tunnels</a></li>
-<li class="toc-entry toc-h2"><a href="#remotelly-managed-tunnels">Remotelly managed tunnels</a></li>
-<li class="toc-entry toc-h1"><a href="#cloudflare-dns">Cloudflare DNS</a></li>
-</ul><p>Ngrok is a service which gives you random url whenever you start a new tunnel.
-<a href="https://www.cloudflare.com/products/tunnel/">Clodflare tunnel</a> is a free
-service that you can use as ngrok alternative.</p>
-
-<p>Install https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># macOS
-brew install cloudflared
-# ubuntu
-wget -q https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb &amp;&amp; dpkg -i cloudflared-linux-amd64.deb
-</code></pre></div></div>
-<p>and login</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cloudflared tunnel login
-# this will create and download ~/.cloudflared/cert.pem
-# you can read pem file in future so you know on which account you have access
-openssl x509 -in cert.pem -noout -ext subjectAltName
-X509v3 Subject Alternative Name: 
-    DNS:*.my-domain.com, DNS:my-domain.com
-</code></pre></div></div>
-
-<p>You can create a temporary tunnel with random url</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cloudflared tunnel --url http://localhost:3000
-</code></pre></div></div>
-<p>and it will be available under .trycloudflare.com like
-<a href="https://request-composer-pools-requirements.trycloudflare.com">https://request-composer-pools-requirements.trycloudflare.com</a></p>
-
-<p>For long living tunnels which uses the same url you should use local
-<a href="https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/">https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/</a>
-or remotelly managed tunnels</p>
-
-<h2 id="locally-managed-tunnels">
-<a class="anchor" href="#locally-managed-tunnels" aria-hidden="true"><span class="octicon octicon-link"></span></a>Locally managed tunnels</h2>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># list all tunnels created previously using cloudflared cli on web
-cloudflared tunnel list
-
-# create tunnel on cloudflare site and local config.json file
-cloudflared tunnel create mytunnel
-# Tunnel credentials written to /home/dule/.cloudflared/asd....asd.json
-
-# create config file that uses this credentials and tunnel name
-cat &gt; ~/.cloudflared/config.yaml &lt;&lt; 'HERE_DOC'
-url: http://localhost:3000
-tunnel: mytunnel
-# home shortcut ~/.cloudflared/ will not work
-credentials-file: /home/dule/.cloudflared/asd....asd.json
-HERE_DOC
-
-# create DNS CNAME record for mytunnel with value asd...asd.cfargotunnel.com
-cloudflared tunnel route dns mytunnel mytunnel.trk.in.rs
-
-# start the tunnel, default is to read cert from .cloudflared/cert.pem and .cloudflared/config.yml
-cloudflared tunnel run mytunnel
-# but you can define using params for credentials json and config yml
-cloudflared --credentials-file doc/cloudflared/f77e7809-5f2b-497e-9086-f13c1ad8b222.json --config doc/cloudflared/config.yml tunnel run mytunnel
-
-# check tunnel status
-cloudflared tunnel info mytunnel
-</code></pre></div></div>
-
-<p>For multiple domains you just need to add same CNAME records to other
-subdomains.</p>
-
-<p>To block by IP address, go to Security &gt; WAF and create rule with “IP Source
-Address” “is not in” {my ip address} And “Hostname” “equals”
-“mytunnel.trk.in.rs” than “Block”.</p>
-
-<p>If you install as a service than you need to stop that service</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>systemctl status cloudflared
-</code></pre></div></div>
-
-<p>If you need another account you can use <code class="language-plaintext highlighter-rouge">origincert</code> param
-https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-run-parameters/#origincert</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cloudflared --origincert doc/cloudflared/cert.pem tunnel list
-cloudflared --origincert doc/cloudflared/cert.pem tunnel create
-# this will create json in the same folder as pem doc/cloudflared/asd.json
-</code></pre></div></div>
-<p>and <code class="language-plaintext highlighter-rouge">config</code> param to configure port
-https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-run-parameters/#config</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cloudflared --origincert doc/cloudflared/cert.pem --config doc/cloudflared/config.yml tunnel run mytunnel
-</code></pre></div></div>
-
-<p>To debug use</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cloudflared --loglevel debug tunnel run
-</code></pre></div></div>
-
-<h2 id="remotelly-managed-tunnels">
-<a class="anchor" href="#remotelly-managed-tunnels" aria-hidden="true"><span class="octicon octicon-link"></span></a>Remotelly managed tunnels</h2>
-
-<p>After install</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo cloudflared service install eyJh....
-
-Installing cloudflared client as a system launch daemon. cloudflared client
-will run at boot
-2024-04-12T05:14:09Z INF Outputs are logged to
-/Library/Logs/com.cloudflare.cloudflared.err.log
-/Library/Logs/com.cloudflare.cloudflared.out.log
-</code></pre></div></div>
-
-<h1 id="cloudflare-dns">
-<a class="anchor" href="#cloudflare-dns" aria-hidden="true"><span class="octicon octicon-link"></span></a>Cloudflare DNS</h1>
-
-<p>If you need direct ssh port 22 access than you need to disable Proxied and use
-DNS only proxy status.</p>
-
-<p>Other solution is to tunnel ssh as http service</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># config.yml
-ingress:
-  - hostname: ssh-my-app.trk.in.rs
-    service: ssh://localhost:22
-</code></pre></div></div>
-<p>and use cloudflared access</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Host ssh-my-app.trk.in.rs
-  ProxyCommand $(brew --prefix)/bin/cloudflared access ssh --hostname %h
-</code></pre></div></div>
-
-<p>Similarly for mysql connection you can use tcp service</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># config.yml
-ingress:
-  - hostname: mysql-my-app.trk.in.rs
-    service: tcp://localhost:3306
-</code></pre></div></div>
-<p>and from remote you can connect using</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cloudflared access tcp --hostname mysql-my-app.trk.in.rs --url localhost:3306
-
-</code></pre></div></div>
+</ul><p>moved to git@git.trk.tools:app/cloudflare-tips.git</p>
 
   </div>
 

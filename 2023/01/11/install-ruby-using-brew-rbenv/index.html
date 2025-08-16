@@ -303,7 +303,7 @@ cat ~/.bashrc
 
 <p>Add this to your <code class="language-plaintext highlighter-rouge">~/.bashrc</code> so you can access rbenv commands</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>echo export PATH="$HOME/.rbenv/bin:$PATH" &gt;&gt; ~/.bashrc
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>echo export PATH='$HOME/.rbenv/bin:$PATH' &gt;&gt; ~/.bashrc
 echo eval "$(rbenv init -)" &gt;&gt; ~/.bashrc
 </code></pre></div></div>
 
@@ -480,7 +480,7 @@ RUBY_APPLY_PATCHES=$'./ruby-3.0.x.patch' asdf install ruby 3.0.6
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gem install jekyll
 Command 'jekyll' not found, but can be installed with:
 
-rbenv rehash
+rbenv aehash
 jekyll # now it works
 </code></pre></div></div>
 
